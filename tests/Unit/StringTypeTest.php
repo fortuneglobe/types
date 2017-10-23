@@ -1,7 +1,4 @@
 <?php declare(strict_types=1);
-/**
- * @author Christian Ramelow <christian.ramelow@fortuneglobe.com>
- */
 
 namespace Fortuneglobe\Types\Tests\Unit;
 
