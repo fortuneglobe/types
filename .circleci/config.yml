@@ -20,8 +20,12 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: sudo composer self-update
-      - run: composer install -o --prefer-dist --no-interaction
+      - run:
+          name: Update composer
+          command: sudo composer self-update
+      - run:
+          name: Install dependencies
+          command: composer install -o --prefer-dist --no-interaction
 
       - save_cache:
           paths:
@@ -29,8 +33,15 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       # run tests!
-      - run: mkdir -p build/logs/coverage
-      - run: vendor/bin/phpunit.phar -c build
+      - run:
+          name: Install xDebug
+          command: pecl install xdebug && docker-php-ext-enable xdebug
+      - run:
+          name: Prepare log directories
+          command: mkdir -p build/logs/coverage
+      - run:
+          name: Run unit tests
+          command: vendor/bin/phpunit.phar -c build
 
       - store_artifacts:
           path: build/logs/coverage
