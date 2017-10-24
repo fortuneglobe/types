@@ -88,7 +88,7 @@ echo json_encode($temperature);
 22.5
 22.5
 22.5
-"22.5"
+22.5
 ```
 
 #### Reconstruct from string value
@@ -124,7 +124,7 @@ echo json_encode($version);
 42
 42
 42
-"42"
+42
 ```
 
 #### Reconstruct from string value
