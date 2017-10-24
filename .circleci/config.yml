@@ -46,10 +46,7 @@ jobs:
             mkdir -p build/logs/junit
       - run:
           name: Run unit tests
-          command: |
-            mkdir -p ~/phpunit
-            vendor/bin/phpunit.phar -c build --log-junit build/logs/junit/junit.xml
-          when: always
+          command: vendor/bin/phpunit.phar -c build --log-junit build/logs/junit/junit.xml
 
       - store_test_results:
           path: build/logs/junit
