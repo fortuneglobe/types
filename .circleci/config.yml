@@ -35,13 +35,27 @@ jobs:
       # run tests!
       - run:
           name: Activate xDebug
-          command: echo "extension=xdebug.so" > /tmp/xdebug.ini && sudo cp /tmp/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+          command: |
+            echo "extension=xdebug.so" > /tmp/xdebug.ini
+            sudo cp /tmp/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
       - run:
           name: Prepare log directories
-          command: mkdir -p build/logs/coverage && mkdir -p $CIRCLE_TEST_REPORTS/phpunit
+          command: |
+            mkdir -p build/logs/coverage
+            mkdir -p build/logs/junit
       - run:
           name: Run unit tests
-          command: vendor/bin/phpunit.phar -c build --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
+          command: |
+            mkdir -p ~/phpunit
+            vendor/bin/phpunit.phar -c build --log-junit build/logs/junit/junit.xml
+          when: always
+
+      - store_test_results:
+          path: build/logs/junit
+
+      - store_artifacts:
+          path: build/logs/junit
 
       - store_artifacts:
           path: build/logs/coverage
