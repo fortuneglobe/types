@@ -22,7 +22,7 @@ composer require fortuneglobe/types
 * StringType
 * FloatType
 * IntType
-* UUIDType (extends StringType)
+* UuidType (extends StringType)
 
 ### Possible exceptions
 
@@ -136,16 +136,16 @@ $version = Version::fromString('42');
 This call throws an `Fortuneglobe\Types\Exceptions\InvalidIntValueException` if the provided string is not an integer number.
 
 
-### UUIDType
+### UuidType
 
 ```php
 <?php declare(strict_types=1);
 
 namespace YourVendor\YourProject;
 
-use Fortuneglobe\Types\UUIDType;
+use Fortuneglobe\Types\UuidType;
 
-final class OrderId extends UUIDType {}
+final class OrderId extends UuidType {}
 
 $orderId = OrderId::generate();
 
@@ -170,4 +170,4 @@ echo json_encode($orderId);
 $orderId = new OrderId('7b13bcba-a18f-4887-b784-9417262862e4');
 ``` 
 
-This call throws an `Fortuneglobe\Types\Exceptions\InvalidUUIDValueException` if the provided string is not a valid UUID.
+This call throws an `Fortuneglobe\Types\Exceptions\InvalidUuidValueException` if the provided string is not a valid UUID.

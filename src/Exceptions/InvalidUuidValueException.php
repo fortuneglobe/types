@@ -3,20 +3,20 @@
 namespace Fortuneglobe\Types\Exceptions;
 
 /**
- * Class InvalidUUIDValueException
+ * Class InvalidUuidValueException
  * @package Fortuneglobe\Types\Exceptions
  */
-final class InvalidUUIDValueException extends InvalidArgumentException
+final class InvalidUuidValueException extends InvalidArgumentException
 {
 	/** @var string */
 	private $uuid;
 
-	public function getUUID() : string
+	public function getUuid() : string
 	{
 		return $this->uuid;
 	}
 
-	public function withUUID( string $uuid ) : self
+	public function withUuid( string $uuid ) : self
 	{
 		$this->message = sprintf( 'Invalid UUID provided: %s', $uuid );
 		$this->uuid    = $uuid;

@@ -2,14 +2,14 @@
 
 namespace Fortuneglobe\Types;
 
-use Fortuneglobe\Types\Exceptions\InvalidUUIDValueException;
-use Fortuneglobe\Types\Interfaces\RepresentsUUIDValue;
+use Fortuneglobe\Types\Exceptions\InvalidUuidValueException;
+use Fortuneglobe\Types\Interfaces\RepresentsUuidValue;
 
 /**
- * Class UUIDType
+ * Class UuidType
  * @package Fortuneglobe\Types
  */
-class UUIDType extends StringType implements RepresentsUUIDValue
+class UuidType extends StringType implements RepresentsUuidValue
 {
 	private const NIL          = '00000000-0000-0000-0000-000000000000';
 
@@ -22,7 +22,7 @@ class UUIDType extends StringType implements RepresentsUUIDValue
 		parent::__construct( $uuid );
 	}
 
-	public static function generate() : RepresentsUUIDValue
+	public static function generate() : RepresentsUuidValue
 	{
 		$data = random_bytes( 16 );
 
@@ -46,6 +46,6 @@ class UUIDType extends StringType implements RepresentsUUIDValue
 			return;
 		}
 
-		throw (new InvalidUUIDValueException())->withUUID( $uuid );
+		throw (new InvalidUuidValueException())->withUuid( $uuid );
 	}
 }
