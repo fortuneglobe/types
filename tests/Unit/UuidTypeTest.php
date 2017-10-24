@@ -133,12 +133,12 @@ final class UuidTypeTest extends TestCase
 
 		return [
 			[
-				'identifier'             => new UuidType( '12345678-1234-1234-1234-123456789012' ),
-				'expectedJsonSerialized' => '"12345678-1234-1234-1234-123456789012"',
+				'identifier'   => new UuidType( '12345678-1234-1234-1234-123456789012' ),
+				'expectedJson' => '"12345678-1234-1234-1234-123456789012"',
 			],
 			[
-				'identifier'             => $generatedUuidentifier,
-				'expectedJsonSerialized' => sprintf( '"%s"', $generatedUuidentifier->toString() ),
+				'identifier'   => $generatedUuidentifier,
+				'expectedJson' => sprintf( '"%s"', $generatedUuidentifier->toString() ),
 			],
 		];
 	}

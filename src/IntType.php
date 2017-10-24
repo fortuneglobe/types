@@ -29,6 +29,11 @@ class IntType extends AbstractType implements RepresentsIntValue
 		return $this->value;
 	}
 
+	public function jsonSerialize() : int
+	{
+		return $this->value;
+	}
+
 	public static function fromString( string $string ) : RepresentsIntValue
 	{
 		$intValue = (int)$string;

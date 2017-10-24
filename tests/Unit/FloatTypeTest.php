@@ -150,31 +150,31 @@ final class FloatTypeTest extends TestCase
 
 	/**
 	 * @param float  $value
-	 * @param string $expectedJsonSerialized
+	 * @param string $expectedJson
 	 *
 	 * @dataProvider floatTypeAsJsonProvider
 	 */
-	public function testCanSerializeFloatTypeAsJson( float $value, string $expectedJsonSerialized )
+	public function testCanSerializeFloatTypeAsJson( float $value, string $expectedJson )
 	{
 		$type = new FloatType( $value );
 
-		$this->assertSame( $expectedJsonSerialized, json_encode( $type ) );
+		$this->assertSame( $expectedJson, json_encode( $type ) );
 	}
 
 	public function floatTypeAsJsonProvider()
 	{
 		return [
 			[
-				'value'                  => 1.23,
-				'expectedJsonSerialized' => '"1.23"',
+				'value'        => 1.23,
+				'expectedJson' => '1.23',
 			],
 			[
-				'value'                  => -1.1,
-				'expectedJsonSerialized' => '"-1.1"',
+				'value'        => -1.1,
+				'expectedJson' => '-1.1',
 			],
 			[
-				'value'                  => 0.5,
-				'expectedJsonSerialized' => '"0.5"',
+				'value'        => 0.5,
+				'expectedJson' => '0.5',
 			],
 		];
 	}

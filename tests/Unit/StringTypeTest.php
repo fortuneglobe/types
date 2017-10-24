@@ -139,33 +139,33 @@ final class StringTypeTest extends TestCase
 
 	/**
 	 * @param StringType $type
-	 * @param string     $expectedJsonSerialized
+	 * @param string     $expectedJson
 	 *
 	 * @dataProvider stringToJsonProvider
 	 */
-	public function testCanSerializeStringTypeAsJson( StringType $type, string $expectedJsonSerialized )
+	public function testCanSerializeStringTypeAsJson( StringType $type, string $expectedJson )
 	{
-		$this->assertSame( $expectedJsonSerialized, json_encode( $type ) );
+		$this->assertSame( $expectedJson, json_encode( $type ) );
 	}
 
 	public function stringToJsonProvider()
 	{
 		return [
 			[
-				'type'                   => new StringType( 'foobar' ),
-				'expectedJsonSerialized' => '"foobar"',
+				'type'         => new StringType( 'foobar' ),
+				'expectedJson' => '"foobar"',
 			],
 			[
-				'type'                   => new StringType( 'Foobar' ),
-				'expectedJsonSerialized' => '"Foobar"',
+				'type'         => new StringType( 'Foobar' ),
+				'expectedJson' => '"Foobar"',
 			],
 			[
-				'type'                   => new StringType( '0.8' ),
-				'expectedJsonSerialized' => '"0.8"',
+				'type'         => new StringType( '0.8' ),
+				'expectedJson' => '"0.8"',
 			],
 			[
-				'type'                   => new StringType( '.8' ),
-				'expectedJsonSerialized' => '".8"',
+				'type'         => new StringType( '.8' ),
+				'expectedJson' => '".8"',
 			],
 		];
 	}

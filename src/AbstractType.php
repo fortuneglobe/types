@@ -17,10 +17,7 @@ abstract class AbstractType
 
 	abstract public function toString() : string;
 
-	public function jsonSerialize() : string
-	{
-		return $this->toString();
-	}
+	abstract public function jsonSerialize();
 
 	public function equals( RepresentsScalarValue $other ) : bool
 	{

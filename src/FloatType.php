@@ -29,6 +29,11 @@ class FloatType extends AbstractType implements RepresentsFloatValue
 		return $this->value;
 	}
 
+	public function jsonSerialize() : float
+	{
+		return $this->value;
+	}
+
 	public static function fromString( string $string ) : RepresentsFloatValue
 	{
 		$floatValue = (float)$string;

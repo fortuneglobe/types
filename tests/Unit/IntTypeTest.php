@@ -149,31 +149,31 @@ final class IntTypeTest extends TestCase
 
 	/**
 	 * @param int    $value
-	 * @param string $expectedJsonSerialized
+	 * @param string $expectedJson
 	 *
 	 * @dataProvider intAsJsonDataProvider
 	 */
-	public function testCanSerializeIntTypeAsJson( int $value, string $expectedJsonSerialized )
+	public function testCanSerializeIntTypeAsJson( int $value, string $expectedJson )
 	{
 		$type = new IntType( $value );
 
-		$this->assertSame( $expectedJsonSerialized, json_encode( $type ) );
+		$this->assertSame( $expectedJson, json_encode( $type ) );
 	}
 
 	public function intAsJsonDataProvider()
 	{
 		return [
 			[
-				'value'                  => 1,
-				'expectedJsonSerialized' => '"1"',
+				'value'        => 1,
+				'expectedJson' => '1',
 			],
 			[
-				'value'                  => -1,
-				'expectedJsonSerialized' => '"-1"',
+				'value'        => -1,
+				'expectedJson' => '-1',
 			],
 			[
-				'value'                  => 0,
-				'expectedJsonSerialized' => '"0"',
+				'value'        => 0,
+				'expectedJson' => '0',
 			],
 		];
 	}

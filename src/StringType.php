@@ -18,6 +18,11 @@ class StringType extends AbstractType implements RepresentsStringValue
 		$this->value = $id;
 	}
 
+	public function jsonSerialize() : string
+	{
+		return $this->value;
+	}
+
 	public function toString() : string
 	{
 		return $this->value;
