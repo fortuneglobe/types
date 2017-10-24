@@ -12,21 +12,21 @@ use Fortuneglobe\Types\Interfaces\RepresentsIntValue;
 class IntType extends AbstractType implements RepresentsIntValue
 {
 	/** @var int */
-	private $id;
+	private $value;
 
 	public function __construct( int $id )
 	{
-		$this->id = $id;
+		$this->value = $id;
 	}
 
 	public function toString() : string
 	{
-		return (string)$this->id;
+		return (string)$this->value;
 	}
 
 	public function toInt() : int
 	{
-		return $this->id;
+		return $this->value;
 	}
 
 	public static function fromString( string $string ) : RepresentsIntValue

@@ -11,15 +11,15 @@ use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
 class StringType extends AbstractType implements RepresentsStringValue
 {
 	/** @var string */
-	private $id;
+	private $value;
 
 	public function __construct( string $id )
 	{
-		$this->id = $id;
+		$this->value = $id;
 	}
 
 	public function toString() : string
 	{
-		return $this->id;
+		return $this->value;
 	}
 }

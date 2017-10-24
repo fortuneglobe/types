@@ -12,21 +12,21 @@ use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
 class FloatType extends AbstractType implements RepresentsFloatValue
 {
 	/** @var float */
-	private $id;
+	private $value;
 
 	public function __construct( float $id )
 	{
-		$this->id = $id;
+		$this->value = $id;
 	}
 
 	public function toString() : string
 	{
-		return (string)$this->id;
+		return (string)$this->value;
 	}
 
 	public function toFloat() : float
 	{
-		return $this->id;
+		return $this->value;
 	}
 
 	public static function fromString( string $string ) : RepresentsFloatValue
