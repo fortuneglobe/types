@@ -38,10 +38,10 @@ jobs:
           command: echo "extension=xdebug.so" > /tmp/xdebug.ini && sudo cp /tmp/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
       - run:
           name: Prepare log directories
-          command: mkdir -p build/logs/coverage
+          command: mkdir -p build/logs/coverage && mkdir -p $CIRCLE_TEST_REPORTS/phpunit
       - run:
           name: Run unit tests
-          command: vendor/bin/phpunit.phar -c build
+          command: vendor/bin/phpunit.phar -c build --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
 
       - store_artifacts:
           path: build/logs/coverage
