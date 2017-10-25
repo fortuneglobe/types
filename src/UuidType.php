@@ -22,18 +22,6 @@ abstract class UuidType extends StringType implements RepresentsUuidValue
 		parent::__construct( $uuid );
 	}
 
-	public static function generate() : RepresentsUuidValue
-	{
-		$data = random_bytes( 16 );
-
-		$data[6] = chr( ord( $data[6] ) & 0x0f | 0x40 );
-		$data[8] = chr( ord( $data[8] ) & 0x3f | 0x80 );
-
-		$uuid = vsprintf( '%s%s-%s-%s-%s-%s%s%s', str_split( bin2hex( $data ), 4 ) );
-
-		return new static( $uuid );
-	}
-
 	private function guardUuidIsValid( string $uuid ) : void
 	{
 		if ( self::NIL === $uuid )
@@ -47,5 +35,17 @@ abstract class UuidType extends StringType implements RepresentsUuidValue
 		}
 
 		throw (new InvalidUuidValueException())->withUuid( $uuid );
+	}
+
+	public static function generate() : RepresentsUuidValue
+	{
+		$data = random_bytes( 16 );
+
+		$data[6] = chr( ord( $data[6] ) & 0x0f | 0x40 );
+		$data[8] = chr( ord( $data[8] ) & 0x3f | 0x80 );
+
+		$uuid = vsprintf( '%s%s-%s-%s-%s-%s%s%s', str_split( bin2hex( $data ), 4 ) );
+
+		return new static( $uuid );
 	}
 }
