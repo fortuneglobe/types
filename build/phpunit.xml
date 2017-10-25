@@ -1,4 +1,11 @@
-<phpunit bootstrap="../tests/bootstrap.php" verbose="true" beStrictAboutOutputDuringTests="true" beStrictAboutTestSize="true" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true">
+<phpunit bootstrap="../tests/bootstrap.php"
+         verbose="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestSize="true"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true">
 	<testsuites>
 		<testsuite name="Types-Unit">
 			<directory suffix="Test.php">../tests/Unit</directory>
