@@ -9,7 +9,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
  * Class FloatType
  * @package Fortuneglobe\Types
  */
-class FloatType extends AbstractType implements RepresentsFloatValue
+abstract class FloatType extends AbstractType implements RepresentsFloatValue
 {
 	/** @var float */
 	private $value;

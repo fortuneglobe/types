@@ -9,7 +9,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsUuidValue;
  * Class UuidType
  * @package Fortuneglobe\Types
  */
-class UuidType extends StringType implements RepresentsUuidValue
+abstract class UuidType extends StringType implements RepresentsUuidValue
 {
 	private const NIL          = '00000000-0000-0000-0000-000000000000';
 

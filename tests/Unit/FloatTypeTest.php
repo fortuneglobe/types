@@ -6,6 +6,7 @@ use Fortuneglobe\Types\Exceptions\InvalidFloatValueException;
 use Fortuneglobe\Types\FloatType;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestFloat;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +17,7 @@ final class FloatTypeTest extends TestCase
 {
 	public function testCanConstructFloatType() : void
 	{
-		$type = new FloatType( 0.42 );
+		$type = new TestFloat( 0.42 );
 
 		$this->assertInstanceOf( RepresentsScalarValue::class, $type );
 		$this->assertInstanceOf( RepresentsFloatValue::class, $type );
@@ -24,12 +25,12 @@ final class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @param FloatType $typeA
-	 * @param FloatType $typeB
+	 * @param RepresentsFloatValue $typeA
+	 * @param RepresentsFloatValue $typeB
 	 *
 	 * @dataProvider equalFloatsProvider
 	 */
-	public function testCanCheckForEquality( FloatType $typeA, FloatType $typeB )
+	public function testCanCheckForEquality( RepresentsFloatValue $typeA, RepresentsFloatValue $typeB )
 	{
 		$this->assertTrue( $typeA->equals( $typeB ) );
 		$this->assertTrue( $typeB->equals( $typeA ) );
@@ -39,31 +40,31 @@ final class FloatTypeTest extends TestCase
 	{
 		return [
 			[
-				'typeA' => new FloatType( 1 ),
-				'typeB' => new FloatType( 1.0 ),
+				'typeA' => new TestFloat( 1 ),
+				'typeB' => new TestFloat( 1.0 ),
 			],
 			[
-				'typeA' => new FloatType( 0 ),
-				'typeB' => new FloatType( 0.0 ),
+				'typeA' => new TestFloat( 0 ),
+				'typeB' => new TestFloat( 0.0 ),
 			],
 			[
-				'typeA' => new FloatType( -1 ),
-				'typeB' => new FloatType( -1.0 ),
+				'typeA' => new TestFloat( -1 ),
+				'typeB' => new TestFloat( -1.0 ),
 			],
 			[
-				'typeA' => new FloatType( 987.123 ),
-				'typeB' => new FloatType( 987.123 ),
+				'typeA' => new TestFloat( 987.123 ),
+				'typeB' => new TestFloat( 987.123 ),
 			],
 		];
 	}
 
 	/**
-	 * @param FloatType $typeA
-	 * @param FloatType $typeB
+	 * @param RepresentsFloatValue $typeA
+	 * @param RepresentsFloatValue $typeB
 	 *
 	 * @dataProvider notEqualFloatsProvider
 	 */
-	public function testCanCheckThatFloatTypesAreNotEqual( FloatType $typeA, FloatType $typeB )
+	public function testCanCheckThatFloatTypesAreNotEqual( RepresentsFloatValue $typeA, RepresentsFloatValue $typeB )
 	{
 		$this->assertFalse( $typeA->equals( $typeB ) );
 		$this->assertFalse( $typeB->equals( $typeA ) );
@@ -73,19 +74,19 @@ final class FloatTypeTest extends TestCase
 	{
 		return [
 			[
-				'typeA' => new FloatType( 1.0 ),
-				'typeB' => new FloatType( -1.0 ),
+				'typeA' => new TestFloat( 1.0 ),
+				'typeB' => new TestFloat( -1.0 ),
 			],
 			[
-				'typeA' => new FloatType( 0.0 ),
-				'typeB' => new FloatType( 0.1 ),
+				'typeA' => new TestFloat( 0.0 ),
+				'typeB' => new TestFloat( 0.1 ),
 			],
 			[
-				'typeA' => new FloatType( -1.0 ),
-				'typeB' => new FloatType( -1.1 ),
+				'typeA' => new TestFloat( -1.0 ),
+				'typeB' => new TestFloat( -1.1 ),
 			],
 			[
-				'typeA' => new FloatType( -1.5 ),
+				'typeA' => new TestFloat( -1.5 ),
 				'typeB' => new class(-1.5) extends FloatType
 				{
 				},
@@ -94,12 +95,12 @@ final class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @param FloatType $type
-	 * @param string    $expectedString
+	 * @param RepresentsFloatValue $type
+	 * @param string               $expectedString
 	 *
 	 * @dataProvider floatTypeAsStringProvider
 	 */
-	public function testCanRepresentFloatTypeAsString( FloatType $type, string $expectedString )
+	public function testCanRepresentFloatTypeAsString( RepresentsFloatValue $type, string $expectedString )
 	{
 		$this->assertSame( $expectedString, $type->toString() );
 		$this->assertSame( $expectedString, $type->__toString() );
@@ -110,39 +111,39 @@ final class FloatTypeTest extends TestCase
 	{
 		return [
 			[
-				'type'           => new FloatType( 1 ),
+				'type'           => new TestFloat( 1 ),
 				'expectedString' => '1',
 			],
 			[
-				'type'           => new FloatType( 0 ),
+				'type'           => new TestFloat( 0 ),
 				'expectedString' => '0',
 			],
 			[
-				'type'           => new FloatType( -1 ),
+				'type'           => new TestFloat( -1 ),
 				'expectedString' => '-1',
 			],
 			[
-				'type'           => new FloatType( 1.0 ),
+				'type'           => new TestFloat( 1.0 ),
 				'expectedString' => '1',
 			],
 			[
-				'type'           => new FloatType( 0.0 ),
+				'type'           => new TestFloat( 0.0 ),
 				'expectedString' => '0',
 			],
 			[
-				'type'           => new FloatType( 1.0 ),
+				'type'           => new TestFloat( 1.0 ),
 				'expectedString' => '1',
 			],
 			[
-				'type'           => new FloatType( 0.1 ),
+				'type'           => new TestFloat( 0.1 ),
 				'expectedString' => '0.1',
 			],
 			[
-				'type'           => new FloatType( 1.1 ),
+				'type'           => new TestFloat( 1.1 ),
 				'expectedString' => '1.1',
 			],
 			[
-				'type'           => new FloatType( -1.1 ),
+				'type'           => new TestFloat( -1.1 ),
 				'expectedString' => '-1.1',
 			],
 		];
@@ -156,7 +157,7 @@ final class FloatTypeTest extends TestCase
 	 */
 	public function testCanSerializeFloatTypeAsJson( float $value, string $expectedJson )
 	{
-		$type = new FloatType( $value );
+		$type = new TestFloat( $value );
 
 		$this->assertSame( $expectedJson, json_encode( $type ) );
 	}
@@ -181,7 +182,7 @@ final class FloatTypeTest extends TestCase
 
 	public function testCanGetFloatValue() : void
 	{
-		$type = new FloatType( 0.42 );
+		$type = new TestFloat( 0.42 );
 
 		$this->assertSame( 0.42, $type->toFloat() );
 	}
@@ -194,10 +195,10 @@ final class FloatTypeTest extends TestCase
 	 */
 	public function testCanReconstructFloatTypeFromString( string $string, float $expectedFloat ) : void
 	{
-		$type = FloatType::fromString( $string );
+		$type = TestFloat::fromString( $string );
 
 		$this->assertSame( $expectedFloat, $type->toFloat() );
-		$this->assertTrue( (new FloatType( $expectedFloat ))->equals( $type ) );
+		$this->assertTrue( (new TestFloat( $expectedFloat ))->equals( $type ) );
 	}
 
 	public function stringFloatValuesProvider() : array
@@ -227,7 +228,7 @@ final class FloatTypeTest extends TestCase
 	{
 		try
 		{
-			FloatType::fromString( $string );
+			TestFloat::fromString( $string );
 		}
 		catch ( InvalidFloatValueException $e )
 		{

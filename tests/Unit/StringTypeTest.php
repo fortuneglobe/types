@@ -5,6 +5,7 @@ namespace Fortuneglobe\Types\Tests\Unit;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
 use Fortuneglobe\Types\StringType;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestString;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,19 +16,19 @@ final class StringTypeTest extends TestCase
 {
 	public function testCanConstructStringIdentifier()
 	{
-		$type = new StringType( 'foobar' );
+		$type = new TestString( 'foobar' );
 		$this->assertInstanceOf( RepresentsScalarValue::class, $type );
 		$this->assertInstanceOf( RepresentsStringValue::class, $type );
 		$this->assertInstanceOf( StringType::class, $type );
 	}
 
 	/**
-	 * @param StringType $typeA
-	 * @param StringType $typeB
+	 * @param RepresentsStringValue $typeA
+	 * @param RepresentsStringValue $typeB
 	 *
 	 * @dataProvider equalStringsProvider
 	 */
-	public function testCanCheckForEquality( StringType $typeA, StringType $typeB )
+	public function testCanCheckForEquality( RepresentsStringValue $typeA, RepresentsStringValue $typeB )
 	{
 		$this->assertTrue( $typeA->equals( $typeB ) );
 		$this->assertTrue( $typeB->equals( $typeA ) );
@@ -37,34 +38,31 @@ final class StringTypeTest extends TestCase
 	{
 		return [
 			[
-				'typeA' => new StringType( 'foobar' ),
-				'typeB' => new StringType( 'foobar' ),
+				'typeA' => new TestString( 'foobar' ),
+				'typeB' => new TestString( 'foobar' ),
 			],
 			[
-				'typeA' => new StringType( 'Foobar' ),
-				'typeB' => new StringType( 'Foobar' ),
+				'typeA' => new TestString( 'Foobar' ),
+				'typeB' => new TestString( 'Foobar' ),
 			],
 			[
-				'typeA' => new StringType( '0.8' ),
-				'typeB' => new StringType( '0.8' ),
+				'typeA' => new TestString( '0.8' ),
+				'typeB' => new TestString( '0.8' ),
 			],
 			[
-				'typeA' => new StringType( '.8' ),
-				'typeB' => new StringType( '.8' ),
+				'typeA' => new TestString( '.8' ),
+				'typeB' => new TestString( '.8' ),
 			],
 		];
 	}
 
 	/**
-	 * @param StringType $typeA
-	 * @param StringType $typeB
+	 * @param RepresentsStringValue $typeA
+	 * @param RepresentsStringValue $typeB
 	 *
 	 * @dataProvider notEqualStringsProvider
 	 */
-	public function testCanCheckThatStringTypesAreNotEqual(
-		StringType $typeA,
-		StringType $typeB
-	)
+	public function testCanCheckThatStringTypesAreNotEqual( RepresentsStringValue $typeA, RepresentsStringValue $typeB )
 	{
 		$this->assertFalse( $typeA->equals( $typeB ) );
 		$this->assertFalse( $typeB->equals( $typeA ) );
@@ -78,19 +76,19 @@ final class StringTypeTest extends TestCase
 
 		return [
 			[
-				'typeA' => new StringType( 'foobar' ),
-				'typeB' => new StringType( 'Foobar' ),
+				'typeA' => new TestString( 'foobar' ),
+				'typeB' => new TestString( 'Foobar' ),
 			],
 			[
-				'typeA' => new StringType( '0.8' ),
-				'typeB' => new StringType( '.8' ),
+				'typeA' => new TestString( '0.8' ),
+				'typeB' => new TestString( '.8' ),
 			],
 			[
-				'typeA' => new StringType( ' ' ),
-				'typeB' => new StringType( '' ),
+				'typeA' => new TestString( ' ' ),
+				'typeB' => new TestString( '' ),
 			],
 			[
-				'typeA' => new StringType( 'foobar' ),
+				'typeA' => new TestString( 'foobar' ),
 				'typeB' => $extendedStringIdentifier,
 			],
 			[
@@ -103,12 +101,12 @@ final class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @param StringType $type
-	 * @param string     $expectedString
+	 * @param RepresentsStringValue $type
+	 * @param string                $expectedString
 	 *
 	 * @dataProvider stringAsStringProvider
 	 */
-	public function testCanRepresentStringTypeAsString( StringType $type, string $expectedString )
+	public function testCanRepresentStringTypeAsString( RepresentsStringValue $type, string $expectedString )
 	{
 		$this->assertSame( $expectedString, $type->toString() );
 		$this->assertSame( $expectedString, $type->__toString() );
@@ -119,31 +117,31 @@ final class StringTypeTest extends TestCase
 	{
 		return [
 			[
-				'type'           => new StringType( 'foobar' ),
+				'type'           => new TestString( 'foobar' ),
 				'expectedString' => 'foobar',
 			],
 			[
-				'type'           => new StringType( 'Foobar' ),
+				'type'           => new TestString( 'Foobar' ),
 				'expectedString' => 'Foobar',
 			],
 			[
-				'type'           => new StringType( '0.8' ),
+				'type'           => new TestString( '0.8' ),
 				'expectedString' => '0.8',
 			],
 			[
-				'type'           => new StringType( '.8' ),
+				'type'           => new TestString( '.8' ),
 				'expectedString' => '.8',
 			],
 		];
 	}
 
 	/**
-	 * @param StringType $type
-	 * @param string     $expectedJson
+	 * @param RepresentsStringValue $type
+	 * @param string                $expectedJson
 	 *
 	 * @dataProvider stringToJsonProvider
 	 */
-	public function testCanSerializeStringTypeAsJson( StringType $type, string $expectedJson )
+	public function testCanSerializeStringTypeAsJson( RepresentsStringValue $type, string $expectedJson )
 	{
 		$this->assertSame( $expectedJson, json_encode( $type ) );
 	}
@@ -152,19 +150,19 @@ final class StringTypeTest extends TestCase
 	{
 		return [
 			[
-				'type'         => new StringType( 'foobar' ),
+				'type'         => new TestString( 'foobar' ),
 				'expectedJson' => '"foobar"',
 			],
 			[
-				'type'         => new StringType( 'Foobar' ),
+				'type'         => new TestString( 'Foobar' ),
 				'expectedJson' => '"Foobar"',
 			],
 			[
-				'type'         => new StringType( '0.8' ),
+				'type'         => new TestString( '0.8' ),
 				'expectedJson' => '"0.8"',
 			],
 			[
-				'type'         => new StringType( '.8' ),
+				'type'         => new TestString( '.8' ),
 				'expectedJson' => '".8"',
 			],
 		];

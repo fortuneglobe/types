@@ -3,7 +3,7 @@
 ## Description
 
 Basic type classes wrapping scalar values to create types in applications.
-These classes are meant to be extended by appropriate named type classes.
+These classes are declared `abstract` and must be extended by appropriate named type classes in your application.
 
 ## Requirements
 

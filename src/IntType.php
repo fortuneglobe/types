@@ -9,7 +9,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsIntValue;
  * Class IntType
  * @package Fortuneglobe\Types
  */
-class IntType extends AbstractType implements RepresentsIntValue
+abstract class IntType extends AbstractType implements RepresentsIntValue
 {
 	/** @var int */
 	private $value;

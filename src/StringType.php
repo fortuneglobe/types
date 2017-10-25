@@ -8,7 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
  * Interface StringType
  * @package Fortuneglobe\Types
  */
-class StringType extends AbstractType implements RepresentsStringValue
+abstract class StringType extends AbstractType implements RepresentsStringValue
 {
 	/** @var string */
 	private $value;
