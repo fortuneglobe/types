@@ -208,6 +208,26 @@ final class IntTypeTest extends TestCase
 				'string'      => (string)PHP_INT_MIN,
 				'expectedInt' => PHP_INT_MIN,
 			],
+			[
+				'string'      => '+42',
+				'expectedInt' => 42,
+			],
+			[
+				'string'      => '-42',
+				'expectedInt' => -42,
+			],
+			[
+				'string'      => '0042',
+				'expectedInt' => 42,
+			],
+			[
+				'string'      => '-0042',
+				'expectedInt' => -42,
+			],
+			[
+				'string'      => '+0042',
+				'expectedInt' => 42,
+			],
 		];
 	}
 
@@ -243,6 +263,12 @@ final class IntTypeTest extends TestCase
 			],
 			[
 				'string' => '-1,33',
+			],
+			[
+				'string' => ((string)PHP_INT_MAX) . '1',
+			],
+			[
+				'string' => ((string)PHP_INT_MIN) . '1',
 			],
 		];
 	}

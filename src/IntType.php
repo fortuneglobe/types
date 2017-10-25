@@ -36,13 +36,17 @@ abstract class IntType extends AbstractType implements RepresentsIntValue
 
 	public static function fromString( string $string ) : RepresentsIntValue
 	{
-		$intValue = (int)$string;
-
-		if ( $string !== (string)$intValue )
+		if ( 0 === preg_match( '#^[-+]?\d+$#', $string ) )
 		{
 			throw (new InvalidIntValueException())->withString( $string );
 		}
 
-		return new static( $intValue );
+		$floatValue = (float)$string;
+		if ( PHP_INT_MAX < $floatValue || PHP_INT_MIN > $floatValue )
+		{
+			throw (new InvalidIntValueException())->withString( $string );
+		}
+
+		return new static( (int)$string );
 	}
 }
