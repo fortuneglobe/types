@@ -13,7 +13,7 @@ abstract class UuidType extends StringType implements RepresentsUuidValue
 {
 	private const NIL          = '00000000-0000-0000-0000-000000000000';
 
-	private const UUID_PATTERN = '^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$';
+	private const UUID_PATTERN = '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
 
 	public function __construct( string $uuid )
 	{
@@ -29,7 +29,7 @@ abstract class UuidType extends StringType implements RepresentsUuidValue
 			return;
 		}
 
-		if ( preg_match( '#' . self::UUID_PATTERN . '#', $uuid ) )
+		if ( preg_match( '#' . self::UUID_PATTERN . '#i', $uuid ) )
 		{
 			return;
 		}
