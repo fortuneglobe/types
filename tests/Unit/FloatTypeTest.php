@@ -216,6 +216,50 @@ final class FloatTypeTest extends TestCase
 				'string'        => '-1.23',
 				'expectedFloat' => -1.23,
 			],
+			[
+				'string'        => '+42.1',
+				'expectedFloat' => 42.1,
+			],
+			[
+				'string'        => '+42.1',
+				'expectedFloat' => 42.1,
+			],
+			[
+				'string'        => '42.',
+				'expectedFloat' => 42,
+			],
+			[
+				'string'        => '+42.',
+				'expectedFloat' => 42,
+			],
+			[
+				'string'        => '-42.',
+				'expectedFloat' => -42,
+			],
+			[
+				'string'        => '0042',
+				'expectedFloat' => 42,
+			],
+			[
+				'string'        => '+0042',
+				'expectedFloat' => 42,
+			],
+			[
+				'string'        => '-0042',
+				'expectedFloat' => -42,
+			],
+			[
+				'string'        => '42.23e4',
+				'expectedFloat' => 422300,
+			],
+			[
+				'string'        => '+42.23e4',
+				'expectedFloat' => 422300,
+			],
+			[
+				'string'        => '-42.23e4',
+				'expectedFloat' => -422300,
+			],
 		];
 	}
 

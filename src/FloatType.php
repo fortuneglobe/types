@@ -36,13 +36,11 @@ abstract class FloatType extends AbstractType implements RepresentsFloatValue
 
 	public static function fromString( string $string ) : RepresentsFloatValue
 	{
-		$floatValue = (float)$string;
-
-		if ( $string !== (string)$floatValue )
+		if ( false === is_numeric( $string ) )
 		{
 			throw (new InvalidFloatValueException())->withString( $string );
 		}
 
-		return new static( $floatValue );
+		return new static( (float)$string );
 	}
 }
