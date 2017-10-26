@@ -13,9 +13,9 @@ abstract class StringType extends AbstractType implements RepresentsStringValue
 	/** @var string */
 	private $value;
 
-	public function __construct( string $id )
+	public function __construct( string $value )
 	{
-		$this->value = $id;
+		$this->value = $value;
 	}
 
 	public function jsonSerialize() : string

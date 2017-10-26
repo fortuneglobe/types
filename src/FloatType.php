@@ -14,9 +14,9 @@ abstract class FloatType extends AbstractType implements RepresentsFloatValue
 	/** @var float */
 	private $value;
 
-	public function __construct( float $id )
+	public function __construct( float $value )
 	{
-		$this->value = $id;
+		$this->value = $value;
 	}
 
 	public function toString() : string

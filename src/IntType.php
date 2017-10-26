@@ -14,9 +14,9 @@ abstract class IntType extends AbstractType implements RepresentsIntValue
 	/** @var int */
 	private $value;
 
-	public function __construct( int $id )
+	public function __construct( int $value )
 	{
-		$this->value = $id;
+		$this->value = $value;
 	}
 
 	public function toString() : string
