@@ -1,0 +1,50 @@
+{
+	"name": "fortuneglobe/identifier",
+	"description": "Identifier",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"license": "proprietary",
+	"authors": [
+		{
+			"name": "Holger Woltersdorf"
+		},
+		{
+			"name": "Christian Ramelow"
+		},
+		{
+			"name": "Benjamin Bruska"
+		}
+	],
+	"require": {
+		"php": ">=7.1"
+	},
+	"require-dev": {
+		"tm/tooly-composer-script": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Fortuneglobe\\Types\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Fortuneglobe\\Types\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"post-install-cmd": "Tooly\\ScriptHandler::installPharTools",
+		"post-update-cmd": "Tooly\\ScriptHandler::installPharTools"
+	},
+	"extra": {
+		"tools": {
+			"phpunit": {
+				"url": "https://phar.phpunit.de/phpunit-6.4.3.phar",
+				"only-dev": true
+			},
+			"phpmetrics": {
+				"url": "https://github.com/phpmetrics/PhpMetrics/releases/download/v2.3.2/phpmetrics.phar",
+				"only-dev": true
+			}
+		}
+	}
+}
