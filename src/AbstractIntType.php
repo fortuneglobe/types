@@ -16,8 +16,12 @@ abstract class AbstractIntType extends AbstractType implements RepresentsIntValu
 
 	public function __construct( int $value )
 	{
+		$this->guardValueIsValid( $value );
+
 		$this->value = $value;
 	}
+
+	abstract protected function guardValueIsValid( int $value );
 
 	public function toString() : string
 	{

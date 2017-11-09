@@ -89,6 +89,10 @@ final class AbstractFloatTypeTest extends TestCase
 				'typeA' => new TestFloat( -1.5 ),
 				'typeB' => new class(-1.5) extends AbstractFloatType
 				{
+					protected function guardValueIsValid( float $value )
+					{
+						// TODO: Implement guardValueIsValid() method.
+					}
 				},
 			],
 		];

@@ -97,6 +97,10 @@ final class AbstractIntTypeTest extends TestCase
 				'typeA' => new TestInt( 0 ),
 				'typeB' => new class(0) extends AbstractIntType
 				{
+					protected function guardValueIsValid( int $value )
+					{
+						// TODO: Implement guardValueIsValid() method.
+					}
 				},
 			],
 		];

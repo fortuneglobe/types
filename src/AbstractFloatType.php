@@ -16,8 +16,12 @@ abstract class AbstractFloatType extends AbstractType implements RepresentsFloat
 
 	public function __construct( float $value )
 	{
+		$this->guardValueIsValid( $value );
+
 		$this->value = $value;
 	}
+
+	abstract protected function guardValueIsValid( float $value );
 
 	public function toString() : string
 	{

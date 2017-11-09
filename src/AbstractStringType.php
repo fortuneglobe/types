@@ -15,8 +15,12 @@ abstract class AbstractStringType extends AbstractType implements RepresentsStri
 
 	public function __construct( string $value )
 	{
+		$this->guardValueIsValid( $value );
+
 		$this->value = $value;
 	}
+
+	abstract protected function guardValueIsValid( string $value );
 
 	public function jsonSerialize() : string
 	{

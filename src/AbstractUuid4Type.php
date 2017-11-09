@@ -15,26 +15,19 @@ abstract class AbstractUuid4Type extends AbstractStringType implements Represent
 
 	private const UUID_PATTERN = '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
 
-	public function __construct( string $uuid )
+	final protected function guardValueIsValid( string $value ) : void
 	{
-		$this->guardUuidIsValid( $uuid );
-
-		parent::__construct( $uuid );
-	}
-
-	private function guardUuidIsValid( string $uuid ) : void
-	{
-		if ( self::NIL === $uuid )
+		if ( self::NIL === $value )
 		{
 			return;
 		}
 
-		if ( preg_match( '#' . self::UUID_PATTERN . '#i', $uuid ) )
+		if ( preg_match( '#' . self::UUID_PATTERN . '#i', $value ) )
 		{
 			return;
 		}
 
-		throw (new InvalidUuid4ValueException())->withUuid4( $uuid );
+		throw (new InvalidUuid4ValueException())->withUuid4( $value );
 	}
 
 	public static function generate() : RepresentsUuid4Value
