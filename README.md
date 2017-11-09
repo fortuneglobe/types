@@ -24,7 +24,7 @@ composer require fortuneglobe/types
 * AbstractStringType
 * AbstractFloatType
 * AbstractIntType
-* AbstractUuidType (extends AbstractStringType)
+* AbstractUuid4Type (extends AbstractStringType)
 
 ### Possible exceptions
 
@@ -48,7 +48,7 @@ use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 
 final class UserId extends AbstractStringType 
 {
-    protected function guardValueIsValid( string $value ) 
+    protected function guardValueIsValid( string $value ) : void 
     {
         if (preg_match('#\s#', $value))
         {
@@ -86,7 +86,7 @@ use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 
 final class DegreeCelsius extends AbstractFloatType 
 {
-    protected function guardValueIsValid( float $value ) 
+    protected function guardValueIsValid( float $value ) : void 
     {
         if (-273.15 > $value)
         {
@@ -132,7 +132,7 @@ use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 
 final class Version extends AbstractIntType 
 {
-    protected function guardValueIsValid( int $value ) 
+    protected function guardValueIsValid( int $value ) : void 
     {
         if (0 > $value)
         {
