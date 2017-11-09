@@ -3,10 +3,12 @@
 namespace Fortuneglobe\Types\Tests\Unit;
 
 use Fortuneglobe\Types\AbstractIntType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 use Fortuneglobe\Types\Exceptions\InvalidIntValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsIntValue;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestInt;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestPositiveIntType;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -275,5 +277,13 @@ final class AbstractIntTypeTest extends TestCase
 				'string' => ((string)PHP_INT_MIN) . '1',
 			],
 		];
+	}
+
+	public function testGuardMethodIsCalledOnConstruction() : void
+	{
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Int cannot be negative.' );
+
+		new TestPositiveIntType( -5 );
 	}
 }
