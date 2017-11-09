@@ -3,8 +3,10 @@
 namespace Fortuneglobe\Types\Tests\Unit;
 
 use Fortuneglobe\Types\AbstractStringType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestNonEmptyStringType;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestString;
 use PHPUnit\Framework\TestCase;
 
@@ -72,6 +74,10 @@ final class AbstractStringTypeTest extends TestCase
 	{
 		$extendedStringIdentifier = new class('foobar') extends AbstractStringType
 		{
+			protected function guardValueIsValid( string $value )
+			{
+				// TODO: Implement guardValueIsValid() method.
+			}
 		};
 
 		return [
@@ -95,6 +101,10 @@ final class AbstractStringTypeTest extends TestCase
 				'typeA' => $extendedStringIdentifier,
 				'typeB' => new class('Foobar') extends AbstractStringType
 				{
+					protected function guardValueIsValid( string $value )
+					{
+						// TODO: Implement guardValueIsValid() method.
+					}
 				},
 			],
 		];
@@ -166,5 +176,13 @@ final class AbstractStringTypeTest extends TestCase
 				'expectedJson' => '".8"',
 			],
 		];
+	}
+
+	public function testGuardMethodIsCalledOnConstruction() : void
+	{
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'String cannot be empty.' );
+
+		new TestNonEmptyStringType( '' );
 	}
 }

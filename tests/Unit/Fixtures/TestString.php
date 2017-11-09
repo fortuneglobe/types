@@ -13,5 +13,8 @@ use Fortuneglobe\Types\AbstractStringType;
  */
 final class TestString extends AbstractStringType
 {
-
+	protected function guardValueIsValid( string $value )
+	{
+		// TODO: Implement guardValueIsValid() method.
+	}
 }

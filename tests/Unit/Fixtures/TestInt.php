@@ -13,5 +13,8 @@ use Fortuneglobe\Types\AbstractIntType;
  */
 final class TestInt extends AbstractIntType
 {
-
+	protected function guardValueIsValid( int $value )
+	{
+		// TODO: Implement guardValueIsValid() method.
+	}
 }

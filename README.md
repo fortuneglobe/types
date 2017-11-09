@@ -19,10 +19,10 @@ composer require fortuneglobe/types
 
 ### Available base types
 
-* StringType
-* FloatType
-* IntType
-* UuidType (extends StringType)
+* AbstractStringType
+* AbstractFloatType
+* AbstractIntType
+* AbstractUuidType (extends AbstractStringType)
 
 ### Possible exceptions
 
@@ -30,21 +30,30 @@ composer require fortuneglobe/types
 \Fortuneglobe\Types\Exceptions\InvalidArgumentException
                                |- InvalidFloatValueException
                                |- InvalidIntValueException
-                               |- InvalidStringValueException
-                               `- InvalidFloatValueException
+                               `- InvalidUuid4ValueException
 ```
   
 
-### StringType
+### AbstractStringType
 
 ```php
 <?php declare(strict_types=1);
 
 namespace YourVendor\YourProject;
 
-use Fortuneglobe\Types\StringType;
+use Fortuneglobe\Types\AbstractStringType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 
-final class UserId extends StringType {}
+final class UserId extends AbstractStringType 
+{
+    protected function guardValueIsValid( string $value ) 
+    {
+        if (preg_match('#\s#', $value))
+        {
+            throw new InvalidArgumentException('User IDs cannot contain whitespace characters.');   
+        }
+    }
+}
 
 $userId = new UserId('fortuneglobe-user-001');
 
@@ -63,16 +72,26 @@ fortuneglobe-user-001
 "fortuneglobe-user-001"
 ```
 
-### FloatType
+### AbstractFloatType
 
 ```php
 <?php declare(strict_types=1);
 
 namespace YourVendor\YourProject;
 
-use Fortuneglobe\Types\FloatType;
+use Fortuneglobe\Types\AbstractFloatType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 
-final class DegreeCelsuis extends FloatType {}
+final class DegreeCelsius extends AbstractFloatType 
+{
+    protected function guardValueIsValid( float $value ) 
+    {
+        if (-273.15 > $value)
+        {
+            throw new InvalidArgumentException('Degree Celsius cannot be below absolute zero.');
+        }
+    }	
+}
 
 $temperature = new DegreeCelsuis(22.5);
 
@@ -99,16 +118,26 @@ $temperature = DegreeCelsuis::fromString('22.5');
 
 This call throws an `Fortuneglobe\Types\Exceptions\InvalidFloatValueException` if the provided string is not a float number.
 
-### IntType
+### AbstractIntType
 
 ```php
 <?php declare(strict_types=1);
 
 namespace YourVendor\YourProject;
 
-use Fortuneglobe\Types\IntType;
+use Fortuneglobe\Types\AbstractIntType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 
-final class Version extends IntType {}
+final class Version extends AbstractIntType 
+{
+    protected function guardValueIsValid( int $value ) 
+    {
+        if (0 > $value)
+        {
+            throw new InvalidArgumentException('Version number cannot be negative.');    
+        }
+    }	
+}
 
 $version = new Version(42);
 
@@ -136,16 +165,18 @@ $version = Version::fromString('42');
 This call throws an `Fortuneglobe\Types\Exceptions\InvalidIntValueException` if the provided string is not an integer number.
 
 
-### UuidType
+### AbstractUuid4Type
+
+This basic type only handles UUID v4 strings.
 
 ```php
 <?php declare(strict_types=1);
 
 namespace YourVendor\YourProject;
 
-use Fortuneglobe\Types\UuidType;
+use Fortuneglobe\Types\AbstractUuid4Type;
 
-final class OrderId extends UuidType {}
+final class OrderId extends AbstractUuid4Type {}
 
 $orderId = OrderId::generate();
 
