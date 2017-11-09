@@ -5,6 +5,8 @@
 Basic type classes wrapping scalar values to create types in applications.
 These classes are declared `abstract` and must be extended by appropriate named type classes in your application.
 
+This library is intended to be used in integration projects only, not in other libraries to avoid version conflicts.
+
 ## Requirements
 
 * PHP >= 7.1
