@@ -15,7 +15,7 @@ use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
  */
 final class TestPositiveFloatType extends AbstractFloatType
 {
-	protected function guardValueIsValid( float $value )
+	protected function guardValueIsValid( float $value ) : void
 	{
 		if ( $value < 0 )
 		{

@@ -20,7 +20,7 @@ abstract class AbstractStringType extends AbstractType implements RepresentsStri
 		$this->value = $value;
 	}
 
-	abstract protected function guardValueIsValid( string $value );
+	abstract protected function guardValueIsValid( string $value ) : void;
 
 	public function jsonSerialize() : string
 	{

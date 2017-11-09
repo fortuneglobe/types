@@ -15,7 +15,7 @@ use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
  */
 final class TestPositiveIntType extends AbstractIntType
 {
-	protected function guardValueIsValid( int $value )
+	protected function guardValueIsValid( int $value ) : void
 	{
 		if ( $value < 0 )
 		{

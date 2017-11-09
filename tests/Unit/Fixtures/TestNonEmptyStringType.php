@@ -15,7 +15,7 @@ use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
  */
 final class TestNonEmptyStringType extends AbstractStringType
 {
-	protected function guardValueIsValid( string $value )
+	protected function guardValueIsValid( string $value ) : void
 	{
 		if ( empty( $value ) )
 		{

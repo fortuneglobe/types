@@ -12,7 +12,7 @@ use Fortuneglobe\Types\Tests\Unit\Fixtures\TestPositiveIntType;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IntTypeTest
+ * Class AbstractIntTypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
 final class AbstractIntTypeTest extends TestCase
@@ -99,7 +99,7 @@ final class AbstractIntTypeTest extends TestCase
 				'typeA' => new TestInt( 0 ),
 				'typeB' => new class(0) extends AbstractIntType
 				{
-					protected function guardValueIsValid( int $value )
+					protected function guardValueIsValid( int $value ) : void
 					{
 						// TODO: Implement guardValueIsValid() method.
 					}

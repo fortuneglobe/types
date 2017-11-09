@@ -21,7 +21,7 @@ abstract class AbstractIntType extends AbstractType implements RepresentsIntValu
 		$this->value = $value;
 	}
 
-	abstract protected function guardValueIsValid( int $value );
+	abstract protected function guardValueIsValid( int $value ) : void;
 
 	public function toString() : string
 	{
