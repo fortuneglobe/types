@@ -3,10 +3,12 @@
 namespace Fortuneglobe\Types\Tests\Unit;
 
 use Fortuneglobe\Types\AbstractFloatType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 use Fortuneglobe\Types\Exceptions\InvalidFloatValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestFloat;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestPositiveFloatType;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -301,5 +303,13 @@ final class AbstractFloatTypeTest extends TestCase
 				'string' => '-1,33',
 			],
 		];
+	}
+
+	public function testGuardMethodIsCalledOnConstruction() : void
+	{
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Float cannot be negative.' );
+
+		new TestPositiveFloatType( -1.5 );
 	}
 }
