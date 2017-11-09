@@ -2,9 +2,9 @@
 
 namespace Fortuneglobe\Types\Tests\Unit;
 
+use Fortuneglobe\Types\AbstractStringType;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
-use Fortuneglobe\Types\StringType;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestString;
 use PHPUnit\Framework\TestCase;
 
@@ -12,14 +12,14 @@ use PHPUnit\Framework\TestCase;
  * Class IdentifierTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
-final class StringTypeTest extends TestCase
+final class AbstractStringTypeTest extends TestCase
 {
 	public function testCanConstructStringIdentifier()
 	{
 		$type = new TestString( 'foobar' );
 		$this->assertInstanceOf( RepresentsScalarValue::class, $type );
 		$this->assertInstanceOf( RepresentsStringValue::class, $type );
-		$this->assertInstanceOf( StringType::class, $type );
+		$this->assertInstanceOf( AbstractStringType::class, $type );
 	}
 
 	/**
@@ -70,7 +70,7 @@ final class StringTypeTest extends TestCase
 
 	public function notEqualStringsProvider()
 	{
-		$extendedStringIdentifier = new class('foobar') extends StringType
+		$extendedStringIdentifier = new class('foobar') extends AbstractStringType
 		{
 		};
 
@@ -93,7 +93,7 @@ final class StringTypeTest extends TestCase
 			],
 			[
 				'typeA' => $extendedStringIdentifier,
-				'typeB' => new class('Foobar') extends StringType
+				'typeB' => new class('Foobar') extends AbstractStringType
 				{
 				},
 			],

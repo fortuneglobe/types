@@ -6,10 +6,10 @@ use Fortuneglobe\Types\Exceptions\InvalidIntValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsIntValue;
 
 /**
- * Class IntType
+ * Class AbstractIntType
  * @package Fortuneglobe\Types
  */
-abstract class IntType extends AbstractType implements RepresentsIntValue
+abstract class AbstractIntType extends AbstractType implements RepresentsIntValue
 {
 	/** @var int */
 	private $value;

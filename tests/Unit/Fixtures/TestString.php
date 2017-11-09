@@ -5,13 +5,13 @@
 
 namespace Fortuneglobe\Types\Tests\Unit\Fixtures;
 
-use Fortuneglobe\Types\StringType;
+use Fortuneglobe\Types\AbstractStringType;
 
 /**
  * Class TestString
  * @package Fortuneglobe\Types\Tests\Unit\Fixtures
  */
-final class TestString extends StringType
+final class TestString extends AbstractStringType
 {
 
 }

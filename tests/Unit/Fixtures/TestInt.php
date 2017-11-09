@@ -5,13 +5,13 @@
 
 namespace Fortuneglobe\Types\Tests\Unit\Fixtures;
 
-use Fortuneglobe\Types\IntType;
+use Fortuneglobe\Types\AbstractIntType;
 
 /**
  * Class TestInt
  * @package Fortuneglobe\Types\Tests\Unit\Fixtures
  */
-final class TestInt extends IntType
+final class TestInt extends AbstractIntType
 {
 
 }

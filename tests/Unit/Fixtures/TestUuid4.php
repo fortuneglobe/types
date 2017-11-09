@@ -5,13 +5,13 @@
 
 namespace Fortuneglobe\Types\Tests\Unit\Fixtures;
 
-use Fortuneglobe\Types\UuidType;
+use Fortuneglobe\Types\AbstractUuid4Type;
 
 /**
- * Class TestUuid
+ * Class TestUuid4
  * @package Fortuneglobe\Types\Tests\Unit\Fixtures
  */
-final class TestUuid extends UuidType
+final class TestUuid4 extends AbstractUuid4Type
 {
 
 }

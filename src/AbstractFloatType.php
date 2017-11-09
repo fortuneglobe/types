@@ -6,10 +6,10 @@ use Fortuneglobe\Types\Exceptions\InvalidFloatValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
 
 /**
- * Class FloatType
+ * Class AbstractFloatType
  * @package Fortuneglobe\Types
  */
-abstract class FloatType extends AbstractType implements RepresentsFloatValue
+abstract class AbstractFloatType extends AbstractType implements RepresentsFloatValue
 {
 	/** @var float */
 	private $value;
