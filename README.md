@@ -1,5 +1,10 @@
 # fortuneglobe/types
 
+[![Build Status branch master](https://circleci.com/gh/fortuneglobe/types/tree/master.svg?style=svg&circle-token=587e804d51907ff65998555361c338c32764c381)](https://circleci.com/gh/fortuneglobe/types/tree/master)
+[![Build Status branch development](https://circleci.com/gh/fortuneglobe/types/tree/development.svg?style=svg&circle-token=587e804d51907ff65998555361c338c32764c381)](https://circleci.com/gh/fortuneglobe/types/tree/development)
+
+[![Latest release](http://github-release-version.herokuapp.com/github/fortuneglobe/types/release.svg?style=flat)](https://github.com/fortuneglobe/types/releases/latest)
+
 ## Description
 
 Basic type classes wrapping scalar values to create types in applications.
