@@ -5,18 +5,22 @@ namespace Fortuneglobe\Types;
 use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
 
 /**
- * Interface StringType
+ * Interface AbstractStringType
  * @package Fortuneglobe\Types
  */
-abstract class StringType extends AbstractType implements RepresentsStringValue
+abstract class AbstractStringType extends AbstractType implements RepresentsStringValue
 {
 	/** @var string */
 	private $value;
 
 	public function __construct( string $value )
 	{
+		$this->guardValueIsValid( $value );
+
 		$this->value = $value;
 	}
+
+	abstract protected function guardValueIsValid( string $value ) : void;
 
 	public function jsonSerialize() : string
 	{

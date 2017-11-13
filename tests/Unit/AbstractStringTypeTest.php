@@ -2,24 +2,26 @@
 
 namespace Fortuneglobe\Types\Tests\Unit;
 
+use Fortuneglobe\Types\AbstractStringType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
-use Fortuneglobe\Types\StringType;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestNonEmptyStringType;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestString;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IdentifierTest
+ * Class AbstractStringTypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
-final class StringTypeTest extends TestCase
+final class AbstractStringTypeTest extends TestCase
 {
 	public function testCanConstructStringIdentifier()
 	{
 		$type = new TestString( 'foobar' );
 		$this->assertInstanceOf( RepresentsScalarValue::class, $type );
 		$this->assertInstanceOf( RepresentsStringValue::class, $type );
-		$this->assertInstanceOf( StringType::class, $type );
+		$this->assertInstanceOf( AbstractStringType::class, $type );
 	}
 
 	/**
@@ -70,8 +72,12 @@ final class StringTypeTest extends TestCase
 
 	public function notEqualStringsProvider()
 	{
-		$extendedStringIdentifier = new class('foobar') extends StringType
+		$extendedStringIdentifier = new class('foobar') extends AbstractStringType
 		{
+			protected function guardValueIsValid( string $value ) : void
+			{
+				// TODO: Implement guardValueIsValid() method.
+			}
 		};
 
 		return [
@@ -93,8 +99,12 @@ final class StringTypeTest extends TestCase
 			],
 			[
 				'typeA' => $extendedStringIdentifier,
-				'typeB' => new class('Foobar') extends StringType
+				'typeB' => new class('Foobar') extends AbstractStringType
 				{
+					protected function guardValueIsValid( string $value ) : void
+					{
+						// TODO: Implement guardValueIsValid() method.
+					}
 				},
 			],
 		];
@@ -166,5 +176,13 @@ final class StringTypeTest extends TestCase
 				'expectedJson' => '".8"',
 			],
 		];
+	}
+
+	public function testGuardMethodIsCalledOnConstruction() : void
+	{
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'String cannot be empty.' );
+
+		new TestNonEmptyStringType( '' );
 	}
 }

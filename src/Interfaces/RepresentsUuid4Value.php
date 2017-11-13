@@ -6,7 +6,7 @@ namespace Fortuneglobe\Types\Interfaces;
  * Interface RepresentsUuidValue
  * @package Fortuneglobe\Types\Interfaces
  */
-interface RepresentsUuidValue extends RepresentsStringValue
+interface RepresentsUuid4Value extends RepresentsStringValue
 {
-	public static function generate() : RepresentsUuidValue;
+	public static function generate() : RepresentsUuid4Value;
 }

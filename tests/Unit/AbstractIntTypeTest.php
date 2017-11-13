@@ -2,26 +2,28 @@
 
 namespace Fortuneglobe\Types\Tests\Unit;
 
+use Fortuneglobe\Types\AbstractIntType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 use Fortuneglobe\Types\Exceptions\InvalidIntValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsIntValue;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
-use Fortuneglobe\Types\IntType;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestInt;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestPositiveIntType;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IntTypeTest
+ * Class AbstractIntTypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
-final class IntTypeTest extends TestCase
+final class AbstractIntTypeTest extends TestCase
 {
-	public function testCanConstuctIntType() : void
+	public function testCanConstructIntType() : void
 	{
 		$type = new TestInt( 1234 );
 
 		$this->assertInstanceOf( RepresentsScalarValue::class, $type );
 		$this->assertInstanceOf( RepresentsIntValue::class, $type );
-		$this->assertInstanceOf( IntType::class, $type );
+		$this->assertInstanceOf( AbstractIntType::class, $type );
 	}
 
 	/**
@@ -95,8 +97,12 @@ final class IntTypeTest extends TestCase
 			],
 			[
 				'typeA' => new TestInt( 0 ),
-				'typeB' => new class(0) extends IntType
+				'typeB' => new class(0) extends AbstractIntType
 				{
+					protected function guardValueIsValid( int $value ) : void
+					{
+						// TODO: Implement guardValueIsValid() method.
+					}
 				},
 			],
 		];
@@ -271,5 +277,13 @@ final class IntTypeTest extends TestCase
 				'string' => ((string)PHP_INT_MIN) . '1',
 			],
 		];
+	}
+
+	public function testGuardMethodIsCalledOnConstruction() : void
+	{
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Int cannot be negative.' );
+
+		new TestPositiveIntType( -5 );
 	}
 }

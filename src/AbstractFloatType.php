@@ -6,18 +6,22 @@ use Fortuneglobe\Types\Exceptions\InvalidFloatValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
 
 /**
- * Class FloatType
+ * Class AbstractFloatType
  * @package Fortuneglobe\Types
  */
-abstract class FloatType extends AbstractType implements RepresentsFloatValue
+abstract class AbstractFloatType extends AbstractType implements RepresentsFloatValue
 {
 	/** @var float */
 	private $value;
 
 	public function __construct( float $value )
 	{
+		$this->guardValueIsValid( $value );
+
 		$this->value = $value;
 	}
+
+	abstract protected function guardValueIsValid( float $value ) : void;
 
 	public function toString() : string
 	{

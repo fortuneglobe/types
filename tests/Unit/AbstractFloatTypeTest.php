@@ -2,18 +2,20 @@
 
 namespace Fortuneglobe\Types\Tests\Unit;
 
+use Fortuneglobe\Types\AbstractFloatType;
+use Fortuneglobe\Types\Exceptions\InvalidArgumentException;
 use Fortuneglobe\Types\Exceptions\InvalidFloatValueException;
-use Fortuneglobe\Types\FloatType;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
 use Fortuneglobe\Types\Tests\Unit\Fixtures\TestFloat;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestPositiveFloatType;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class FloatTypeTest
+ * Class AbstractFloatTypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
-final class FloatTypeTest extends TestCase
+final class AbstractFloatTypeTest extends TestCase
 {
 	public function testCanConstructFloatType() : void
 	{
@@ -21,7 +23,7 @@ final class FloatTypeTest extends TestCase
 
 		$this->assertInstanceOf( RepresentsScalarValue::class, $type );
 		$this->assertInstanceOf( RepresentsFloatValue::class, $type );
-		$this->assertInstanceOf( FloatType::class, $type );
+		$this->assertInstanceOf( AbstractFloatType::class, $type );
 	}
 
 	/**
@@ -87,8 +89,12 @@ final class FloatTypeTest extends TestCase
 			],
 			[
 				'typeA' => new TestFloat( -1.5 ),
-				'typeB' => new class(-1.5) extends FloatType
+				'typeB' => new class(-1.5) extends AbstractFloatType
 				{
+					protected function guardValueIsValid( float $value ) : void
+					{
+						// TODO: Implement guardValueIsValid() method.
+					}
 				},
 			],
 		];
@@ -297,5 +303,13 @@ final class FloatTypeTest extends TestCase
 				'string' => '-1,33',
 			],
 		];
+	}
+
+	public function testGuardMethodIsCalledOnConstruction() : void
+	{
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( 'Float cannot be negative.' );
+
+		new TestPositiveFloatType( -1.5 );
 	}
 }

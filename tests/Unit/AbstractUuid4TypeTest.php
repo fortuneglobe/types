@@ -2,26 +2,26 @@
 
 namespace Fortuneglobe\Types\Tests\Unit;
 
-use Fortuneglobe\Types\Exceptions\InvalidUuidValueException;
+use Fortuneglobe\Types\AbstractUuid4Type;
+use Fortuneglobe\Types\Exceptions\InvalidUuid4ValueException;
 use Fortuneglobe\Types\Interfaces\RepresentsScalarValue;
-use Fortuneglobe\Types\Interfaces\RepresentsUuidValue;
-use Fortuneglobe\Types\Tests\Unit\Fixtures\TestUuid;
-use Fortuneglobe\Types\UuidType;
+use Fortuneglobe\Types\Interfaces\RepresentsUuid4Value;
+use Fortuneglobe\Types\Tests\Unit\Fixtures\TestUuid4;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class UuidTypeTest
+ * Class AbstractUuid4TypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
-final class UuidTypeTest extends TestCase
+final class AbstractUuid4TypeTest extends TestCase
 {
 	public function testCanGenerateUuidType() : void
 	{
-		$uuid = TestUuid::generate();
+		$uuid = TestUuid4::generate();
 
 		$this->assertInstanceOf( RepresentsScalarValue::class, $uuid );
-		$this->assertInstanceOf( RepresentsUuidValue::class, $uuid );
-		$this->assertInstanceOf( UuidType::class, $uuid );
+		$this->assertInstanceOf( RepresentsUuid4Value::class, $uuid );
+		$this->assertInstanceOf( AbstractUuid4Type::class, $uuid );
 	}
 
 	/**
@@ -31,11 +31,11 @@ final class UuidTypeTest extends TestCase
 	 */
 	public function testCanConstructUuidType( string $uuidString )
 	{
-		$uuid = new TestUuid( $uuidString );
+		$uuid = new TestUuid4( $uuidString );
 
 		$this->assertInstanceOf( RepresentsScalarValue::class, $uuid );
-		$this->assertInstanceOf( RepresentsUuidValue::class, $uuid );
-		$this->assertInstanceOf( UuidType::class, $uuid );
+		$this->assertInstanceOf( RepresentsUuid4Value::class, $uuid );
+		$this->assertInstanceOf( AbstractUuid4Type::class, $uuid );
 	}
 
 	public function uuidStringProvider()
@@ -48,18 +48,18 @@ final class UuidTypeTest extends TestCase
 				'uuidString' => '12345678-1234-1234-1234-123456789012',
 			],
 			[
-				'uuidString' => TestUuid::generate()->toString(),
+				'uuidString' => TestUuid4::generate()->toString(),
 			],
 		];
 	}
 
 	/**
-	 * @param RepresentsUuidValue $UuidTypeA
-	 * @param RepresentsUuidValue $UuidTypeB
+	 * @param RepresentsUuid4Value $UuidTypeA
+	 * @param RepresentsUuid4Value $UuidTypeB
 	 *
 	 * @dataProvider equalUuidsProvider
 	 */
-	public function testCanCheckForEuqality( RepresentsUuidValue $UuidTypeA, RepresentsUuidValue $UuidTypeB )
+	public function testCanCheckForEuqality( RepresentsUuid4Value $UuidTypeA, RepresentsUuid4Value $UuidTypeB )
 	{
 		$this->assertTrue( $UuidTypeA->equals( $UuidTypeB ) );
 		$this->assertTrue( $UuidTypeB->equals( $UuidTypeA ) );
@@ -69,21 +69,21 @@ final class UuidTypeTest extends TestCase
 	{
 		return [
 			[
-				'UuidTypeA' => new TestUuid( '12345678-1234-1234-1234-123456789012' ),
-				'UuidTypeB' => new TestUuid( '12345678-1234-1234-1234-123456789012' ),
+				'UuidTypeA' => new TestUuid4( '12345678-1234-1234-1234-123456789012' ),
+				'UuidTypeB' => new TestUuid4( '12345678-1234-1234-1234-123456789012' ),
 			],
 		];
 	}
 
 	/**
-	 * @param RepresentsUuidValue $UuidTypeA
-	 * @param RepresentsUuidValue $UuidTypeB
+	 * @param RepresentsUuid4Value $UuidTypeA
+	 * @param RepresentsUuid4Value $UuidTypeB
 	 *
 	 * @dataProvider notEqualUuidsProvider
 	 */
 	public function testCanCheckThatUuidTypesAreNotEqual(
-		RepresentsUuidValue $UuidTypeA,
-		RepresentsUuidValue $UuidTypeB
+		RepresentsUuid4Value $UuidTypeA,
+		RepresentsUuid4Value $UuidTypeB
 	)
 	{
 		$this->assertFalse( $UuidTypeA->equals( $UuidTypeB ) );
@@ -94,19 +94,19 @@ final class UuidTypeTest extends TestCase
 	{
 		$uuidStringA      = '12345678-1234-1234-1234-123456789012';
 		$uuidStringB      = '12345678-1234-1234-1234-210987654321';
-		$extendedUuidType = new class($uuidStringA) extends UuidType
+		$extendedUuidType = new class($uuidStringA) extends AbstractUuid4Type
 		{
 		};
 
 		return [
 			# Different values
 			[
-				'UuidTypeA' => new TestUuid( $uuidStringA ),
-				'UuidTypeB' => new TestUuid( $uuidStringB ),
+				'UuidTypeA' => new TestUuid4( $uuidStringA ),
+				'UuidTypeB' => new TestUuid4( $uuidStringB ),
 			],
 			# Different objects
 			[
-				'UuidTypeA' => new TestUuid( $uuidStringA ),
+				'UuidTypeA' => new TestUuid4( $uuidStringA ),
 				'UuidTypeB' => $extendedUuidType,
 			],
 		];
@@ -115,29 +115,29 @@ final class UuidTypeTest extends TestCase
 	public function testCanRepresentUuidTypeAsString()
 	{
 		$uuidString = '12345678-1234-1234-1234-123456789012';
-		$uuid       = new TestUuid( $uuidString );
+		$uuid       = new TestUuid4( $uuidString );
 		$this->assertSame( $uuidString, $uuid->toString() );
 		$this->assertSame( $uuidString, (string)$uuid );
 	}
 
 	/**
-	 * @param RepresentsUuidValue $uuidentifier
-	 * @param string              $expectedJson
+	 * @param RepresentsUuid4Value $uuidentifier
+	 * @param string               $expectedJson
 	 *
 	 * @dataProvider uuidToJsonProvider
 	 */
-	public function testCanSerializeUuidTypeAsJson( RepresentsUuidValue $uuidentifier, string $expectedJson )
+	public function testCanSerializeUuidTypeAsJson( RepresentsUuid4Value $uuidentifier, string $expectedJson )
 	{
 		$this->assertSame( $expectedJson, json_encode( $uuidentifier ) );
 	}
 
 	public function uuidToJsonProvider()
 	{
-		$generatedUuidentifier = TestUuid::generate();
+		$generatedUuidentifier = TestUuid4::generate();
 
 		return [
 			[
-				'identifier'   => new TestUuid( '12345678-1234-1234-1234-123456789012' ),
+				'identifier'   => new TestUuid4( '12345678-1234-1234-1234-123456789012' ),
 				'expectedJson' => '"12345678-1234-1234-1234-123456789012"',
 			],
 			[
@@ -151,11 +151,11 @@ final class UuidTypeTest extends TestCase
 	{
 		try
 		{
-			new TestUuid( 'foobar' );
+			new TestUuid4( 'foobar' );
 		}
-		catch ( InvalidUuidValueException $ex )
+		catch ( InvalidUuid4ValueException $ex )
 		{
-			$this->assertEquals( $ex->getUuid(), 'foobar' );
+			$this->assertEquals( $ex->getUuid4(), 'foobar' );
 			$this->assertEquals( $ex->getMessage(), 'Invalid UUID provided: foobar' );
 		}
 	}
