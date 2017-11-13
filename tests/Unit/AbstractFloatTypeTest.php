@@ -12,7 +12,7 @@ use Fortuneglobe\Types\Tests\Unit\Fixtures\TestPositiveFloatType;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class FloatTypeTest
+ * Class AbstractFloatTypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
 final class AbstractFloatTypeTest extends TestCase
@@ -91,7 +91,7 @@ final class AbstractFloatTypeTest extends TestCase
 				'typeA' => new TestFloat( -1.5 ),
 				'typeB' => new class(-1.5) extends AbstractFloatType
 				{
-					protected function guardValueIsValid( float $value )
+					protected function guardValueIsValid( float $value ) : void
 					{
 						// TODO: Implement guardValueIsValid() method.
 					}

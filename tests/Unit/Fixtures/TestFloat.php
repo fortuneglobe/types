@@ -13,7 +13,7 @@ use Fortuneglobe\Types\AbstractFloatType;
  */
 final class TestFloat extends AbstractFloatType
 {
-	protected function guardValueIsValid( float $value )
+	protected function guardValueIsValid( float $value ) : void
 	{
 		// TODO: Implement guardValueIsValid() method.
 	}

@@ -11,7 +11,7 @@ use Fortuneglobe\Types\Tests\Unit\Fixtures\TestString;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IdentifierTest
+ * Class AbstractStringTypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
 final class AbstractStringTypeTest extends TestCase
@@ -74,7 +74,7 @@ final class AbstractStringTypeTest extends TestCase
 	{
 		$extendedStringIdentifier = new class('foobar') extends AbstractStringType
 		{
-			protected function guardValueIsValid( string $value )
+			protected function guardValueIsValid( string $value ) : void
 			{
 				// TODO: Implement guardValueIsValid() method.
 			}
@@ -101,7 +101,7 @@ final class AbstractStringTypeTest extends TestCase
 				'typeA' => $extendedStringIdentifier,
 				'typeB' => new class('Foobar') extends AbstractStringType
 				{
-					protected function guardValueIsValid( string $value )
+					protected function guardValueIsValid( string $value ) : void
 					{
 						// TODO: Implement guardValueIsValid() method.
 					}

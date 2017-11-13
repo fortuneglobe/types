@@ -10,7 +10,7 @@ use Fortuneglobe\Types\Tests\Unit\Fixtures\TestUuid4;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class UuidTypeTest
+ * Class AbstractUuid4TypeTest
  * @package Fortuneglobe\Types\Tests\Unit
  */
 final class AbstractUuid4TypeTest extends TestCase

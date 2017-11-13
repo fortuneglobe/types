@@ -21,7 +21,7 @@ abstract class AbstractFloatType extends AbstractType implements RepresentsFloat
 		$this->value = $value;
 	}
 
-	abstract protected function guardValueIsValid( float $value );
+	abstract protected function guardValueIsValid( float $value ) : void;
 
 	public function toString() : string
 	{
