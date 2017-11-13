@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [1.0.0] - YYYY-MM-DD
+## [1.0.0] - 2017-11-13
 
 ### Changed
 
@@ -18,6 +18,7 @@
 
 * Initial release
 
+[1.0.0]: https://github.com/fortuneglobe/types/compare/v0.9.1...v1.0.0
 [0.9.1]: https://github.com/fortuneglobe/types/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/fortuneglobe/types/tags/v0.9.0
 
