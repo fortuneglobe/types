@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2.0.0] - 2021-08-05
+
+### Changed
+
+* Replace all Types with new Types
+
+---
+
+[2.0.0]: https://github.com/fortuneglobe/types/compare/1.0.0...2.0.0
+
 ## [1.0.0] - 2017-11-13
 
 ### Changed

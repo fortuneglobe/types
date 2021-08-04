@@ -2,33 +2,54 @@
 
 namespace Fortuneglobe\Types;
 
-use Fortuneglobe\Types\Interfaces\RepresentsStringValue;
+use Fortuneglobe\Types\Exceptions\ValidationException;
+use Fortuneglobe\Types\Interfaces\RepresentsStringType;
+use Fortuneglobe\Types\Traits\RepresentingStringType;
 
-/**
- * Interface AbstractStringType
- * @package Fortuneglobe\Types
- */
-abstract class AbstractStringType extends AbstractType implements RepresentsStringValue
+abstract class AbstractStringType implements RepresentsStringType
 {
-	/** @var string */
-	private $value;
+	use RepresentingStringType;
 
 	public function __construct( string $value )
 	{
-		$this->guardValueIsValid( $value );
+		$this->validate( $value );
 
 		$this->value = $value;
 	}
 
-	abstract protected function guardValueIsValid( string $value ) : void;
+	abstract public function isValid( string $value ): bool;
 
-	public function jsonSerialize() : string
+	/**
+	 * @param RepresentsStringType $type
+	 *
+	 * @return RepresentsStringType|static
+	 */
+	public static function fromStringType( RepresentsStringType $type ): RepresentsStringType
 	{
-		return $this->value;
+		return new static( $type->toString() );
 	}
 
-	public function toString() : string
+	public function equals( RepresentsStringType $type ): bool
 	{
-		return $this->value;
+		return get_class( $this ) === get_class( $type ) && $this->equalsValue( $type );
+	}
+
+	public function equalsValue( RepresentsStringType $type ): bool
+	{
+		return $this->toString() === $type->toString();
+	}
+
+	protected function validate( string $value ): void
+	{
+		if ( !$this->isValid( $value ) )
+		{
+			throw new ValidationException(
+				sprintf(
+					'Invalid %s: %s',
+					(new \ReflectionClass( $this ))->getShortName(),
+					$value
+				)
+			);
+		}
 	}
 }
