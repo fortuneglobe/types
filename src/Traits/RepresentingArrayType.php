@@ -4,15 +4,80 @@ namespace Fortuneglobe\Types\Traits;
 
 trait RepresentingArrayType
 {
-	private array $value;
+	private array $genericArray;
 
-	public function __construct( array $value )
+	public function __construct( array $genericArray = [] )
 	{
-		$this->value = $value;
+		$this->genericArray = $genericArray;
 	}
 
 	public function toArray(): array
 	{
-		return $this->value;
+		return $this->genericArray;
+	}
+
+	public function current()
+	{
+		return current( $this->genericArray );
+	}
+
+	public function next(): void
+	{
+		next( $this->genericArray );
+	}
+
+	public function key()
+	{
+		return key( $this->genericArray );
+	}
+
+	public function valid(): bool
+	{
+		return isset( $this->genericArray[ $this->key() ] );
+	}
+
+	public function rewind(): void
+	{
+		reset( $this->genericArray );
+	}
+
+	public function offsetExists( $offset ): bool
+	{
+		return isset( $this->genericArray[ (string)$offset ] );
+	}
+
+	public function offsetGet( $offset )
+	{
+		if ( !isset( $this->genericArray[ (string)$offset ] ) )
+		{
+			throw new \LogicException( 'Key not found in array: ' . $offset );
+		}
+
+		return $this->genericArray[ (string)$offset ];
+	}
+
+	public function offsetSet( $offset, $value ): void
+	{
+		$this->genericArray[ (string)$offset ] = $value;
+	}
+
+	public function offsetUnset( $offset )
+	{
+		unset( $this->genericArray[ (string)$offset ] );
+	}
+
+	public function count(): int
+	{
+		return count( $this->genericArray );
+	}
+
+	public function toJson(): string
+	{
+		return json_encode( $this, JSON_THROW_ON_ERROR );
+	}
+
+	public function jsonSerialize(): array
+	{
+		return $this->genericArray;
 	}
 }

@@ -4,7 +4,7 @@
 
 ### Changed
 
-* Replace all Types with new Types
+* Replace all types
 
 ---
 
