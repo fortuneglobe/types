@@ -61,3 +61,17 @@ $difference    = $quantityOfSecondItem->subtract( $quantityOfFirstItem ); //3
 
 $incrementedQuantity = $quantityOfFirstItem->increment( 10 ); //12
 ````
+
+````PHP
+class FulfillmentId
+{
+    use RepresentingUuid4;
+}
+
+$fulfillmentId        = FulfillmentId::generate(); //some UUID4
+$anotherFulfillmentId = FulfillmentId::fromString( '9b856c0e-610a-4e38-9ea6-b9ac63cfb521' ); 
+````
+
+````PHP
+$uuid4 = (string)Uuid4::generate();
+````
