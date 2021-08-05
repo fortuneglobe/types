@@ -15,7 +15,6 @@
 		"ext-json": "*"
 	},
 	"require-dev": {
-		"roave/security-advisories": "dev-latest",
 		"tm/tooly-composer-script": "^1.4.1"
 	},
 	"autoload": {

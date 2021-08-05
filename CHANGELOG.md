@@ -2,9 +2,7 @@
 
 ## [2.0.0] - 2021-08-05
 
-### Changed
-
-* Replace all types
+It's a rework. All previous classes were removed or replaced.
 
 ---
 
