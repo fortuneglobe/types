@@ -12,6 +12,8 @@ Die abstrakten Klassen sind immutable.
 
 ## Anwendungsbeispiele
 
+### Strings
+
 ````PHP
 class ClientId extends AbstractStringType
 {
@@ -44,6 +46,8 @@ $newClientId->toString(); //zalando
 (string)$newClientId; //zalando
 ````
 
+### Integers
+
 ````PHP
 class Quantity extends AbstractStringType
 {
@@ -62,6 +66,8 @@ $difference    = $quantityOfSecondItem->subtract( $quantityOfFirstItem ); //3
 $incrementedQuantity = $quantityOfFirstItem->increment( 10 ); //12
 ````
 
+### Eigene Uuid4-Typen
+
 ````PHP
 class FulfillmentId
 {
@@ -71,6 +77,8 @@ class FulfillmentId
 $fulfillmentId        = FulfillmentId::generate(); //some UUID4
 $anotherFulfillmentId = FulfillmentId::fromString( '9b856c0e-610a-4e38-9ea6-b9ac63cfb521' ); 
 ````
+
+### Uuid4
 
 ````PHP
 $uuid4 = (string)Uuid4::generate();
