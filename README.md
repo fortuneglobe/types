@@ -38,7 +38,10 @@ $clientId->equals( $yetAnotherClientId ) //false
 $clientId->equals( $channelId ) //false
 $clientId->equalsValue( $channelId ) //true
 
-$newClientId = ClientId::fromStringType( $anotherChannelId ); //zalando
+$newClientId = ClientId::fromStringType( $anotherChannelId );
+get_class( $newClientId ); //ClientId
+$newClientId->toString(); //zalando
+(string)$newClientId; //zalando
 ````
 
 ````PHP
