@@ -2,49 +2,49 @@
 
 namespace Fortuneglobe\Types;
 
-use Fortuneglobe\Types\Exceptions\InvalidFloatValueException;
-use Fortuneglobe\Types\Interfaces\RepresentsFloatValue;
+use Fortuneglobe\Types\Exceptions\ValidationException;
+use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
+use Fortuneglobe\Types\Traits\RepresentingFloatType;
 
-/**
- * Class AbstractFloatType
- * @package Fortuneglobe\Types
- */
-abstract class AbstractFloatType extends AbstractType implements RepresentsFloatValue
+abstract class AbstractFloatType implements RepresentsFloatType
 {
-	/** @var float */
-	private $value;
+	use RepresentingFloatType;
 
 	public function __construct( float $value )
 	{
-		$this->guardValueIsValid( $value );
+		$this->validate( $value );
 
 		$this->value = $value;
 	}
 
-	abstract protected function guardValueIsValid( float $value ) : void;
+	abstract public function isValid( float $value ): bool;
 
-	public function toString() : string
+	/**
+	 * @param RepresentsFloatType $type
+	 *
+	 * @return RepresentsFloatType|static
+	 */
+	public static function fromFloatType( RepresentsFloatType $type ): RepresentsFloatType
 	{
-		return (string)$this->value;
+		return new static( $type->toFloat() );
 	}
 
-	public function toFloat() : float
+	public function equals( RepresentsFloatType $floatType ): bool
 	{
-		return $this->value;
+		return get_class( $floatType ) === get_class( $this ) && $this->isEqual( $floatType );
 	}
 
-	public function jsonSerialize() : float
+	protected function validate( float $value ): void
 	{
-		return $this->value;
-	}
-
-	public static function fromString( string $string ) : RepresentsFloatValue
-	{
-		if ( false === is_numeric( $string ) )
+		if ( !$this->isValid( $value ) )
 		{
-			throw (new InvalidFloatValueException())->withString( $string );
+			throw new ValidationException(
+				sprintf(
+					'Invalid %s: %s',
+					(new \ReflectionClass( $this ))->getShortName(),
+					$value
+				)
+			);
 		}
-
-		return new static( (float)$string );
 	}
 }
