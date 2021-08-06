@@ -34,12 +34,6 @@ jobs:
 
       # run tests!
       - run:
-          name: Activate xDebug
-          command: |
-            echo "extension=xdebug.so" > /tmp/xdebug.ini
-            sudo cp /tmp/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
-      - run:
           name: Prepare log directories
           command: |
             mkdir -p build/logs/coverage
