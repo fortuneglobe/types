@@ -1,8 +1,10 @@
 # Types
 [![Build Status branch master](https://circleci.com/gh/fortuneglobe/types/tree/master.svg?style=svg&circle-token=587e804d51907ff65998555361c338c32764c381)](https://circleci.com/gh/fortuneglobe/types/tree/master)
 [![Build Status branch development](https://circleci.com/gh/fortuneglobe/types/tree/development.svg?style=svg&circle-token=587e804d51907ff65998555361c338c32764c381)](https://circleci.com/gh/fortuneglobe/types/tree/development)
-![Code coverage](https://img.shields.io/static/v1?label=coverage&message=87.33%&color=green)
-[![Latest release](http://github-release-version.herokuapp.com/github/fortuneglobe/types/release.svg?style=flat)](https://github.com/fortuneglobe/types/releases/latest)
+![Code Coverage](https://img.shields.io/static/v1?label=coverage&message=87.33%&color=green)
+![Last Commit](https://badgen.net/github/last-commit/fortuneglobe/types)
+![Dependencies](https://badgen.net/github/dependents-repo/fortuneglobe/types)
+![Latest release](https://badgen.net/github/release/fortuneglobe/types)
 
 
 ## Beschreibung
