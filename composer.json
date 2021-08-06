@@ -6,20 +6,16 @@
 	"license": "proprietary",
 	"authors": [
 		{
-			"name": "Holger Woltersdorf"
-		},
-		{
-			"name": "Christian Ramelow"
-		},
-		{
-			"name": "Benjamin Bruska"
+			"name": "Benjamin Bruska",
+			"email": "benjamin.bruska@fortuneglobe.com"
 		}
 	],
 	"require": {
-		"php": ">=7.1"
+		"php": ">=7.4",
+		"ext-json": "*"
 	},
 	"require-dev": {
-		"tm/tooly-composer-script": "^1.0"
+		"tm/tooly-composer-script": "^1.4.1"
 	},
 	"autoload": {
 		"psr-4": {
@@ -38,8 +34,9 @@
 	"extra": {
 		"tools": {
 			"phpunit": {
-				"url": "https://phar.phpunit.de/phpunit-6.4.3.phar",
-				"only-dev": true
+				"url": "https://phar.phpunit.de/phpunit-9.phar",
+				"only-dev": true,
+				"force-replace": true
 			},
 			"phpmetrics": {
 				"url": "https://github.com/phpmetrics/PhpMetrics/releases/download/v2.3.2/phpmetrics.phar",

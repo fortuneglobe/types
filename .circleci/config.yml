@@ -6,7 +6,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.1.9-fpm-browsers
+      - image: cimg/php:7.4-browsers
 
     working_directory: ~/repo
 
@@ -33,12 +33,6 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       # run tests!
-      - run:
-          name: Activate xDebug
-          command: |
-            echo "extension=xdebug.so" > /tmp/xdebug.ini
-            sudo cp /tmp/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
       - run:
           name: Prepare log directories
           command: |

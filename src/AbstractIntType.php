@@ -2,55 +2,89 @@
 
 namespace Fortuneglobe\Types;
 
-use Fortuneglobe\Types\Exceptions\InvalidIntValueException;
-use Fortuneglobe\Types\Interfaces\RepresentsIntValue;
+use Fortuneglobe\Types\Exceptions\ValidationException;
+use Fortuneglobe\Types\Interfaces\RepresentsIntType;
+use Fortuneglobe\Types\Traits\RepresentingIntType;
 
-/**
- * Class AbstractIntType
- * @package Fortuneglobe\Types
- */
-abstract class AbstractIntType extends AbstractType implements RepresentsIntValue
+abstract class AbstractIntType implements RepresentsIntType
 {
-	/** @var int */
-	private $value;
+	use RepresentingIntType;
 
 	public function __construct( int $value )
 	{
-		$this->guardValueIsValid( $value );
+		$this->validate( $value );
 
 		$this->value = $value;
 	}
 
-	abstract protected function guardValueIsValid( int $value ) : void;
+	abstract public function isValid( int $value ): bool;
 
-	public function toString() : string
+	/**
+	 * @param RepresentsIntType $type
+	 *
+	 * @return RepresentsIntType|static
+	 */
+	public static function fromIntType( RepresentsIntType $type ): RepresentsIntType
 	{
-		return (string)$this->value;
+		return new static( $type->toInt() );
 	}
 
-	public function toInt() : int
+	public function equals( RepresentsIntType $type ): bool
 	{
-		return $this->value;
+		return get_class( $this ) === get_class( $type ) && $this->isEqual( $type );
 	}
 
-	public function jsonSerialize() : int
+	/**
+	 * @param RepresentsIntType $type
+	 *
+	 * @return RepresentsIntType|static
+	 */
+	public function add( RepresentsIntType $type ): RepresentsIntType
 	{
-		return $this->value;
+		return new static( $this->value + $type->toInt() );
 	}
 
-	public static function fromString( string $string ) : RepresentsIntValue
+	/**
+	 * @param RepresentsIntType $type
+	 *
+	 * @return RepresentsIntType|static
+	 */
+	public function subtract( RepresentsIntType $type ): RepresentsIntType
 	{
-		if ( 0 === preg_match( '#^[-+]?\d+$#', $string ) )
+		return new static( $this->value - $type->toInt() );
+	}
+
+	/**
+	 * @param int $value
+	 *
+	 * @return RepresentsIntType|static
+	 */
+	public function increment( int $value = 1 ): RepresentsIntType
+	{
+		return new static( $this->value + $value );
+	}
+
+	/**
+	 * @param int $value
+	 *
+	 * @return RepresentsIntType|static
+	 */
+	public function decrement( int $value = 1 ): RepresentsIntType
+	{
+		return new static( $this->value - $value );
+	}
+
+	protected function validate( int $value ): void
+	{
+		if ( !$this->isValid( $value ) )
 		{
-			throw (new InvalidIntValueException())->withString( $string );
+			throw new ValidationException(
+				sprintf(
+					'Invalid %s: %s',
+					(new \ReflectionClass( $this ))->getShortName(),
+					$value
+				)
+			);
 		}
-
-		$floatValue = (float)$string;
-		if ( PHP_INT_MAX < $floatValue || PHP_INT_MIN > $floatValue )
-		{
-			throw (new InvalidIntValueException())->withString( $string );
-		}
-
-		return new static( (int)$string );
 	}
 }

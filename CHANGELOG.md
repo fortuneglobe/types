@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [2.0.0] - 2021-08-05
+
+It's a rework. All previous classes were removed or replaced.
+
+---
+
+[2.0.0]: https://github.com/fortuneglobe/types/compare/1.0.0...2.0.0
+
 ## [1.0.0] - 2017-11-13
 
 ### Changed
