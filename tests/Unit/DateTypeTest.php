@@ -31,6 +31,11 @@ class DateTypeTest extends TestCase
 		self::assertEquals( new AnyDateType( '2021-08-04 21:15:37' ), AnyDateType::fromDateType( new AnotherDateType( '2021-08-04 21:15:37' ) ) );
 	}
 
+	public function testFromTimestamp(): void
+	{
+		self::assertEquals( new AnyDateType( '1970-01-01 00:00:00', new \DateTimeZone( '+0200' ) ), AnyDateType::fromTimestamp( 0, new \DateTimeZone( '+0200' ) ) );
+	}
+
 	public function testIfSameClassWithSameValueEquals()
 	{
 		self::assertTrue( (new AnyDateType( '2021-08-04 21:15:37' ))->equals( new AnyDateType( '2021-08-04 21:15:37' ) ) );
