@@ -30,13 +30,14 @@ abstract class AbstractDateType implements RepresentsDateType
 	}
 
 	/**
-	 * @param int $unixTimestamp
+	 * @param int                $unixTimestamp
+	 * @param null|\DateTimeZone $timeZone
 	 *
 	 * @return RepresentsDateType|static
 	 */
-	public static function fromTimestamp( int $unixTimestamp ): RepresentsDateType
+	public static function fromTimestamp( int $unixTimestamp, ?\DateTimeZone $timeZone = null ): RepresentsDateType
 	{
-		return new static( (new \DateTimeImmutable())->setTimestamp( $unixTimestamp )->format( 'c' ) );
+		return new static( (new \DateTimeImmutable( 'now', $timeZone ))->modify( '@' . $unixTimestamp )->format( 'c' ) );
 	}
 
 	public function equals( RepresentsDateType $dateType ): bool
