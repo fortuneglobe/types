@@ -29,6 +29,16 @@ abstract class AbstractDateType implements RepresentsDateType
 		return new static( $type->format( 'c' ), $type->getTimezone() );
 	}
 
+	/**
+	 * @param int $unixTimestamp
+	 *
+	 * @return RepresentsDateType|static
+	 */
+	public static function fromTimestamp( int $unixTimestamp ): RepresentsDateType
+	{
+		return new static( (new \DateTimeImmutable())->setTimestamp( $unixTimestamp )->format( 'c' ) );
+	}
+
 	public function equals( RepresentsDateType $dateType ): bool
 	{
 		return get_class( $dateType ) === get_class( $this ) && $this->equalsValue( $dateType );

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2.1.0] - 2021-12-07
+
+### Added
+
+* New instantiation method `fromTimestamp` to `AbstractDateType`
+
+---
+
+[2.1.0]: https://github.com/fortuneglobe/types/compare/2.0.0...2.1.0
+
 ## [2.0.0] - 2021-08-05
 
 It's a rework. All previous classes were removed or replaced.
