@@ -6,7 +6,7 @@ use Fortuneglobe\Types\AbstractStringType;
 
 class AnotherStringType extends AbstractStringType
 {
-	public function isValid( string $value ): bool
+	public static function isValid( string $value ): bool
 	{
 		return true;
 	}

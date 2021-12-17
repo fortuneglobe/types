@@ -17,7 +17,7 @@ abstract class AbstractFloatType implements RepresentsFloatType
 		$this->value = $value;
 	}
 
-	abstract public function isValid( float $value ): bool;
+	abstract public static function isValid( float $value ): bool;
 
 	/**
 	 * @param RepresentsFloatType $type
@@ -36,12 +36,12 @@ abstract class AbstractFloatType implements RepresentsFloatType
 
 	protected function validate( float $value ): void
 	{
-		if ( !$this->isValid( $value ) )
+		if ( !static::isValid( $value ) )
 		{
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( $this ))->getShortName(),
+					(new \ReflectionClass( get_called_class() ))->getShortName(),
 					$value
 				)
 			);

@@ -6,7 +6,7 @@ use Fortuneglobe\Types\AbstractFloatType;
 
 class NoZeroFloatType extends AbstractFloatType
 {
-	public function isValid( float $value ): bool
+	public static function isValid( float $value ): bool
 	{
 		return $value !== 0.0;
 	}

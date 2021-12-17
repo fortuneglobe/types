@@ -17,7 +17,7 @@ abstract class AbstractDateType implements RepresentsDateType
 		$this->dateTime = new \DateTimeImmutable( $dateTime, $timeZone );
 	}
 
-	abstract public function isValid( \DateTimeInterface $value ): bool;
+	abstract public static function isValid( \DateTimeInterface $value ): bool;
 
 	/**
 	 * @param RepresentsDateType $type
@@ -61,18 +61,18 @@ abstract class AbstractDateType implements RepresentsDateType
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( $this ))->getShortName(),
+					(new \ReflectionClass( get_called_class() ))->getShortName(),
 					$dateTime
 				)
 			);
 		}
 
-		if ( !$this->isValid( $dateTimeImmutable ) )
+		if ( !static::isValid( $dateTimeImmutable ) )
 		{
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( $this ))->getShortName(),
+					(new \ReflectionClass( get_called_class() ))->getShortName(),
 					$dateTime
 				)
 			);

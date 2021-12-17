@@ -17,7 +17,7 @@ abstract class AbstractStringType implements RepresentsStringType
 		$this->value = $value;
 	}
 
-	abstract public function isValid( string $value ): bool;
+	abstract public static function isValid( string $value ): bool;
 
 	/**
 	 * @param RepresentsStringType $type
@@ -41,12 +41,12 @@ abstract class AbstractStringType implements RepresentsStringType
 
 	protected function validate( string $value ): void
 	{
-		if ( !$this->isValid( $value ) )
+		if ( !static::isValid( $value ) )
 		{
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( $this ))->getShortName(),
+					(new \ReflectionClass( get_called_class() ))->getShortName(),
 					$value
 				)
 			);
