@@ -90,7 +90,7 @@ class FloatTypeTest extends TestCase
 
 		new class(12) extends AbstractFloatType
 		{
-			public function isValid( float $value ): bool
+			public static function isValid( float $value ): bool
 			{
 				return false;
 			}
@@ -103,7 +103,7 @@ class FloatTypeTest extends TestCase
 
 		new class(12) extends AbstractFloatType
 		{
-			public function isValid( float $value ): bool
+			public static function isValid( float $value ): bool
 			{
 				return true;
 			}
@@ -145,14 +145,14 @@ class FloatTypeTest extends TestCase
 	{
 		$originalIntType = new class($originalFloatValue) extends AbstractFloatType
 		{
-			public function isValid( float $value ): bool
+			public static function isValid( float $value ): bool
 			{
 				return true;
 			}
 		};
 		$anotherIntType  = new class($anotherFloatValue) extends AbstractFloatType
 		{
-			public function isValid( float $value ): bool
+			public static function isValid( float $value ): bool
 			{
 				return true;
 			}

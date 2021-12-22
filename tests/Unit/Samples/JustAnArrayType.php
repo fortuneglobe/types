@@ -6,7 +6,7 @@ use Fortuneglobe\Types\AbstractArrayType;
 
 class JustAnArrayType extends AbstractArrayType
 {
-	public function isValid( array $genericArray ): bool
+	public static function isValid( array $genericArray ): bool
 	{
 		return true;
 	}

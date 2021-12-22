@@ -6,7 +6,7 @@ use Fortuneglobe\Types\AbstractArrayType;
 
 class NoNumberAsKeyArrayType extends AbstractArrayType
 {
-	public function isValid( array $genericArray ): bool
+	public static function isValid( array $genericArray ): bool
 	{
 		foreach ( $genericArray as $key => $value )
 		{

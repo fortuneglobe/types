@@ -17,7 +17,7 @@ abstract class AbstractIntType implements RepresentsIntType
 		$this->value = $value;
 	}
 
-	abstract public function isValid( int $value ): bool;
+	abstract public static function isValid( int $value ): bool;
 
 	/**
 	 * @param RepresentsIntType $type
@@ -76,12 +76,12 @@ abstract class AbstractIntType implements RepresentsIntType
 
 	protected function validate( int $value ): void
 	{
-		if ( !$this->isValid( $value ) )
+		if ( !static::isValid( $value ) )
 		{
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( $this ))->getShortName(),
+					(new \ReflectionClass( get_called_class() ))->getShortName(),
 					$value
 				)
 			);

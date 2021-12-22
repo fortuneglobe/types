@@ -12,12 +12,12 @@ abstract class AbstractArrayType implements RepresentsArrayType
 
 	public function __construct( array $genericArray )
 	{
-		$this->validate( $genericArray );
+		self::validate( $genericArray );
 
 		$this->genericArray = $genericArray;
 	}
 
-	abstract public function isValid( array $genericArray ): bool;
+	abstract public static function isValid( array $genericArray ): bool;
 
 	/**
 	 * @param string $json
@@ -59,14 +59,14 @@ abstract class AbstractArrayType implements RepresentsArrayType
 		return $firstArray === $secondArray;
 	}
 
-	protected function validate( array $genericArray ): void
+	protected static function validate( array $genericArray ): void
 	{
-		if ( !$this->isValid( $genericArray ) )
+		if ( !static::isValid( $genericArray ) )
 		{
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( $this ))->getShortName(),
+					(new \ReflectionClass( get_called_class() ))->getShortName(),
 					print_r( $genericArray, true )
 				)
 			);

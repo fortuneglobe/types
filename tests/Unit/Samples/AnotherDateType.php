@@ -6,7 +6,7 @@ use Fortuneglobe\Types\AbstractDateType;
 
 class AnotherDateType extends AbstractDateType
 {
-	public function isValid( \DateTimeInterface $value ): bool
+	public static function isValid( \DateTimeInterface $value ): bool
 	{
 		return true;
 	}

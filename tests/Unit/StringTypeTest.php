@@ -69,7 +69,7 @@ class StringTypeTest extends TestCase
 
 		new class('Test') extends AbstractStringType
 		{
-			public function isValid( string $value ): bool
+			public static function isValid( string $value ): bool
 			{
 				return false;
 			}
@@ -82,7 +82,7 @@ class StringTypeTest extends TestCase
 
 		new class('Test') extends AbstractStringType
 		{
-			public function isValid( string $value ): bool
+			public static function isValid( string $value ): bool
 			{
 				return true;
 			}

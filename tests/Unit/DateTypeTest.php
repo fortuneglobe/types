@@ -57,7 +57,7 @@ class DateTypeTest extends TestCase
 
 		new class('2021-08-04 21:15:37') extends AbstractDateType
 		{
-			public function isValid( \DateTimeInterface $value ): bool
+			public static function isValid( \DateTimeInterface $value ): bool
 			{
 				return false;
 			}
@@ -70,7 +70,7 @@ class DateTypeTest extends TestCase
 
 		new class('2021-08-04 21:15:37') extends AbstractDateType
 		{
-			public function isValid( \DateTimeInterface $value ): bool
+			public static function isValid( \DateTimeInterface $value ): bool
 			{
 				return true;
 			}

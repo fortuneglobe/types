@@ -65,7 +65,7 @@ class ArrayTypeTest extends TestCase
 
 		new class([ 'a' => 'b' ]) extends AbstractArrayType
 		{
-			public function isValid( array $genericArray ): bool
+			public static function isValid( array $genericArray ): bool
 			{
 				return false;
 			}
@@ -78,7 +78,7 @@ class ArrayTypeTest extends TestCase
 
 		new class([ 'a' => 'b' ]) extends AbstractArrayType
 		{
-			public function isValid( array $genericArray ): bool
+			public static function isValid( array $genericArray ): bool
 			{
 				return true;
 			}

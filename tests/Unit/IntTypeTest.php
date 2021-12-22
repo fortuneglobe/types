@@ -18,7 +18,7 @@ class IntTypeTest extends TestCase
 
 		new class(12) extends AbstractIntType
 		{
-			public function isValid( int $value ): bool
+			public static function isValid( int $value ): bool
 			{
 				return false;
 			}
@@ -31,7 +31,7 @@ class IntTypeTest extends TestCase
 
 		new class(12) extends AbstractIntType
 		{
-			public function isValid( int $value ): bool
+			public static function isValid( int $value ): bool
 			{
 				return true;
 			}
@@ -123,14 +123,14 @@ class IntTypeTest extends TestCase
 	{
 		$originalIntType = new class($originalIntValue) extends AbstractIntType
 		{
-			public function isValid( int $value ): bool
+			public static function isValid( int $value ): bool
 			{
 				return true;
 			}
 		};
 		$anotherIntType  = new class($anotherIntValue) extends AbstractIntType
 		{
-			public function isValid( int $value ): bool
+			public static function isValid( int $value ): bool
 			{
 				return true;
 			}

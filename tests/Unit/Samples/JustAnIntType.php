@@ -6,7 +6,7 @@ use Fortuneglobe\Types\AbstractIntType;
 
 class JustAnIntType extends AbstractIntType
 {
-	public function isValid( int $value ): bool
+	public static function isValid( int $value ): bool
 	{
 		return true;
 	}
