@@ -24,14 +24,14 @@ Die abstrakten Klassen sind immutable.
 ````PHP
 class ClientId extends AbstractStringType
 {
-    public function isValid( string $value ): bool
+    public static function isValid( string $value ): bool
     {
         return $value !== '';
     }
 }
 class ChannelId extends AbstractStringType
 {
-    public function isValid( string $value ): bool
+    public static function isValid( string $value ): bool
     {
         return $value !== '';
     }
@@ -58,7 +58,7 @@ $newClientId->toString(); //zalando
 ````PHP
 class Quantity extends AbstractStringType
 {
-    public function isValid( int $value ): bool
+    public static function isValid( int $value ): bool
     {
         return $value > 0;
     }
