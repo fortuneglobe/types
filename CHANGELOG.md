@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [2.2.0] - 2021-12-22
+## [3.0.0] - 2021-12-22
 
 ### Changed
 
@@ -8,7 +8,7 @@
 
 ---
 
-[2.2.0]: https://github.com/fortuneglobe/types/compare/2.1.0...2.2.0
+[3.0.0]: https://github.com/fortuneglobe/types/compare/2.1.0...3.0.0
 
 ## [2.1.0] - 2021-12-07
 
