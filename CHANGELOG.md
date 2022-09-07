@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## [3.1.0] - 2022-09-07
+
+### Added
+
+* Abstract classes for lists of types
+  * `AbstractFloatTypeArray`
+  * `AbstractIntTypeArray`
+  * `AbstractStringTypeArray`
+* Traits for lists of types
+  * `RepresentingFloatTypeArray`
+  * `RepresentingIntTypeArray`
+  * `RepresentingStringTypeArray`
+* Ready-To-Use implementations for lists of types
+  * `FloatTypeArray`
+  * `IntTypeArray`
+  * `StringTypeArray`
+
+### Removed
+
+* Static function `fromJson` from interface `RepresentsArrayType` because it didn't make sense
+
+---
+
+[3.1.0]: https://github.com/fortuneglobe/types/compare/3.0.0...3.1.0
+
 ## [3.0.0] - 2021-12-22
 
 ### Changed

@@ -9,6 +9,4 @@ interface RepresentsArrayType extends \ArrayAccess, \Iterator, \Countable, \Json
 	public function toJson(): string;
 
 	public function jsonSerialize(): array;
-
-	public static function fromJson( string $json ): RepresentsArrayType;
 }

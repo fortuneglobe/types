@@ -233,44 +233,9 @@ class ArrayTypeTest extends TestCase
 	 * @param RepresentsArrayType $anotherArrayType
 	 * @param bool                $expectedResult
 	 */
-	public function testIfEqualsValueComparesOnlyValues(
-		RepresentsArrayType $arrayType, RepresentsArrayType $anotherArrayType, bool $expectedResult
-	): void
+	public function testIfEqualsValueComparesOnlyValues( RepresentsArrayType $arrayType, RepresentsArrayType $anotherArrayType, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $arrayType->equalsValue( $anotherArrayType ) );
-	}
-
-	public function ToJsonDataProvider(): array
-	{
-		return [
-			[
-				new JustAnArrayType(
-					[
-						'a' => 'abc',
-						'b' => 1,
-						'c' => [
-							'def' => 3.25,
-							'hij' => [
-								'isTest' => true,
-							],
-						],
-					]
-				),
-				json_encode(
-					[
-						'a' => 'abc',
-						'b' => 1,
-						'c' => [
-							'def' => 3.25,
-							'hij' => [
-								'isTest' => true,
-							],
-						],
-					],
-					JSON_THROW_ON_ERROR
-				),
-			],
-		];
 	}
 
 	public function testToJson(): void
