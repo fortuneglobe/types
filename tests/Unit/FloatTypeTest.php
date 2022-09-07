@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroFloatType;
+use Fortuneglobe\Types\Traits\RepresentingFloatType;
 use PHPUnit\Framework\TestCase;
 
 class FloatTypeTest extends TestCase
@@ -163,5 +164,15 @@ class FloatTypeTest extends TestCase
 		self::assertEquals( $isEqual, $originalIntType->isEqual( $anotherIntType ) );
 		self::assertEquals( $isGreater, $originalIntType->isGreaterThan( $anotherIntType ) );
 		self::assertEquals( $isGreater || $isEqual, $originalIntType->isGreaterThanOrEqual( $anotherIntType ) );
+	}
+
+	public function testInitializeClassUsingTrait(): void
+	{
+		$floatType = new class(2.5)
+		{
+			use RepresentingFloatType;
+		};
+
+		self::assertEquals( 2.5, $floatType->toFloat() );
 	}
 }

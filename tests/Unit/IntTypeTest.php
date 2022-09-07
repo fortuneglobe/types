@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroIntType;
+use Fortuneglobe\Types\Traits\RepresentingIntType;
 use PHPUnit\Framework\TestCase;
 
 class IntTypeTest extends TestCase
@@ -292,6 +293,16 @@ class IntTypeTest extends TestCase
 	public function testFromIntType(): void
 	{
 		self::assertEquals( new JustAnIntType( 15 ), JustAnIntType::fromIntType( new AnotherIntType( 15 ) ) );
+	}
+
+	public function testInitializeClassUsingTrait(): void
+	{
+		$intType = new class(2)
+		{
+			use RepresentingIntType;
+		};
+
+		self::assertEquals( 2, $intType->toInt() );
 	}
 }
 

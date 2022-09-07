@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoQuestionMarkStringType;
+use Fortuneglobe\Types\Traits\RepresentingStringType;
 use PHPUnit\Framework\TestCase;
 
 class StringTypeTest extends TestCase
@@ -122,9 +123,7 @@ class StringTypeTest extends TestCase
 	 * @param RepresentsStringType $anotherStringType
 	 * @param bool                 $expectedResult
 	 */
-	public function testIfEqualsValueComparesOnlyValues(
-		RepresentsStringType $stringType, RepresentsStringType $anotherStringType, bool $expectedResult
-	): void
+	public function testIfEqualsValueComparesOnlyValues( RepresentsStringType $stringType, RepresentsStringType $anotherStringType, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $stringType->equalsValue( $anotherStringType ) );
 	}
@@ -134,5 +133,15 @@ class StringTypeTest extends TestCase
 		self::assertTrue( (new AnyStringType( '' ))->isEmpty() );
 		self::assertFalse( (new AnyStringType( '0' ))->isEmpty() );
 		self::assertFalse( (new AnyStringType( ' ' ))->isEmpty() );
+	}
+
+	public function testInitializeClassUsingTrait(): void
+	{
+		$stringType = new class('a')
+		{
+			use RepresentingStringType;
+		};
+
+		self::assertEquals( 'a', $stringType->toString() );
 	}
 }

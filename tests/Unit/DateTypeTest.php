@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsDateType;
 use Fortuneglobe\Types\Tests\Unit\Samples\After2000DateType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherDateType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyDateType;
+use Fortuneglobe\Types\Traits\RepresentingDateType;
 use PHPUnit\Framework\TestCase;
 
 class DateTypeTest extends TestCase
@@ -120,10 +121,18 @@ class DateTypeTest extends TestCase
 	 * @param RepresentsDateType $anotherDateType
 	 * @param bool               $expectedResult
 	 */
-	public function testIfEqualsValueComparesOnlyValues(
-		RepresentsDateType $dateType, RepresentsDateType $anotherDateType, bool $expectedResult
-	): void
+	public function testIfEqualsValueComparesOnlyValues( RepresentsDateType $dateType, RepresentsDateType $anotherDateType, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $dateType->equalsValue( $anotherDateType ) );
+	}
+
+	public function testInitializeClassUsingTrait(): void
+	{
+		$dateType = new class('2021-08-04 20:57:48')
+		{
+			use RepresentingDateType;
+		};
+
+		self::assertEquals( '20210804', $dateType->format( 'Ymd' ) );
 	}
 }

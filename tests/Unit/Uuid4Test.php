@@ -17,13 +17,11 @@ class Uuid4Test extends TestCase
 	public function InvalidUuid4Provider(): array
 	{
 		return [
-			[
-				'c2667c9b-01b7-48e0-bb16-1df24837ec3f2',
-				'c2667c9b-01b7-48e0-b-1df24837ec3f',
-				'c2667c9b-01b7-48e0--1df24837ec3f',
-				'c2667c9b-01b7-48e0-1df24837ec3f',
-				'invalid',
-			],
+			[ 'c2667c9b-01b7-48e0-bb16-1df24837ec3f2', ],
+			[ 'c2667c9b-01b7-48e0-b-1df24837ec3f', ],
+			[ 'c2667c9b-01b7-48e0--1df24837ec3f', ],
+			[ 'c2667c9b-01b7-48e0-1df24837ec3f', ],
+			[ 'invalid', ],
 		];
 	}
 
@@ -43,10 +41,8 @@ class Uuid4Test extends TestCase
 	public function ValidUuid4Provider(): array
 	{
 		return [
-			[
-				'c2667c9b-01b7-48e0-bb16-1df24837ec3f',
-				'00000000-0000-0000-0000-000000000000',
-			],
+			[ 'c2667c9b-01b7-48e0-bb16-1df24837ec3f', ],
+			[ '00000000-0000-0000-0000-000000000000', ],
 		];
 	}
 
@@ -69,5 +65,4 @@ class Uuid4Test extends TestCase
 		self::assertTrue( preg_match( '!^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$!i', $uuid4->toString() ) > 0 );
 		self::assertSame( Uuid4::class, get_class( $uuid4 ) );
 	}
-
 }
