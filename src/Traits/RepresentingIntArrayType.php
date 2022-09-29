@@ -42,7 +42,7 @@ trait RepresentingIntArrayType
 		next( $this->intTypes );
 	}
 
-	public function key()
+	public function key(): int|string|null
 	{
 		return key( $this->intTypes );
 	}
@@ -82,7 +82,7 @@ trait RepresentingIntArrayType
 		$this->intTypes[ (string)$offset ] = $value;
 	}
 
-	public function offsetUnset( $offset )
+	public function offsetUnset( $offset ): void
 	{
 		unset( $this->intTypes[ (string)$offset ] );
 	}

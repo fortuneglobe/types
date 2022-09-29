@@ -66,7 +66,7 @@ abstract class AbstractFloatTypeArray implements RepresentsArrayType
 				throw new ValidationException(
 					sprintf(
 						'Invalid %s: %s',
-						(new \ReflectionClass( get_called_class() ))->getShortName(),
+						(new \ReflectionClass( static::class ))->getShortName(),
 						print_r( $floatTypes, true )
 					)
 				);

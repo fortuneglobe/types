@@ -4,7 +4,6 @@ namespace Fortuneglobe\Types\Traits;
 
 use Fortuneglobe\Types\Exceptions\ValidationException;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
-use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 
 trait RepresentingFloatArrayType
 {
@@ -33,7 +32,7 @@ trait RepresentingFloatArrayType
 		return $floats;
 	}
 
-	public function current():RepresentsFloatType
+	public function current(): RepresentsFloatType
 	{
 		return current( $this->floatTypes );
 	}
@@ -43,7 +42,7 @@ trait RepresentingFloatArrayType
 		next( $this->floatTypes );
 	}
 
-	public function key()
+	public function key(): int|string|null
 	{
 		return key( $this->floatTypes );
 	}
@@ -83,7 +82,7 @@ trait RepresentingFloatArrayType
 		$this->floatTypes[ (string)$offset ] = $value;
 	}
 
-	public function offsetUnset( $offset )
+	public function offsetUnset( $offset ): void
 	{
 		unset( $this->floatTypes[ (string)$offset ] );
 	}

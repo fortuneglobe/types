@@ -16,7 +16,7 @@ trait RepresentingArrayType
 		return $this->genericArray;
 	}
 
-	public function current()
+	public function current(): mixed
 	{
 		return current( $this->genericArray );
 	}
@@ -26,7 +26,7 @@ trait RepresentingArrayType
 		next( $this->genericArray );
 	}
 
-	public function key()
+	public function key(): string|int|null
 	{
 		return key( $this->genericArray );
 	}
@@ -46,7 +46,7 @@ trait RepresentingArrayType
 		return isset( $this->genericArray[ (string)$offset ] );
 	}
 
-	public function offsetGet( $offset )
+	public function offsetGet( $offset ): mixed
 	{
 		if ( !isset( $this->genericArray[ (string)$offset ] ) )
 		{
@@ -61,7 +61,7 @@ trait RepresentingArrayType
 		$this->genericArray[ (string)$offset ] = $value;
 	}
 
-	public function offsetUnset( $offset )
+	public function offsetUnset( $offset ): void
 	{
 		unset( $this->genericArray[ (string)$offset ] );
 	}
