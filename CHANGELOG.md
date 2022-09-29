@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [4.0.0] - 2022-09-07
+
+### Changed
+
+* Package for PHP >= 8.0
+
+---
+
+[4.0.0]: https://github.com/fortuneglobe/types/compare/3.1.0...4.0.0
+
 ## [3.1.0] - 2022-09-07
 
 ### Added

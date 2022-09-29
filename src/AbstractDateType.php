@@ -61,7 +61,7 @@ abstract class AbstractDateType implements RepresentsDateType
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( get_called_class() ))->getShortName(),
+					(new \ReflectionClass( static::class ))->getShortName(),
 					$dateTime
 				)
 			);
@@ -72,7 +72,7 @@ abstract class AbstractDateType implements RepresentsDateType
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( get_called_class() ))->getShortName(),
+					(new \ReflectionClass( static::class ))->getShortName(),
 					$dateTime
 				)
 			);

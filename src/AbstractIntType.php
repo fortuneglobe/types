@@ -81,7 +81,7 @@ abstract class AbstractIntType implements RepresentsIntType
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( get_called_class() ))->getShortName(),
+					(new \ReflectionClass( static::class ))->getShortName(),
 					$value
 				)
 			);

@@ -42,7 +42,7 @@ trait RepresentingStringArrayType
 		next( $this->stringTypes );
 	}
 
-	public function key()
+	public function key(): int|string|null
 	{
 		return key( $this->stringTypes );
 	}
@@ -82,7 +82,7 @@ trait RepresentingStringArrayType
 		$this->stringTypes[ (string)$offset ] = $value;
 	}
 
-	public function offsetUnset( $offset )
+	public function offsetUnset( $offset ): void
 	{
 		unset( $this->stringTypes[ (string)$offset ] );
 	}

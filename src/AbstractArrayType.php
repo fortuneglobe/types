@@ -41,7 +41,7 @@ abstract class AbstractArrayType implements RepresentsArrayType
 
 	public function equalsValue( RepresentsArrayType $type ): bool
 	{
-		$sortFunction = function ( $element )
+		$sortFunction = static function ( $element )
 		{
 			if ( is_array( $element ) )
 			{
@@ -66,7 +66,7 @@ abstract class AbstractArrayType implements RepresentsArrayType
 			throw new ValidationException(
 				sprintf(
 					'Invalid %s: %s',
-					(new \ReflectionClass( get_called_class() ))->getShortName(),
+					(new \ReflectionClass( static::class ))->getShortName(),
 					print_r( $genericArray, true )
 				)
 			);
