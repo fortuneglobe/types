@@ -4,6 +4,7 @@ namespace Fortuneglobe\Types;
 
 use Fortuneglobe\Types\Exceptions\ValidationException;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
+use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 use Fortuneglobe\Types\Traits\RepresentingFloatType;
 
 abstract class AbstractFloatType implements RepresentsFloatType
@@ -35,41 +36,41 @@ abstract class AbstractFloatType implements RepresentsFloatType
 	}
 
 	/**
-	 * @param float|RepresentsFloatType $value
+	 * @param float|RepresentsFloatType|RepresentsIntType|int $value
 	 *
 	 * @return RepresentsFloatType|static
 	 */
-	public function add( float|RepresentsFloatType $value ): RepresentsFloatType
+	public function add( float|RepresentsFloatType|RepresentsIntType|int $value ): RepresentsFloatType
 	{
 		return new static( $this->value + $this->getValue( $value ) );
 	}
 
 	/**
-	 * @param float|RepresentsFloatType $value
+	 * @param float|RepresentsFloatType|RepresentsIntType|int $value
 	 *
 	 * @return RepresentsFloatType
 	 */
-	public function subtract( float|RepresentsFloatType $value ): RepresentsFloatType
+	public function subtract( float|RepresentsFloatType|RepresentsIntType|int $value ): RepresentsFloatType
 	{
 		return new static( $this->value - $this->getValue( $value ) );
 	}
 
 	/**
-	 * @param float|RepresentsFloatType $value
+	 * @param float|RepresentsFloatType|RepresentsIntType|int $value
 	 *
 	 * @return RepresentsFloatType
 	 */
-	public function multiply( float|RepresentsFloatType $value ): RepresentsFloatType
+	public function multiply( float|RepresentsFloatType|RepresentsIntType|int $value ): RepresentsFloatType
 	{
 		return new static( $this->value * $this->getValue( $value ) );
 	}
 
 	/**
-	 * @param float|RepresentsFloatType $value
+	 * @param float|RepresentsFloatType|RepresentsIntType|int $value
 	 *
 	 * @return RepresentsFloatType
 	 */
-	public function divide( float|RepresentsFloatType $value ): RepresentsFloatType
+	public function divide( float|RepresentsFloatType|RepresentsIntType|int $value ): RepresentsFloatType
 	{
 		return new static( $this->value / $this->getValue( $value ) );
 	}
