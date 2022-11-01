@@ -3,6 +3,7 @@
 namespace Fortuneglobe\Types\Traits;
 
 use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
+use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 
 trait RepresentingFloatType
 {
@@ -78,8 +79,13 @@ trait RepresentingFloatType
 		return $this->value <= 0.0;
 	}
 
-	protected function getValue( RepresentsFloatType|float $floatType ): float
+	protected function getValue( RepresentsFloatType|RepresentsIntType|int|float $value ): float
 	{
-		return is_float( $floatType ) ? $floatType : $floatType->toFloat();
+		if ( $value instanceof RepresentsFloatType || $value instanceof RepresentsIntType )
+		{
+			return $value->toFloat();
+		}
+
+		return (float)$value;
 	}
 }

@@ -5,8 +5,10 @@ namespace Fortuneglobe\Types\Tests\Unit;
 use Fortuneglobe\Types\AbstractFloatType;
 use Fortuneglobe\Types\Exceptions\ValidationException;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
+use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyFloatType;
+use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroFloatType;
 use Fortuneglobe\Types\Traits\RepresentingFloatType;
 use PHPUnit\Framework\TestCase;
@@ -136,11 +138,11 @@ class FloatTypeTest extends TestCase
 	/**
 	 * @dataProvider FloatComparisonDataProvider
 	 *
-	 * @param float  $originalFloatValue
-	 * @param float  $anotherFloatValue
-	 * @param bool $isLess
-	 * @param bool $isEqual
-	 * @param bool $isGreater
+	 * @param float $originalFloatValue
+	 * @param float $anotherFloatValue
+	 * @param bool  $isLess
+	 * @param bool  $isEqual
+	 * @param bool  $isGreater
 	 */
 	public function testComparingFloatValues( float $originalFloatValue, float $anotherFloatValue, bool $isLess, bool $isEqual, bool $isGreater ): void
 	{
@@ -302,95 +304,129 @@ class FloatTypeTest extends TestCase
 	/**
 	 * @dataProvider AdditionDataProvider
 	 *
-	 * @param RepresentsFloatType $originalFloatType
-	 * @param RepresentsFloatType $anotherFloatType
-	 * @param RepresentsFloatType $expectedFloatType
+	 * @param RepresentsFloatType                   $originalFloatType
+	 * @param RepresentsFloatType|RepresentsIntType $anotherType
+	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
-	public function testAddition( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	public function testAddition( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
-		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherFloatType ) );
-		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherType->toFloat() ) );
+
+		if ( $anotherType instanceof RepresentsIntType )
+		{
+			self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherType->toInt() ) );
+		}
 	}
 
 	public function SubtractionDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new JustAnIntType( 0 ), new AnyFloatType( 0 ) ],
 			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( -5 ) ],
+			[ new AnyFloatType( 0 ), new JustAnIntType( 5 ), new AnyFloatType( -5 ) ],
 			[ new AnotherFloatType( 5 ), new AnyFloatType( 0 ), new AnotherFloatType( 5 ) ],
+			[ new AnotherFloatType( 5 ), new JustAnIntType( 0 ), new AnotherFloatType( 5 ) ],
 			[ new AnyFloatType( 5 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 5 ), new JustAnIntType( 5 ), new AnyFloatType( 0 ) ],
 			[ new AnyFloatType( -5 ), new AnyFloatType( 10 ), new AnyFloatType( -15 ) ],
+			[ new AnyFloatType( -5 ), new JustAnIntType( 10 ), new AnyFloatType( -15 ) ],
 		];
 	}
 
 	/**
 	 * @dataProvider SubtractionDataProvider
 	 *
-	 * @param RepresentsFloatType $originalFloatType
-	 * @param RepresentsFloatType $anotherFloatType
-	 * @param RepresentsFloatType $expectedFloatType
+	 * @param RepresentsFloatType                   $originalFloatType
+	 * @param RepresentsFloatType|RepresentsIntType $anotherType
+	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
-	public function testSubtraction( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	public function testSubtraction( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
-		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherFloatType ) );
-		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherType->toFloat() ) );
+
+		if ( $anotherType instanceof RepresentsIntType )
+		{
+			self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherType->toInt() ) );
+		}
 	}
 
 	public function MultiplicationDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new JustAnIntType( 0 ), new AnyFloatType( 0 ) ],
 			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new JustAnIntType( 5 ), new AnyFloatType( 0 ) ],
 			[ new AnotherFloatType( 5 ), new AnyFloatType( 0 ), new AnotherFloatType( 0 ) ],
+			[ new AnotherFloatType( 5 ), new JustAnIntType( 0 ), new AnotherFloatType( 0 ) ],
 			[ new AnyFloatType( 5 ), new AnyFloatType( 5 ), new AnyFloatType( 25 ) ],
+			[ new AnyFloatType( 5 ), new JustAnIntType( 5 ), new AnyFloatType( 25 ) ],
 			[ new AnyFloatType( -5 ), new AnyFloatType( 10 ), new AnyFloatType( -50 ) ],
+			[ new AnyFloatType( -5 ), new JustAnIntType( 10 ), new AnyFloatType( -50 ) ],
 		];
 	}
 
 	/**
 	 * @dataProvider MultiplicationDataProvider
 	 *
-	 * @param RepresentsFloatType $originalFloatType
-	 * @param RepresentsFloatType $anotherFloatType
-	 * @param RepresentsFloatType $expectedFloatType
+	 * @param RepresentsFloatType                   $originalFloatType
+	 * @param RepresentsFloatType|RepresentsIntType $anotherType
+	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
-	public function testMultiplication( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	public function testMultiplication( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
-		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherFloatType ) );
-		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherType->toFloat() ) );
+
+		if ( $anotherType instanceof RepresentsIntType )
+		{
+			self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherType->toInt() ) );
+		}
 	}
 
 	public function DivisionDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new JustAnIntType( 5 ), new AnyFloatType( 0 ) ],
 			[ new AnotherFloatType( 5 ), new AnyFloatType( 5 ), new AnotherFloatType( 1 ) ],
+			[ new AnotherFloatType( 5 ), new JustAnIntType( 5 ), new AnotherFloatType( 1 ) ],
 			[ new AnyFloatType( 25 ), new AnyFloatType( 5 ), new AnyFloatType( 5 ) ],
+			[ new AnyFloatType( 25 ), new JustAnIntType( 5 ), new AnyFloatType( 5 ) ],
 			[ new AnyFloatType( -50 ), new AnyFloatType( 10 ), new AnyFloatType( -5 ) ],
+			[ new AnyFloatType( -50 ), new JustAnIntType( 10 ), new AnyFloatType( -5 ) ],
 		];
 	}
 
 	/**
 	 * @dataProvider DivisionDataProvider
 	 *
-	 * @param RepresentsFloatType $originalFloatType
-	 * @param RepresentsFloatType $anotherFloatType
-	 * @param RepresentsFloatType $expectedFloatType
+	 * @param RepresentsFloatType                   $originalFloatType
+	 * @param RepresentsFloatType|RepresentsIntType $anotherType
+	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
-	public function testDivision( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	public function testDivision( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
-		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherFloatType ) );
-		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherType->toFloat() ) );
+
+		if ( $anotherType instanceof RepresentsIntType )
+		{
+			self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherType->toInt() ) );
+		}
 	}
 
 	public function testTypeCasting(): void
 	{
-		self::assertEquals( '1.0', (new AnyFloatType( 1 ))->toString(1) );
-		self::assertEquals( '-1.0', (new AnyFloatType( -1 ))->toString(1) );
-		self::assertEquals( '0.0', (new AnyFloatType( 0 ))->toString(1) );
-		self::assertEquals( '1.26', (new AnyFloatType( 1.255 ))->toString(2) );
-		self::assertEquals( '-1.26', (new AnyFloatType( -1.255 ))->toString(2) );
-		self::assertEquals( '1.25', (new AnyFloatType( 1.254 ))->toString(2) );
-		self::assertEquals( '-1.25', (new AnyFloatType( -1.254 ))->toString(2) );
+		self::assertEquals( '1.0', (new AnyFloatType( 1 ))->toString( 1 ) );
+		self::assertEquals( '-1.0', (new AnyFloatType( -1 ))->toString( 1 ) );
+		self::assertEquals( '0.0', (new AnyFloatType( 0 ))->toString( 1 ) );
+		self::assertEquals( '1.26', (new AnyFloatType( 1.255 ))->toString( 2 ) );
+		self::assertEquals( '-1.26', (new AnyFloatType( -1.255 ))->toString( 2 ) );
+		self::assertEquals( '1.25', (new AnyFloatType( 1.254 ))->toString( 2 ) );
+		self::assertEquals( '-1.25', (new AnyFloatType( -1.254 ))->toString( 2 ) );
 	}
 }

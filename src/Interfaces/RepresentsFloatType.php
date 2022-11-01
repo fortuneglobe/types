@@ -32,11 +32,11 @@ interface RepresentsFloatType
 
 	public function isEqual( RepresentsFloatType|float $value ): bool;
 
-	public function add( RepresentsFloatType|float $value ): RepresentsFloatType;
+	public function add( RepresentsFloatType|RepresentsIntType|float|int $value ): RepresentsFloatType;
 
-	public function subtract( RepresentsFloatType|float $value ): RepresentsFloatType;
+	public function subtract( RepresentsFloatType|RepresentsIntType|float|int $value ): RepresentsFloatType;
 
-	public function multiply( RepresentsFloatType|float $value ): RepresentsFloatType;
+	public function multiply( RepresentsFloatType|RepresentsIntType|float|int $value ): RepresentsFloatType;
 
-	public function divide( RepresentsFloatType|float $value ): RepresentsFloatType;
+	public function divide( RepresentsFloatType|RepresentsIntType|float|int $value ): RepresentsFloatType;
 }
