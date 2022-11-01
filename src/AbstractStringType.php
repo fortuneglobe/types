@@ -34,9 +34,9 @@ abstract class AbstractStringType implements RepresentsStringType
 		return get_class( $this ) === get_class( $type ) && $this->equalsValue( $type );
 	}
 
-	public function equalsValue( RepresentsStringType $type ): bool
+	public function equalsValue( RepresentsStringType|string $value ): bool
 	{
-		return $this->toString() === $type->toString();
+		return $this->toString() === (is_string( $value ) ? $value : $value->toString());
 	}
 
 	protected function validate( string $value ): void

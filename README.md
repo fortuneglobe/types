@@ -70,7 +70,18 @@ $totalQuantity = $quantityOfFirstItem->add( $quantityOfSecondItem ); //7
 $difference    = $quantityOfFirstItem->subtract( $quantityOfSecondItem ); //throws ValidationException
 $difference    = $quantityOfSecondItem->subtract( $quantityOfFirstItem ); //3
 
-$incrementedQuantity = $quantityOfFirstItem->increment( 10 ); //12
+$incrementedQuantity = $quantityOfFirstItem->increment( $quantityOfSecondItem ); //7
+````
+
+Man kann auch mit primitiven Datentypen rechnen.
+
+````PHP
+$quantity  = new Quantity( 2 );
+
+$totalQuantity = $quantity->add( 5 ); //7
+$difference    = $quantity->subtract( 5 ); //-3
+
+$incrementedQuantity = $quantity->increment( 10 ); //12
 ````
 
 ### Eigene Uuid4-Typen

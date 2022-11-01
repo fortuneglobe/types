@@ -18,33 +18,78 @@ trait RepresentingIntType
 		return $this->value;
 	}
 
-	public function __toString(): string
+	public function toString(): string
 	{
 		return (string)$this->value;
 	}
 
-	public function isGreaterThan( RepresentsIntType $intType ): bool
+	public function toFloat(): float
 	{
-		return $this->value > $intType->toInt();
+		return (float)$this->value;
 	}
 
-	public function isGreaterThanOrEqual( RepresentsIntType $intType ): bool
+	public function toBool(): bool
 	{
-		return $this->value >= $intType->toInt();
+		return (bool)$this->value;
 	}
 
-	public function isLessThan( RepresentsIntType $intType ): bool
+	public function __toString(): string
 	{
-		return $this->value < $intType->toInt();
+		return $this->toString();
 	}
 
-	public function isLessThanOrEqual( RepresentsIntType $intType ): bool
+	public function isGreaterThan( RepresentsIntType|int $value ): bool
 	{
-		return $this->value <= $intType->toInt();
+		return $this->value > $this->getValue( $value );
 	}
 
-	public function isEqual( RepresentsIntType $intType ): bool
+	public function isGreaterThanOrEqual( RepresentsIntType|int $value ): bool
 	{
-		return $this->value === $intType->toInt();
+		return $this->value >= $this->getValue( $value );
+	}
+
+	public function isLessThan( RepresentsIntType|int $value ): bool
+	{
+		return $this->value < $this->getValue( $value );
+	}
+
+	public function isLessThanOrEqual( RepresentsIntType|int $value ): bool
+	{
+		return $this->value <= $this->getValue( $value );
+	}
+
+	public function isEqual( RepresentsIntType|int $value ): bool
+	{
+		return $this->value === $this->getValue( $value );
+	}
+
+	public function isZero(): bool
+	{
+		return $this->value === 0;
+	}
+
+	public function isPositive(): bool
+	{
+		return $this->value > 0;
+	}
+
+	public function isNegative(): bool
+	{
+		return $this->value < 0;
+	}
+
+	public function isPositiveOrZero(): bool
+	{
+		return $this->value >= 0;
+	}
+
+	public function isNegativeOrZero(): bool
+	{
+		return $this->value <= 0;
+	}
+
+	protected function getValue( RepresentsIntType|int $value ): int
+	{
+		return is_int( $value ) ? $value : $value->toInt();
 	}
 }

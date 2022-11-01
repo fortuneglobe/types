@@ -87,6 +87,55 @@ class IntTypeTest extends TestCase
 		self::assertEquals( $equals, $intType->equals( $anotherIntType ) );
 	}
 
+	public function IntEqualityValueDataProvider(): array
+	{
+		return [
+			[
+				new JustAnIntType( 12 ),
+				new JustAnIntType( 12 ),
+				true,
+			],
+			[
+				new JustAnIntType( 0 ),
+				new JustAnIntType( 0 ),
+				true,
+			],
+			[
+				new JustAnIntType( -100 ),
+				new JustAnIntType( -100 ),
+				true,
+			],
+			[
+				new JustAnIntType( -12 ),
+				new JustAnIntType( 12 ),
+				false,
+			],
+			[
+				new JustAnIntType( PHP_INT_MIN ),
+				new JustAnIntType( PHP_INT_MAX ),
+				false,
+			],
+			[
+				new JustAnIntType( 2 ),
+				new AnotherIntType( 2 ),
+				true,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider IntEqualityValueDataProvider
+	 *
+	 * @param AbstractIntType $intType
+	 * @param AbstractIntType $anotherIntType
+	 * @param bool            $equals
+	 */
+	public function testIntValueEquality( AbstractIntType $intType, AbstractIntType $anotherIntType, bool $equals ): void
+	{
+		self::assertEquals( $equals, $intType->isEqual( $anotherIntType ) );
+		self::assertEquals( $equals, $intType->isEqual( $anotherIntType->toInt() ) );
+	}
+
 	public function testIfIntTypeCanBeInstantiatedByAnotherIntType(): void
 	{
 		$intType = JustAnIntType::fromIntType( new AnotherIntType( 12 ) );
@@ -142,6 +191,12 @@ class IntTypeTest extends TestCase
 		self::assertEquals( $isEqual, $originalIntType->isEqual( $anotherIntType ) );
 		self::assertEquals( $isGreater, $originalIntType->isGreaterThan( $anotherIntType ) );
 		self::assertEquals( $isGreater || $isEqual, $originalIntType->isGreaterThanOrEqual( $anotherIntType ) );
+
+		self::assertEquals( $isLess, $originalIntType->isLessThan( $anotherIntType->toInt() ) );
+		self::assertEquals( $isLess || $isEqual, $originalIntType->isLessThanOrEqual( $anotherIntType->toInt() ) );
+		self::assertEquals( $isEqual, $originalIntType->isEqual( $anotherIntType->toInt() ) );
+		self::assertEquals( $isGreater, $originalIntType->isGreaterThan( $anotherIntType->toInt() ) );
+		self::assertEquals( $isGreater || $isEqual, $originalIntType->isGreaterThanOrEqual( $anotherIntType->toInt() ) );
 	}
 
 	public function AdditionDataProvider(): array
@@ -166,6 +221,7 @@ class IntTypeTest extends TestCase
 	public function testAddition( RepresentsIntType $originalIntType, RepresentsIntType $anotherIntType, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->add( $anotherIntType ) );
+		self::assertEquals( $expectedIntType, $originalIntType->add( $anotherIntType->toInt() ) );
 	}
 
 	public function SubtractionDataProvider(): array
@@ -189,6 +245,7 @@ class IntTypeTest extends TestCase
 	public function testSubtraction( RepresentsIntType $originalIntType, RepresentsIntType $anotherIntType, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->subtract( $anotherIntType ) );
+		self::assertEquals( $expectedIntType, $originalIntType->subtract( $anotherIntType->toInt() ) );
 	}
 
 	public function IncrementDataProvider(): array
@@ -214,6 +271,7 @@ class IntTypeTest extends TestCase
 	public function testIncrement( RepresentsIntType $originalIntType, int $value, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->increment( $value ) );
+		self::assertEquals( $expectedIntType, $originalIntType->increment( new JustAnIntType( $value ) ) );
 	}
 
 	public function DecrementDataProvider(): array
@@ -240,6 +298,7 @@ class IntTypeTest extends TestCase
 	public function testDecrement( RepresentsIntType $originalIntType, int $value, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->decrement( $value ) );
+		self::assertEquals( $expectedIntType, $originalIntType->decrement( new JustAnIntType( $value ) ) );
 	}
 
 	public function ToStringDataProvider(): array
@@ -303,6 +362,52 @@ class IntTypeTest extends TestCase
 		};
 
 		self::assertEquals( 2, $intType->toInt() );
+	}
+
+	public function testIsZero(): void
+	{
+		self::assertTrue( (new JustAnIntType( 0 ))->isZero() );
+		self::assertFalse( (new JustAnIntType( -1 ))->isZero() );
+		self::assertFalse( (new JustAnIntType( 1 ))->isZero() );
+	}
+
+	public function testIsPositive(): void
+	{
+		self::assertFalse( (new JustAnIntType( 0 ))->isPositive() );
+		self::assertFalse( (new JustAnIntType( -1 ))->isPositive() );
+		self::assertTrue( (new JustAnIntType( 1 ))->isPositive() );
+	}
+
+	public function testIsNegative(): void
+	{
+		self::assertFalse( (new JustAnIntType( 0 ))->isNegative() );
+		self::assertTrue( (new JustAnIntType( -1 ))->isNegative() );
+		self::assertFalse( (new JustAnIntType( 1 ))->isNegative() );
+	}
+
+	public function testIsPositiveOrZero(): void
+	{
+		self::assertTrue( (new JustAnIntType( 0 ))->isPositiveOrZero() );
+		self::assertFalse( (new JustAnIntType( -1 ))->isPositiveOrZero() );
+		self::assertTrue( (new JustAnIntType( 1 ))->isPositiveOrZero() );
+	}
+
+	public function testIsNegativeOrZero(): void
+	{
+		self::assertTrue( (new JustAnIntType( 0 ))->isNegativeOrZero() );
+		self::assertTrue( (new JustAnIntType( -1 ))->isNegativeOrZero() );
+		self::assertFalse( (new JustAnIntType( 1 ))->isNegativeOrZero() );
+	}
+
+	public function testTypeCasting(): void
+	{
+		self::assertEquals( 1.0, (new JustAnIntType( 1 ))->toFloat() );
+		self::assertEquals( -1.0, (new JustAnIntType( -1 ))->toFloat() );
+		self::assertEquals( 0.0, (new JustAnIntType( 0 ))->toFloat() );
+		self::assertEquals( '1', (new JustAnIntType( 1 ))->toString() );
+		self::assertEquals( '-1', (new JustAnIntType( -1 ))->toString() );
+		self::assertEquals( true, (new JustAnIntType( 1 ))->toBool() );
+		self::assertEquals( false, (new JustAnIntType( 0 ))->toBool() );
 	}
 }
 
