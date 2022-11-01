@@ -6,25 +6,41 @@ interface RepresentsIntType
 {
 	public function toInt(): int;
 
+	public function toString(): string;
+
+	public function toFloat(): float;
+
+	public function toBool(): bool;
+
 	public function __toString(): string;
 
 	public function equals( RepresentsIntType $type ): bool;
 
-	public function isGreaterThan( RepresentsIntType $intType ): bool;
+	public function isGreaterThan( RepresentsIntType|int $value ): bool;
 
-	public function isGreaterThanOrEqual( RepresentsIntType $intType ): bool;
+	public function isGreaterThanOrEqual( RepresentsIntType|int $value ): bool;
 
-	public function isLessThan( RepresentsIntType $intType ): bool;
+	public function isLessThan( RepresentsIntType|int $value ): bool;
 
-	public function isLessThanOrEqual( RepresentsIntType $intType ): bool;
+	public function isLessThanOrEqual( RepresentsIntType|int $value ): bool;
 
-	public function isEqual( RepresentsIntType $intType ): bool;
+	public function isEqual( RepresentsIntType|int $value ): bool;
 
-	public function add( RepresentsIntType $type ): RepresentsIntType;
+	public function isZero(): bool;
 
-	public function subtract( RepresentsIntType $type ): RepresentsIntType;
+	public function isPositive(): bool;
 
-	public function increment( int $value = 1 ): RepresentsIntType;
+	public function isNegative(): bool;
 
-	public function decrement( int $value = 1 ): RepresentsIntType;
+	public function isPositiveOrZero(): bool;
+
+	public function isNegativeOrZero(): bool;
+
+	public function add( RepresentsIntType|int $value ): RepresentsIntType;
+
+	public function subtract( RepresentsIntType|int $value ): RepresentsIntType;
+
+	public function increment( RepresentsIntType|int $value = 1 ): RepresentsIntType;
+
+	public function decrement( RepresentsIntType|int $value = 1 ): RepresentsIntType;
 }

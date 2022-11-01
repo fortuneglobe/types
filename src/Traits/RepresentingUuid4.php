@@ -20,7 +20,7 @@ trait RepresentingUuid4
 			return;
 		}
 
-		if ( preg_match( '!^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$!i', $value ) )
+		if ( preg_match( '!^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$!i', $value ) )
 		{
 			return;
 		}

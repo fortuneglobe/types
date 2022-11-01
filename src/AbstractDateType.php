@@ -56,7 +56,7 @@ abstract class AbstractDateType implements RepresentsDateType
 		{
 			$dateTimeImmutable = new \DateTimeImmutable( $dateTime, $timeZone );
 		}
-		catch ( \Throwable $exception )
+		catch ( \Throwable )
 		{
 			throw new ValidationException(
 				sprintf(

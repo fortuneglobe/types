@@ -29,9 +29,49 @@ abstract class AbstractFloatType implements RepresentsFloatType
 		return new static( $type->toFloat() );
 	}
 
-	public function equals( RepresentsFloatType $floatType ): bool
+	public function equals( RepresentsFloatType $type ): bool
 	{
-		return get_class( $floatType ) === get_class( $this ) && $this->isEqual( $floatType );
+		return get_class( $type ) === get_class( $this ) && $this->isEqual( $type );
+	}
+
+	/**
+	 * @param float|RepresentsFloatType $value
+	 *
+	 * @return RepresentsFloatType|static
+	 */
+	public function add( float|RepresentsFloatType $value ): RepresentsFloatType
+	{
+		return new static( $this->value + $this->getValue( $value ) );
+	}
+
+	/**
+	 * @param float|RepresentsFloatType $value
+	 *
+	 * @return RepresentsFloatType
+	 */
+	public function subtract( float|RepresentsFloatType $value ): RepresentsFloatType
+	{
+		return new static( $this->value - $this->getValue( $value ) );
+	}
+
+	/**
+	 * @param float|RepresentsFloatType $value
+	 *
+	 * @return RepresentsFloatType
+	 */
+	public function multiply( float|RepresentsFloatType $value ): RepresentsFloatType
+	{
+		return new static( $this->value * $this->getValue( $value ) );
+	}
+
+	/**
+	 * @param float|RepresentsFloatType $value
+	 *
+	 * @return RepresentsFloatType
+	 */
+	public function divide( float|RepresentsFloatType $value ): RepresentsFloatType
+	{
+		return new static( $this->value / $this->getValue( $value ) );
 	}
 
 	protected function validate( float $value ): void

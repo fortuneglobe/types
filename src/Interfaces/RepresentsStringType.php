@@ -6,9 +6,13 @@ interface RepresentsStringType
 {
 	public function equals( RepresentsStringType $type ): bool;
 
-	public function equalsValue( RepresentsStringType $type ): bool;
+	public function equalsValue( RepresentsStringType|string $value ): bool;
 
 	public function toString(): string;
+
+	public function toInt(): int;
+
+	public function toFloat(): float;
 
 	public function __toString(): string;
 }

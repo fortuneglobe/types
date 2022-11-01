@@ -1,5 +1,43 @@
 # CHANGELOG
 
+## [5.0.0] - 2022-11-01
+
+### Added
+
+* Methods to `RepresentsFloatType` 
+  * `toString`, 
+  * `add`, 
+  * `subtract`,
+  * `multiply`, 
+  * `divide`, 
+  * `isZero`, 
+  * `isPositive`,
+  * `isNegative`, 
+  * `isPositiveOrZero`, 
+  * `isNegativeOrZero`
+  
+* Methods to `RepresentsIntType`
+  * `toFloat`,
+  * `toBool`,
+  * `isZero`,
+  * `isPositive`,
+  * `isNegative`,
+  * `isPositiveOrZero`,
+  * `isNegativeOrZero`
+
+* Methods to `RepresentsStringType`
+  * `toFloat`,
+  * `toInt`,
+
+### Changed
+
+* Package for PHP >= 8.1
+* Now you can use also corresponding primitive data types for calculation and checking equality of values 
+
+---
+
+[5.0.0]: https://github.com/fortuneglobe/types/compare/4.0.0...5.0.0
+
 ## [4.0.0] - 2022-09-30
 
 ### Changed

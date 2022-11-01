@@ -35,43 +35,43 @@ abstract class AbstractIntType implements RepresentsIntType
 	}
 
 	/**
-	 * @param RepresentsIntType $type
+	 * @param RepresentsIntType $value
 	 *
 	 * @return RepresentsIntType|static
 	 */
-	public function add( RepresentsIntType $type ): RepresentsIntType
+	public function add( RepresentsIntType|int $value ): RepresentsIntType
 	{
-		return new static( $this->value + $type->toInt() );
+		return new static( $this->value + $this->getValue( $value ) );
 	}
 
 	/**
-	 * @param RepresentsIntType $type
+	 * @param RepresentsIntType $value
 	 *
 	 * @return RepresentsIntType|static
 	 */
-	public function subtract( RepresentsIntType $type ): RepresentsIntType
+	public function subtract( RepresentsIntType|int $value ): RepresentsIntType
 	{
-		return new static( $this->value - $type->toInt() );
+		return new static( $this->value - $this->getValue( $value ) );
 	}
 
 	/**
-	 * @param int $value
+	 * @param RepresentsIntType|int $value
 	 *
 	 * @return RepresentsIntType|static
 	 */
-	public function increment( int $value = 1 ): RepresentsIntType
+	public function increment( RepresentsIntType|int $value = 1 ): RepresentsIntType
 	{
-		return new static( $this->value + $value );
+		return new static( $this->value + $this->getValue( $value ) );
 	}
 
 	/**
-	 * @param int $value
+	 * @param RepresentsIntType|int $value
 	 *
 	 * @return RepresentsIntType|static
 	 */
-	public function decrement( int $value = 1 ): RepresentsIntType
+	public function decrement( RepresentsIntType|int $value = 1 ): RepresentsIntType
 	{
-		return new static( $this->value - $value );
+		return new static( $this->value - $this->getValue( $value ) );
 	}
 
 	protected function validate( int $value ): void

@@ -136,22 +136,22 @@ class FloatTypeTest extends TestCase
 	/**
 	 * @dataProvider FloatComparisonDataProvider
 	 *
-	 * @param int  $originalFloatValue
-	 * @param int  $anotherFloatValue
+	 * @param float  $originalFloatValue
+	 * @param float  $anotherFloatValue
 	 * @param bool $isLess
 	 * @param bool $isEqual
 	 * @param bool $isGreater
 	 */
-	public function testComparingIntValues( float $originalFloatValue, float $anotherFloatValue, bool $isLess, bool $isEqual, bool $isGreater ): void
+	public function testComparingFloatValues( float $originalFloatValue, float $anotherFloatValue, bool $isLess, bool $isEqual, bool $isGreater ): void
 	{
-		$originalIntType = new class($originalFloatValue) extends AbstractFloatType
+		$originalFloatType = new class($originalFloatValue) extends AbstractFloatType
 		{
 			public static function isValid( float $value ): bool
 			{
 				return true;
 			}
 		};
-		$anotherIntType  = new class($anotherFloatValue) extends AbstractFloatType
+		$anotherFloatType  = new class($anotherFloatValue) extends AbstractFloatType
 		{
 			public static function isValid( float $value ): bool
 			{
@@ -159,11 +159,17 @@ class FloatTypeTest extends TestCase
 			}
 		};
 
-		self::assertEquals( $isLess, $originalIntType->isLessThan( $anotherIntType ) );
-		self::assertEquals( $isLess || $isEqual, $originalIntType->isLessThanOrEqual( $anotherIntType ) );
-		self::assertEquals( $isEqual, $originalIntType->isEqual( $anotherIntType ) );
-		self::assertEquals( $isGreater, $originalIntType->isGreaterThan( $anotherIntType ) );
-		self::assertEquals( $isGreater || $isEqual, $originalIntType->isGreaterThanOrEqual( $anotherIntType ) );
+		self::assertEquals( $isLess, $originalFloatType->isLessThan( $anotherFloatType ) );
+		self::assertEquals( $isLess || $isEqual, $originalFloatType->isLessThanOrEqual( $anotherFloatType ) );
+		self::assertEquals( $isEqual, $originalFloatType->isEqual( $anotherFloatType ) );
+		self::assertEquals( $isGreater, $originalFloatType->isGreaterThan( $anotherFloatType ) );
+		self::assertEquals( $isGreater || $isEqual, $originalFloatType->isGreaterThanOrEqual( $anotherFloatType ) );
+
+		self::assertEquals( $isLess, $originalFloatType->isLessThan( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $isLess || $isEqual, $originalFloatType->isLessThanOrEqual( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $isEqual, $originalFloatType->isEqual( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $isGreater, $originalFloatType->isGreaterThan( $anotherFloatType->toFloat() ) );
+		self::assertEquals( $isGreater || $isEqual, $originalFloatType->isGreaterThanOrEqual( $anotherFloatType->toFloat() ) );
 	}
 
 	public function testInitializeClassUsingTrait(): void
@@ -174,5 +180,217 @@ class FloatTypeTest extends TestCase
 		};
 
 		self::assertEquals( 2.5, $floatType->toFloat() );
+	}
+
+	public function testIsZero(): void
+	{
+		self::assertTrue( (new AnyFloatType( 0 ))->isZero() );
+		self::assertFalse( (new AnyFloatType( -0.1 ))->isZero() );
+		self::assertFalse( (new AnyFloatType( 0.1 ))->isZero() );
+	}
+
+	public function testIsPositive(): void
+	{
+		self::assertFalse( (new AnyFloatType( 0 ))->isPositive() );
+		self::assertFalse( (new AnyFloatType( -0.1 ))->isPositive() );
+		self::assertTrue( (new AnyFloatType( 0.1 ))->isPositive() );
+	}
+
+	public function testIsNegative(): void
+	{
+		self::assertFalse( (new AnyFloatType( 0 ))->isNegative() );
+		self::assertTrue( (new AnyFloatType( -0.1 ))->isNegative() );
+		self::assertFalse( (new AnyFloatType( 0.1 ))->isNegative() );
+	}
+
+	public function testIsPositiveOrZero(): void
+	{
+		self::assertTrue( (new AnyFloatType( 0 ))->isPositiveOrZero() );
+		self::assertFalse( (new AnyFloatType( -0.1 ))->isPositiveOrZero() );
+		self::assertTrue( (new AnyFloatType( 0.1 ))->isPositiveOrZero() );
+	}
+
+	public function testIsNegativeOrZero(): void
+	{
+		self::assertTrue( (new AnyFloatType( 0 ))->isNegativeOrZero() );
+		self::assertTrue( (new AnyFloatType( -0.1 ))->isNegativeOrZero() );
+		self::assertFalse( (new AnyFloatType( 0.1 ))->isNegativeOrZero() );
+	}
+
+	public function FloatValueEqualityDataProvider(): array
+	{
+		return [
+			[
+				new AnyFloatType( 0 ),
+				new AnotherFloatType( 0 ),
+				true,
+			],
+			[
+				new AnyFloatType( 0.1 ),
+				new AnotherFloatType( 0.1 ),
+				true,
+			],
+			[
+				new AnyFloatType( -0.1 ),
+				new AnotherFloatType( -0.1 ),
+				true,
+			],
+			[
+				new AnyFloatType( 0.1 ),
+				new AnotherFloatType( 0.2 ),
+				false,
+			],
+			[
+				new AnyFloatType( -0.1 ),
+				new AnotherFloatType( -0.2 ),
+				false,
+			],
+			[
+				new AnyFloatType( 0 ),
+				new AnyFloatType( 0 ),
+				true,
+			],
+			[
+				new AnyFloatType( 0.1 ),
+				new AnyFloatType( 0.1 ),
+				true,
+			],
+			[
+				new AnyFloatType( -0.1 ),
+				new AnyFloatType( -0.1 ),
+				true,
+			],
+			[
+				new AnyFloatType( 0.1 ),
+				new AnyFloatType( 0.2 ),
+				false,
+			],
+			[
+				new AnyFloatType( -0.1 ),
+				new AnyFloatType( -0.2 ),
+				false,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider FloatValueEqualityDataProvider
+	 *
+	 * @param RepresentsFloatType $floatType
+	 * @param RepresentsFloatType $anotherFloatType
+	 * @param bool                $expectedEquals
+	 *
+	 * @return void
+	 */
+	public function testValueEquality( RepresentsFloatType $floatType, RepresentsFloatType $anotherFloatType, bool $expectedEquals ): void
+	{
+		self::assertEquals( $expectedEquals, $floatType->isEqual( $anotherFloatType ) );
+		self::assertEquals( $expectedEquals, $floatType->isEqual( $anotherFloatType->toFloat() ) );
+	}
+
+	public function AdditionDataProvider(): array
+	{
+		return [
+			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( 5 ) ],
+			[ new AnotherFloatType( 5 ), new AnyFloatType( 0 ), new AnotherFloatType( 5 ) ],
+			[ new AnyFloatType( 5 ), new AnyFloatType( 5 ), new AnyFloatType( 10 ) ],
+			[ new AnyFloatType( -5 ), new AnyFloatType( 10 ), new AnyFloatType( 5 ) ],
+		];
+	}
+
+	/**
+	 * @dataProvider AdditionDataProvider
+	 *
+	 * @param RepresentsFloatType $originalFloatType
+	 * @param RepresentsFloatType $anotherFloatType
+	 * @param RepresentsFloatType $expectedFloatType
+	 */
+	public function testAddition( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	{
+		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherFloatType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherFloatType->toFloat() ) );
+	}
+
+	public function SubtractionDataProvider(): array
+	{
+		return [
+			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( -5 ) ],
+			[ new AnotherFloatType( 5 ), new AnyFloatType( 0 ), new AnotherFloatType( 5 ) ],
+			[ new AnyFloatType( 5 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( -5 ), new AnyFloatType( 10 ), new AnyFloatType( -15 ) ],
+		];
+	}
+
+	/**
+	 * @dataProvider SubtractionDataProvider
+	 *
+	 * @param RepresentsFloatType $originalFloatType
+	 * @param RepresentsFloatType $anotherFloatType
+	 * @param RepresentsFloatType $expectedFloatType
+	 */
+	public function testSubtraction( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	{
+		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherFloatType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherFloatType->toFloat() ) );
+	}
+
+	public function MultiplicationDataProvider(): array
+	{
+		return [
+			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
+			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
+			[ new AnotherFloatType( 5 ), new AnyFloatType( 0 ), new AnotherFloatType( 0 ) ],
+			[ new AnyFloatType( 5 ), new AnyFloatType( 5 ), new AnyFloatType( 25 ) ],
+			[ new AnyFloatType( -5 ), new AnyFloatType( 10 ), new AnyFloatType( -50 ) ],
+		];
+	}
+
+	/**
+	 * @dataProvider MultiplicationDataProvider
+	 *
+	 * @param RepresentsFloatType $originalFloatType
+	 * @param RepresentsFloatType $anotherFloatType
+	 * @param RepresentsFloatType $expectedFloatType
+	 */
+	public function testMultiplication( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	{
+		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherFloatType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherFloatType->toFloat() ) );
+	}
+
+	public function DivisionDataProvider(): array
+	{
+		return [
+			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
+			[ new AnotherFloatType( 5 ), new AnyFloatType( 5 ), new AnotherFloatType( 1 ) ],
+			[ new AnyFloatType( 25 ), new AnyFloatType( 5 ), new AnyFloatType( 5 ) ],
+			[ new AnyFloatType( -50 ), new AnyFloatType( 10 ), new AnyFloatType( -5 ) ],
+		];
+	}
+
+	/**
+	 * @dataProvider DivisionDataProvider
+	 *
+	 * @param RepresentsFloatType $originalFloatType
+	 * @param RepresentsFloatType $anotherFloatType
+	 * @param RepresentsFloatType $expectedFloatType
+	 */
+	public function testDivision( RepresentsFloatType $originalFloatType, RepresentsFloatType $anotherFloatType, RepresentsFloatType $expectedFloatType ): void
+	{
+		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherFloatType ) );
+		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherFloatType->toFloat() ) );
+	}
+
+	public function testTypeCasting(): void
+	{
+		self::assertEquals( '1.0', (new AnyFloatType( 1 ))->toString(1) );
+		self::assertEquals( '-1.0', (new AnyFloatType( -1 ))->toString(1) );
+		self::assertEquals( '0.0', (new AnyFloatType( 0 ))->toString(1) );
+		self::assertEquals( '1.26', (new AnyFloatType( 1.255 ))->toString(2) );
+		self::assertEquals( '-1.26', (new AnyFloatType( -1.255 ))->toString(2) );
+		self::assertEquals( '1.25', (new AnyFloatType( 1.254 ))->toString(2) );
+		self::assertEquals( '-1.25', (new AnyFloatType( -1.254 ))->toString(2) );
 	}
 }
