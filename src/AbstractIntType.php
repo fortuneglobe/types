@@ -35,7 +35,7 @@ abstract class AbstractIntType implements RepresentsIntType
 	}
 
 	/**
-	 * @param RepresentsIntType $value
+	 * @param RepresentsIntType|int $value
 	 *
 	 * @return RepresentsIntType|static
 	 */
@@ -45,7 +45,7 @@ abstract class AbstractIntType implements RepresentsIntType
 	}
 
 	/**
-	 * @param RepresentsIntType $value
+	 * @param RepresentsIntType|int $value
 	 *
 	 * @return RepresentsIntType|static
 	 */
