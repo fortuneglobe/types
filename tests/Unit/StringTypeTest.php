@@ -145,14 +145,4 @@ class StringTypeTest extends TestCase
 
 		self::assertEquals( 'a', $stringType->toString() );
 	}
-
-	public function testTypeCasting(): void
-	{
-		self::assertEquals( 1.2, (new AnyStringType( '1.2' ))->toFloat() );
-		self::assertEquals( -1.2, (new AnyStringType( '-1.2' ))->toFloat() );
-		self::assertEquals( 0.0, (new AnyStringType( '0.0' ))->toFloat() );
-		self::assertEquals( 120, (new AnyStringType( '120' ))->toInt() );
-		self::assertEquals( -120, (new AnyStringType( '-120' ))->toInt() );
-		self::assertEquals( 0, (new AnyStringType( '0' ))->toInt() );
-	}
 }

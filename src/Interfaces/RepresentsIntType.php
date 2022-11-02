@@ -10,8 +10,6 @@ interface RepresentsIntType
 
 	public function toFloat(): float;
 
-	public function toBool(): bool;
-
 	public function __toString(): string;
 
 	public function equals( RepresentsIntType $type ): bool;

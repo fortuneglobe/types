@@ -10,9 +10,5 @@ interface RepresentsStringType
 
 	public function toString(): string;
 
-	public function toInt(): int;
-
-	public function toFloat(): float;
-
 	public function __toString(): string;
 }
