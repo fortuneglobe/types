@@ -28,11 +28,6 @@ trait RepresentingIntType
 		return (float)$this->value;
 	}
 
-	public function toBool(): bool
-	{
-		return (bool)$this->value;
-	}
-
 	public function __toString(): string
 	{
 		return $this->toString();

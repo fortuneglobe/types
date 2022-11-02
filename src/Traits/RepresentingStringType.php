@@ -25,14 +25,4 @@ trait RepresentingStringType
 	{
 		return $this->value;
 	}
-
-	public function toInt(): int
-	{
-		return (int)$this->value;
-	}
-
-	public function toFloat(): float
-	{
-		return (float)$this->value;
-	}
 }

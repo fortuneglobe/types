@@ -406,8 +406,6 @@ class IntTypeTest extends TestCase
 		self::assertEquals( 0.0, (new JustAnIntType( 0 ))->toFloat() );
 		self::assertEquals( '1', (new JustAnIntType( 1 ))->toString() );
 		self::assertEquals( '-1', (new JustAnIntType( -1 ))->toString() );
-		self::assertEquals( true, (new JustAnIntType( 1 ))->toBool() );
-		self::assertEquals( false, (new JustAnIntType( 0 ))->toBool() );
 	}
 }
 
