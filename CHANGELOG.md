@@ -1,38 +1,49 @@
 # CHANGELOG
 
+## [5.1.0] - 2022-11-23
+
+### Changed
+
+* `RepresentingArrayType` returns now null if offset is missing instead of throwing an exception
+* Now you can use also `RepresentsStringType` for `fromString` method of `RepresentingUuid4`
+
+---
+
+[5.1.0]: https://github.com/fortuneglobe/types/compare/5.0.0...5.1.0
+
 ## [5.0.0] - 2022-11-01
 
 ### Added
 
-* Methods to `RepresentsFloatType` 
-  * `toString`, 
-  * `add`, 
-  * `subtract`,
-  * `multiply`, 
-  * `divide`, 
-  * `isZero`, 
-  * `isPositive`,
-  * `isNegative`, 
-  * `isPositiveOrZero`, 
-  * `isNegativeOrZero`
-  
+* Methods to `RepresentsFloatType`
+    * `toString`,
+    * `add`,
+    * `subtract`,
+    * `multiply`,
+    * `divide`,
+    * `isZero`,
+    * `isPositive`,
+    * `isNegative`,
+    * `isPositiveOrZero`,
+    * `isNegativeOrZero`
+
 * Methods to `RepresentsIntType`
-  * `toFloat`,
-  * `toBool`,
-  * `isZero`,
-  * `isPositive`,
-  * `isNegative`,
-  * `isPositiveOrZero`,
-  * `isNegativeOrZero`
+    * `toFloat`,
+    * `toBool`,
+    * `isZero`,
+    * `isPositive`,
+    * `isNegative`,
+    * `isPositiveOrZero`,
+    * `isNegativeOrZero`
 
 * Methods to `RepresentsStringType`
-  * `toFloat`,
-  * `toInt`,
+    * `toFloat`,
+    * `toInt`,
 
 ### Changed
 
 * Package for PHP >= 8.1
-* Now you can use also corresponding primitive data types for calculation and checking equality of values 
+* Now you can use also corresponding primitive data types for calculation and checking equality of values
 
 ---
 
@@ -53,17 +64,17 @@
 ### Added
 
 * Abstract classes for lists of types
-  * `AbstractFloatTypeArray`
-  * `AbstractIntTypeArray`
-  * `AbstractStringTypeArray`
+    * `AbstractFloatTypeArray`
+    * `AbstractIntTypeArray`
+    * `AbstractStringTypeArray`
 * Traits for lists of types
-  * `RepresentingFloatTypeArray`
-  * `RepresentingIntTypeArray`
-  * `RepresentingStringTypeArray`
+    * `RepresentingFloatTypeArray`
+    * `RepresentingIntTypeArray`
+    * `RepresentingStringTypeArray`
 * Ready-To-Use implementations for lists of types
-  * `FloatTypeArray`
-  * `IntTypeArray`
-  * `StringTypeArray`
+    * `FloatTypeArray`
+    * `IntTypeArray`
+    * `StringTypeArray`
 
 ### Removed
 
@@ -120,7 +131,9 @@ It's a rework. All previous classes were removed or replaced.
 * Initial release
 
 [1.0.0]: https://github.com/fortuneglobe/types/compare/v0.9.1...v1.0.0
+
 [0.9.1]: https://github.com/fortuneglobe/types/compare/v0.9.0...v0.9.1
+
 [0.9.0]: https://github.com/fortuneglobe/types/tags/v0.9.0
 
 [#2]: https://github.com/fortuneglobe/types/issues/2
