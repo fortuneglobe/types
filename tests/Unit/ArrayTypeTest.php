@@ -327,4 +327,16 @@ class ArrayTypeTest extends TestCase
 		self::assertEquals( 'first', $arrayType->key() );
 		self::assertEquals( true, $arrayType->valid() );
 	}
+
+	public function testIfMissingOffsetReturnsNull(): void
+	{
+		$arrayType = new JustAnArrayType(
+			[
+				'one'   => 'a',
+				'two'   => 'b',
+				'three' => 'c',
+			]
+		);
+		self::assertNull( $arrayType['four'] );
+	}
 }

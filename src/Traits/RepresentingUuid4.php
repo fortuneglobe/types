@@ -3,29 +3,32 @@
 namespace Fortuneglobe\Types\Traits;
 
 use Fortuneglobe\Types\Exceptions\ValidationException;
+use Fortuneglobe\Types\Interfaces\RepresentsStringType;
 
 trait RepresentingUuid4
 {
 	private string $value;
 
-	protected function __construct( string $value )
+	protected function __construct( RepresentsStringType|string $value )
 	{
-		$this->value = $value;
+		$this->value = self::getValue( $value );
 	}
 
-	final public static function validate( string $value ): void
+	final public static function validate( RepresentsStringType|string $value ): void
 	{
-		if ( '00000000-0000-0000-0000-000000000000' === $value )
+		$stringValue = self::getValue( $value );
+
+		if ( '00000000-0000-0000-0000-000000000000' === $stringValue )
 		{
 			return;
 		}
 
-		if ( preg_match( '!^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$!i', $value ) )
+		if ( preg_match( '!^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$!i', $stringValue ) )
 		{
 			return;
 		}
 
-		throw new ValidationException( 'Invalid uuid: ' . $value );
+		throw new ValidationException( 'Invalid uuid: ' . $stringValue );
 	}
 
 	/**
@@ -46,11 +49,11 @@ trait RepresentingUuid4
 	}
 
 	/**
-	 * @param string $uuid4
+	 * @param RepresentsStringType|string $uuid4
 	 *
 	 * @return static
 	 */
-	public static function fromString( string $uuid4 ): self
+	public static function fromString( RepresentsStringType|string $uuid4 ): self
 	{
 		self::validate( $uuid4 );
 
@@ -65,5 +68,15 @@ trait RepresentingUuid4
 	public function __toString(): string
 	{
 		return $this->value;
+	}
+
+	protected static function getValue( RepresentsStringType|string $value ): string
+	{
+		if ( $value instanceof RepresentsStringType )
+		{
+			return $value->toString();
+		}
+
+		return $value;
 	}
 }

@@ -3,6 +3,9 @@
 namespace Fortuneglobe\Types\Tests\Unit;
 
 use Fortuneglobe\Types\Exceptions\ValidationException;
+use Fortuneglobe\Types\Interfaces\RepresentsStringType;
+use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
+use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Uuid4;
 use PHPUnit\Framework\TestCase;
 
@@ -43,15 +46,17 @@ class Uuid4Test extends TestCase
 		return [
 			[ 'c2667c9b-01b7-48e0-bb16-1df24837ec3f', ],
 			[ '00000000-0000-0000-0000-000000000000', ],
+			[ new AnyStringType( 'c2667c9b-01b7-48e0-bb16-1df24837ec3f' ), ],
+			[ new AnotherStringType( '00000000-0000-0000-0000-000000000000' ), ],
 		];
 	}
 
 	/**
 	 * @dataProvider ValidUuid4Provider
 	 *
-	 * @param string $validValue
+	 * @param RepresentsStringType|string $validValue
 	 */
-	public function testIfValidValueThrowsException( string $validValue ): void
+	public function testIfValidValueThrowsException( RepresentsStringType|string $validValue ): void
 	{
 		$this->expectNotToPerformAssertions();
 

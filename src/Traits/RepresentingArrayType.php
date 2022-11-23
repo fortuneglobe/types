@@ -48,12 +48,7 @@ trait RepresentingArrayType
 
 	public function offsetGet( $offset ): mixed
 	{
-		if ( !isset( $this->genericArray[ (string)$offset ] ) )
-		{
-			throw new \LogicException( 'Key not found in array: ' . $offset );
-		}
-
-		return $this->genericArray[ (string)$offset ];
+		return $this->genericArray[ (string)$offset ] ?? null;
 	}
 
 	public function offsetSet( $offset, $value ): void
