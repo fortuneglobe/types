@@ -5,6 +5,7 @@ namespace Fortuneglobe\Types\Tests\Unit;
 use Fortuneglobe\Types\Exceptions\ValidationException;
 use Fortuneglobe\Types\Interfaces\RepresentsStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
+use Fortuneglobe\Types\Tests\Unit\Samples\AnotherUuid4Type;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Uuid4;
 use PHPUnit\Framework\TestCase;
@@ -69,5 +70,90 @@ class Uuid4Test extends TestCase
 
 		self::assertTrue( preg_match( '!^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$!i', $uuid4->toString() ) > 0 );
 		self::assertSame( Uuid4::class, get_class( $uuid4 ) );
+	}
+
+	public function EqualsDataProvider(): array
+	{
+		return [
+			[
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				true,
+			],
+			[
+				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				false,
+			],
+			[
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( 'f1025ba6-bcaf-4257-8e48-58ebc96788b4' ),
+				false,
+			],
+			[
+				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '605879b6-14ae-4323-9994-7bcd6a53bb90' ),
+				false,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider EqualsDataProvider
+	 *
+	 * @param RepresentsStringType $uuid4
+	 * @param RepresentsStringType $anotherUuid4
+	 * @param bool                 $expectedResult
+	 *
+	 * @return void
+	 */
+	public function testEquals( RepresentsStringType $uuid4, RepresentsStringType $anotherUuid4, bool $expectedResult ): void
+	{
+		self::assertEquals( $expectedResult, $uuid4->equals( $anotherUuid4 ) );
+	}
+
+	public function EqualsValueDataProvider(): array
+	{
+		return [
+			[
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				true,
+			],
+			[
+				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				true,
+			],
+			[
+				new AnyStringType( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				true,
+			],
+			[
+				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( 'f1025ba6-bcaf-4257-8e48-58ebc96788b4' ),
+				false,
+			],
+			[
+				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				Uuid4::fromString( '605879b6-14ae-4323-9994-7bcd6a53bb90' ),
+				false,
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider EqualsValueDataProvider
+	 *
+	 * @param RepresentsStringType $uuid4
+	 * @param RepresentsStringType $anotherUuid4
+	 * @param bool                 $expectedResult
+	 *
+	 * @return array[]
+	 */
+	public function testEqualsValue( RepresentsStringType $uuid4, RepresentsStringType $anotherUuid4, bool $expectedResult ): void
+	{
+		self::assertEquals( $expectedResult, $uuid4->equalsValue( $anotherUuid4 ) );
 	}
 }
