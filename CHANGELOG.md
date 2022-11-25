@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [5.2.0] - 2022-11-25
+
+### Changed
+
+* Add interface `RepresentsStringType` to `Uuid4` and implement methods
+
+---
+
+[5.2.0]: https://github.com/fortuneglobe/types/compare/5.1.0...5.2.0
+
 ## [5.1.0] - 2022-11-23
 
 ### Changed
