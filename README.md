@@ -46,6 +46,7 @@ $clientId->equals( $anotherClientId ) //true
 $clientId->equals( $yetAnotherClientId ) //false
 $clientId->equals( $channelId ) //false
 $clientId->equalsValue( $channelId ) //true
+$clientId->equalsValue( 'gmo' ) //true
 
 $newClientId = ClientId::fromStringType( $anotherChannelId );
 get_class( $newClientId ); //ClientId
@@ -101,3 +102,25 @@ $anotherFulfillmentId = FulfillmentId::fromString( '9b856c0e-610a-4e38-9ea6-b9ac
 ````PHP
 $uuid4 = (string)Uuid4::generate();
 ````
+
+### Additional methods provided by trait RepresentingStringType and so also by AbstractStringType
+
+* `getLength`
+* `contains`
+* `split`
+* `splitRaw`
+* `matchRegularExpression`
+
+### Additional Methods provided by AbstractStringType
+
+* `trim`
+* `replace`
+* `substring`
+* `toLowerCase`
+* `toUpperCase`
+* `capitalizeFirst`
+* `deCapitalizeFirst`
+* `toKebabCase`
+* `toSnakeCase`
+* `toUpperCamelCase`
+* `toLowerCamelCase`

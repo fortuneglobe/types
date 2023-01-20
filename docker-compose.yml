@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  types_repo:
+    build:
+      dockerfile: Dockerfile
+      context: .docker/php
+    container_name: types_repo
+    restart: always
+    working_dir: /repo
+    volumes:
+      - ./:/repo
