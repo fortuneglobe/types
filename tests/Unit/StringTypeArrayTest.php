@@ -41,6 +41,14 @@ class StringTypeArrayTest extends TestCase
 		self::assertFalse( $object1->equals( $object2 ) );
 	}
 
+	public function testIfSameObjectWithDifferentValueCountIsNotEqual()
+	{
+		$object1 = (new StringTypeArray( [ new AnyStringType( 'a' ), new AnyStringType( 'b' ) ] ));
+		$object2 = (new StringTypeArray( [ new AnyStringType( 'a' ), new AnyStringType( 'b' ), new AnyStringType( 'b' ) ] ));
+
+		self::assertFalse( $object1->equals( $object2 ) );
+	}
+
 	public function testIfDifferentObjectWithSameValuesIsNotEqual()
 	{
 		$object1 = (new StringTypeArray( [ new AnotherStringType( 'a' ), new AnyStringType( 'b' ) ] ));
@@ -201,6 +209,7 @@ class StringTypeArrayTest extends TestCase
 		$stringTypes['a'] = new AnyStringType( 'b' );
 
 		self::assertEquals( new AnyStringType( 'b' ), $stringTypes['a'] );
+		self::assertTrue( isset( $stringTypes['a'] ) );
 
 		unset( $stringTypes['b'] );
 
@@ -244,8 +253,7 @@ class StringTypeArrayTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class([ new AnyStringType( 'a' ), new AnotherStringType( 'b' ) ]) extends AbstractStringTypeArray
-		{
+		new class([ new AnyStringType( 'a' ), new AnotherStringType( 'b' ) ]) extends AbstractStringTypeArray {
 			protected static function isValid( RepresentsStringType $stringType ): bool
 			{
 				return $stringType instanceof AnyStringType;
@@ -257,8 +265,7 @@ class StringTypeArrayTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ new AnyStringType( 'a' ), new AnyStringType( 'b' ) ]) extends AbstractStringTypeArray
-		{
+		new class([ new AnyStringType( 'a' ), new AnyStringType( 'b' ) ]) extends AbstractStringTypeArray {
 			protected static function isValid( RepresentsStringType $stringType ): bool
 			{
 				return $stringType instanceof AnyStringType;
@@ -270,8 +277,7 @@ class StringTypeArrayTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ new AnyStringType( 'a' ), new AnyStringType( 'b' ) ])
-		{
+		new class([ new AnyStringType( 'a' ), new AnyStringType( 'b' ) ]) {
 			use RepresentingStringArrayType;
 		};
 	}

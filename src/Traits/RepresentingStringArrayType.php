@@ -62,7 +62,7 @@ trait RepresentingStringArrayType
 		return isset( $this->stringTypes[ (string)$offset ] );
 	}
 
-	public function offsetGet( $offset ): RepresentsStringType
+	public function offsetGet( $offset ): RepresentsStringType|\Stringable|string
 	{
 		if ( !isset( $this->stringTypes[ (string)$offset ] ) )
 		{

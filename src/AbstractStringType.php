@@ -34,9 +34,9 @@ abstract class AbstractStringType implements RepresentsStringType
 		return get_class( $this ) === get_class( $type ) && $this->equalsValue( $type );
 	}
 
-	public function equalsValue( RepresentsStringType|string $value ): bool
+	public function equalsValue( RepresentsStringType|string|\Stringable $value ): bool
 	{
-		return $this->toString() === (is_string( $value ) ? $value : $value->toString());
+		return $this->toString() === (is_string( $value ) ? $value : (string)$value);
 	}
 
 	public function trim( string $characters = " \n\r\t\v\x00" ): self
@@ -44,7 +44,7 @@ abstract class AbstractStringType implements RepresentsStringType
 		return new static( trim( $this->toString(), $characters ) );
 	}
 
-	public function replace( array|string|RepresentsStringType $search, array|string|RepresentsStringType $replace ): self
+	public function replace( array|string|RepresentsStringType|\Stringable $search, array|string|RepresentsStringType|\Stringable $replace ): self
 	{
 		return new static( str_replace( is_array( $search ) ? $search : (string)$search, is_array( $replace ) ? $replace : (string)$replace, $this->toString() ) );
 	}

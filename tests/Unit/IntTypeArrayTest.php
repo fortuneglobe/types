@@ -41,6 +41,14 @@ class IntTypeArrayTest extends TestCase
 		self::assertFalse( $object1->equals( $object2 ) );
 	}
 
+	public function testIfSameObjectWithDifferentValueCountIsNotEqual()
+	{
+		$object1 = (new IntTypeArray( [ new JustAnIntType( 0 ), new JustAnIntType( 1 ) ] ));
+		$object2 = (new IntTypeArray( [ new JustAnIntType( 0 ), new JustAnIntType( 1 ), new JustAnIntType( 1 ) ] ));
+
+		self::assertFalse( $object1->equals( $object2 ) );
+	}
+
 	public function testIfDifferentObjectWithSameValuesIsNotEqual()
 	{
 		$object1 = (new IntTypeArray( [ new AnotherIntType( 0 ), new JustAnIntType( 1 ) ] ));
@@ -244,8 +252,7 @@ class IntTypeArrayTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class([ new JustAnIntType( 0 ), new AnotherIntType( 1 ) ]) extends AbstractIntTypeArray
-		{
+		new class([ new JustAnIntType( 0 ), new AnotherIntType( 1 ) ]) extends AbstractIntTypeArray {
 			protected static function isValid( RepresentsIntType $intType ): bool
 			{
 				return $intType instanceof JustAnIntType;
@@ -257,8 +264,7 @@ class IntTypeArrayTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ new JustAnIntType( 0 ), new JustAnIntType( 1 ) ]) extends AbstractIntTypeArray
-		{
+		new class([ new JustAnIntType( 0 ), new JustAnIntType( 1 ) ]) extends AbstractIntTypeArray {
 			protected static function isValid( RepresentsIntType $intType ): bool
 			{
 				return $intType instanceof JustAnIntType;
@@ -270,8 +276,7 @@ class IntTypeArrayTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ new JustAnIntType( 0 ), new JustAnIntType( 1 ) ])
-		{
+		new class([ new JustAnIntType( 0 ), new JustAnIntType( 1 ) ]) {
 			use RepresentingIntArrayType;
 		};
 	}

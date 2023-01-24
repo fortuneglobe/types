@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [5.4.0] - 2023-24-01
+
+### Added
+
+* Helper class `TypesToArrayHelper`: Converts array of types to array of primitive types 
+
+### Changed
+
+* Remove method `__toString()` from `RepresentsStringType` and extend `\Stringable` instead (no BC)
+* Add `\Stringable` as valid argument type to methods `equalsValue` and `replace` of `AbstractStringType`:
+
+---
+
+[5.4.0]: https://github.com/fortuneglobe/types/compare/5.3.0...5.4.0
+
 ## [5.3.0] - 2023-20-01
 
 ### Added
