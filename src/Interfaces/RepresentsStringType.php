@@ -2,13 +2,11 @@
 
 namespace Fortuneglobe\Types\Interfaces;
 
-interface RepresentsStringType
+interface RepresentsStringType extends \Stringable
 {
 	public function equals( RepresentsStringType $type ): bool;
 
 	public function equalsValue( RepresentsStringType|string $value ): bool;
 
 	public function toString(): string;
-
-	public function __toString(): string;
 }

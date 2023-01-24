@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoQuestionMarkStringType;
+use Fortuneglobe\Types\Tests\Unit\Samples\RandomStringableType;
 use Fortuneglobe\Types\Traits\RepresentingStringType;
 use PHPUnit\Framework\TestCase;
 
@@ -127,6 +128,12 @@ class StringTypeTest extends TestCase
 		self::assertSame( $expectedResult, $stringType->equalsValue( $anotherStringType->toString() ) );
 	}
 
+	public function testEqualsValueWithStringables(): void
+	{
+		self::assertTrue( (new AnyStringType( 'Test 1' ))->equalsValue( new RandomStringableType( 'Test 1' ) ) );
+		self::assertFalse( (new AnyStringType( 'Test 1' ))->equalsValue( new RandomStringableType( 'Test 2' ) ) );
+	}
+
 	public function testIsEmpty(): void
 	{
 		self::assertTrue( (new AnyStringType( '' ))->isEmpty() );
@@ -180,7 +187,14 @@ class StringTypeTest extends TestCase
 	public function testReplace(): void
 	{
 		self::assertEquals( new AnyStringType( 'I don\'t like red' ), (new AnyStringType( 'I don\'t like yellow' ))->replace( 'yellow', 'red' ) );
-		self::assertEquals( new AnyStringType( 'I don\'t like red' ), (new AnyStringType( 'I don\'t like yellow' ))->replace( new AnyStringType( 'yellow' ), new AnyStringType( 'red' ) ) );
+		self::assertEquals(
+			new AnyStringType( 'I don\'t like red' ),
+			(new AnyStringType( 'I don\'t like yellow' ))->replace( new AnyStringType( 'yellow' ), new AnyStringType( 'red' ) )
+		);
+		self::assertEquals(
+			new AnyStringType( 'I don\'t like red' ),
+			(new AnyStringType( 'I don\'t like yellow' ))->replace( new RandomStringableType( 'yellow' ), new RandomStringableType( 'red' ) )
+		);
 		self::assertEquals( new AnyStringType( 'I like red' ), (new AnyStringType( 'I don\'t like yellow' ))->replace( [ 'yellow', 'don\'t ' ], [ 'red', '' ] ) );
 
 		$anyStringType = new AnyStringType( 'I don\'t like blue' );

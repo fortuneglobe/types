@@ -33,7 +33,7 @@ trait RepresentingStringType
 		return strlen( $this->toString() );
 	}
 
-	public function contains( string|RepresentsStringType $needle ): bool
+	public function contains( string|RepresentsStringType|\Stringable $needle ): bool
 	{
 		return str_contains( $this->toString(), (string)$needle );
 	}
@@ -61,7 +61,7 @@ trait RepresentingStringType
 		return explode( $delimiter, $this->toString() );
 	}
 
-	public function matchRegularExpression( string|RepresentsStringType $pattern, &$matches = null, int $flags = 0, int $offset = 0 ): bool
+	public function matchRegularExpression( string|RepresentsStringType|\Stringable $pattern, &$matches = null, int $flags = 0, int $offset = 0 ): bool
 	{
 		$result = @preg_match( (string)$pattern, $this->toString(), $matches, $flags, $offset );
 

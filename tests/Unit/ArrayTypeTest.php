@@ -54,6 +54,11 @@ class ArrayTypeTest extends TestCase
 		self::assertFalse( (new JustAnArrayType( [ 'a' => 'b' ] ))->equals( new JustAnArrayType( [ 'b' => 'b' ] ) ) );
 	}
 
+	public function testIfSameClassWithAnotherValueCountIsNotEqual()
+	{
+		self::assertFalse( (new JustAnArrayType( [ 'a' => 'b' ] ))->equals( new JustAnArrayType( [ 'a' => 'b', 'c' => 'd' ] ) ) );
+	}
+
 	public function testIfAnotherClassWithSameValueIsNotEqual()
 	{
 		self::assertFalse( (new JustAnArrayType( [ 'a' => 'b' ] ))->equals( new AnotherArrayType( [ 'a' => 'b' ] ) ) );

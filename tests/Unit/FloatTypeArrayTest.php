@@ -7,6 +7,7 @@ use Fortuneglobe\Types\Exceptions\ValidationException;
 use Fortuneglobe\Types\FloatTypeArray;
 use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatType;
+use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatTypeArray;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyFloatType;
 use Fortuneglobe\Types\Traits\RepresentingFloatArrayType;
 use PHPUnit\Framework\TestCase;
@@ -41,10 +42,26 @@ class FloatTypeArrayTest extends TestCase
 		self::assertFalse( $object1->equals( $object2 ) );
 	}
 
-	public function testIfDifferentObjectWithSameValuesIsNotEqual()
+	public function testIfSameObjectWithDifferentValueCountIsNotEqual()
+	{
+		$object1 = (new FloatTypeArray( [ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ] ));
+		$object2 = (new FloatTypeArray( [ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ), new AnyFloatType( 1.5 ) ] ));
+
+		self::assertFalse( $object1->equals( $object2 ) );
+	}
+
+	public function testIfSameObjectWithDifferentTypesAndSameValuesIsNotEqual()
 	{
 		$object1 = (new FloatTypeArray( [ new AnotherFloatType( 0.5 ), new AnyFloatType( 1.5 ) ] ));
 		$object2 = (new FloatTypeArray( [ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ] ));
+
+		self::assertFalse( $object1->equals( $object2 ) );
+	}
+
+	public function testIfDifferentObjectWithSameTypesAndValuesIsNotEqual()
+	{
+		$object1 = (new FloatTypeArray( [ new AnotherFloatType( 0.5 ), new AnyFloatType( 1.5 ) ] ));
+		$object2 = (new AnotherFloatTypeArray( [ new AnotherFloatType( 0.5 ), new AnyFloatType( 1.5 ) ] ));
 
 		self::assertFalse( $object1->equals( $object2 ) );
 	}
@@ -190,7 +207,7 @@ class FloatTypeArrayTest extends TestCase
 	{
 		self::assertCount( 0, new FloatTypeArray( [] ) );
 		self::assertCount( 1, new FloatTypeArray( [ new AnyFloatType( 0.5 ) ] ) );
-		self::assertCount( 1, new FloatTypeArray( [ 0.5 => new AnyFloatType( 0.5 ) ] ) );
+		self::assertCount( 1, new FloatTypeArray( [ '0.5' => new AnyFloatType( 0.5 ) ] ) );
 		self::assertCount( 2, new FloatTypeArray( [ new AnyFloatType( 0.5 ), new AnotherFloatType( 0.5 ) ] ) );
 		self::assertCount( 3, new FloatTypeArray( [ new AnyFloatType( 0.5 ), new AnotherFloatType( 1.5 ), new AnotherFloatType( 2.5 ) ] ) );
 	}
@@ -244,8 +261,7 @@ class FloatTypeArrayTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class([ new AnyFloatType( 0.5 ), new AnotherFloatType( 1.5 ) ]) extends AbstractFloatTypeArray
-		{
+		new class([ new AnyFloatType( 0.5 ), new AnotherFloatType( 1.5 ) ]) extends AbstractFloatTypeArray {
 			protected static function isValid( RepresentsFloatType $floatType ): bool
 			{
 				return $floatType instanceof AnyFloatType;
@@ -257,8 +273,7 @@ class FloatTypeArrayTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ]) extends AbstractFloatTypeArray
-		{
+		new class([ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ]) extends AbstractFloatTypeArray {
 			protected static function isValid( RepresentsFloatType $floatType ): bool
 			{
 				return $floatType instanceof AnyFloatType;
@@ -270,8 +285,7 @@ class FloatTypeArrayTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ])
-		{
+		new class([ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ]) {
 			use RepresentingFloatArrayType;
 		};
 	}
