@@ -94,6 +94,25 @@ abstract class AbstractStringType implements RepresentsStringType
 		return $this->toCamelCase( true );
 	}
 
+	public function jsonSerialize(): string
+	{
+		return $this->value;
+	}
+
+	protected function validate( string $value ): void
+	{
+		if ( !static::isValid( $value ) )
+		{
+			throw new ValidationException(
+				sprintf(
+					'Invalid %s: %s',
+					(new \ReflectionClass( static::class ))->getShortName(),
+					$value
+				)
+			);
+		}
+	}
+
 	private function toCamelCase( bool $isLowerCamelCase ): self
 	{
 		$result = @preg_match_all( '#[^-_\s]*#', $this->toString(), $matches, PREG_PATTERN_ORDER );
@@ -118,19 +137,5 @@ abstract class AbstractStringType implements RepresentsStringType
 		}
 
 		return $this;
-	}
-
-	protected function validate( string $value ): void
-	{
-		if ( !static::isValid( $value ) )
-		{
-			throw new ValidationException(
-				sprintf(
-					'Invalid %s: %s',
-					(new \ReflectionClass( static::class ))->getShortName(),
-					$value
-				)
-			);
-		}
 	}
 }

@@ -407,6 +407,13 @@ class IntTypeTest extends TestCase
 		self::assertEquals( '1', (new JustAnIntType( 1 ))->toString() );
 		self::assertEquals( '-1', (new JustAnIntType( -1 ))->toString() );
 	}
+
+	public function testJsonSerialize(): void
+	{
+		$intType = new JustAnIntType( 255 );
+
+		self::assertSame( '255', json_encode( $intType, JSON_THROW_ON_ERROR ) );
+	}
 }
 
 

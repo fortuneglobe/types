@@ -56,8 +56,7 @@ class DateTypeTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class('2021-08-04 21:15:37') extends AbstractDateType
-		{
+		new class('2021-08-04 21:15:37') extends AbstractDateType {
 			public static function isValid( \DateTimeInterface $value ): bool
 			{
 				return false;
@@ -69,8 +68,7 @@ class DateTypeTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class('2021-08-04 21:15:37') extends AbstractDateType
-		{
+		new class('2021-08-04 21:15:37') extends AbstractDateType {
 			public static function isValid( \DateTimeInterface $value ): bool
 			{
 				return true;
@@ -128,11 +126,17 @@ class DateTypeTest extends TestCase
 
 	public function testInitializeClassUsingTrait(): void
 	{
-		$dateType = new class('2021-08-04 20:57:48')
-		{
+		$dateType = new class('2021-08-04 20:57:48') {
 			use RepresentingDateType;
 		};
 
 		self::assertEquals( '20210804', $dateType->format( 'Ymd' ) );
+	}
+
+	public function testJsonSerialize(): void
+	{
+		$date = new AnyDateType( '2023-03-01 07:33:35.843380' );
+
+		self::assertSame( '"2023-03-01 07:33:35.843380"', json_encode( $date, JSON_THROW_ON_ERROR ) );
 	}
 }

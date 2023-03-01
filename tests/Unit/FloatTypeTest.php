@@ -91,8 +91,7 @@ class FloatTypeTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class(12) extends AbstractFloatType
-		{
+		new class(12) extends AbstractFloatType {
 			public static function isValid( float $value ): bool
 			{
 				return false;
@@ -104,8 +103,7 @@ class FloatTypeTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class(12) extends AbstractFloatType
-		{
+		new class(12) extends AbstractFloatType {
 			public static function isValid( float $value ): bool
 			{
 				return true;
@@ -146,15 +144,13 @@ class FloatTypeTest extends TestCase
 	 */
 	public function testComparingFloatValues( float $originalFloatValue, float $anotherFloatValue, bool $isLess, bool $isEqual, bool $isGreater ): void
 	{
-		$originalFloatType = new class($originalFloatValue) extends AbstractFloatType
-		{
+		$originalFloatType = new class($originalFloatValue) extends AbstractFloatType {
 			public static function isValid( float $value ): bool
 			{
 				return true;
 			}
 		};
-		$anotherFloatType  = new class($anotherFloatValue) extends AbstractFloatType
-		{
+		$anotherFloatType  = new class($anotherFloatValue) extends AbstractFloatType {
 			public static function isValid( float $value ): bool
 			{
 				return true;
@@ -176,8 +172,7 @@ class FloatTypeTest extends TestCase
 
 	public function testInitializeClassUsingTrait(): void
 	{
-		$floatType = new class(2.5)
-		{
+		$floatType = new class(2.5) {
 			use RepresentingFloatType;
 		};
 
@@ -428,5 +423,12 @@ class FloatTypeTest extends TestCase
 		self::assertEquals( '-1.26', (new AnyFloatType( -1.255 ))->toString( 2 ) );
 		self::assertEquals( '1.25', (new AnyFloatType( 1.254 ))->toString( 2 ) );
 		self::assertEquals( '-1.25', (new AnyFloatType( -1.254 ))->toString( 2 ) );
+	}
+
+	public function testJsonSerialize(): void
+	{
+		$floatType = new AnyFloatType( 1.255 );
+
+		self::assertSame( '1.255', json_encode( $floatType, JSON_THROW_ON_ERROR ) );
 	}
 }

@@ -87,13 +87,12 @@ $incrementedQuantity = $quantity->increment( 10 ); //12
 ### Eigene Uuid4-Typen
 
 ````PHP
-class FulfillmentId
+class FulfillmentId extends Uuid4
 {
-    use RepresentingUuid4;
 }
 
 $fulfillmentId        = FulfillmentId::generate(); //some UUID4
-$anotherFulfillmentId = FulfillmentId::fromString( '9b856c0e-610a-4e38-9ea6-b9ac63cfb521' ); 
+$anotherFulfillmentId = new FulfillmentId( '9b856c0e-610a-4e38-9ea6-b9ac63cfb521' ); 
 ````
 
 ### Uuid4
@@ -139,3 +138,7 @@ $types = [
 
 TypesToArrayHelper::toStringArray( $types ); // [ 'one', 'two', 'three' ]
 ````
+
+## Json
+
+Alle Typen implementieren `\JsonSerializable` und können damit mit `json_encode` serialisiert werden.
