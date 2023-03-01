@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [6.0.0] - 2023-24-01
+
+### Added
+
+* `\JsonSerializable` to all interfaces 
+* Implementations for `\JsonSerializable`
+
+### Changed
+
+* Uuid4 now extends `AbstractStringType` 
+
+### Deleted
+
+* `RepresentingUuid4` is obsolete now. Instead, extend from `Uuid4` now.
+
+---
+
+[6.0.0]: https://github.com/fortuneglobe/types/compare/5.4.0...6.0.0
+
 ## [5.4.0] - 2023-24-01
 
 ### Added

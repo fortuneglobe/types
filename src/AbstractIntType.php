@@ -74,6 +74,11 @@ abstract class AbstractIntType implements RepresentsIntType
 		return new static( $this->value - $this->getValue( $value ) );
 	}
 
+	public function jsonSerialize(): int
+	{
+		return $this->value;
+	}
+
 	protected function validate( int $value ): void
 	{
 		if ( !static::isValid( $value ) )

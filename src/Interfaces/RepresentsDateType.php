@@ -2,7 +2,7 @@
 
 namespace Fortuneglobe\Types\Interfaces;
 
-interface RepresentsDateType
+interface RepresentsDateType extends \JsonSerializable
 {
 	public function equals( RepresentsDateType $dateType ): bool;
 

@@ -2,7 +2,7 @@
 
 namespace Fortuneglobe\Types\Interfaces;
 
-interface RepresentsStringType extends \Stringable
+interface RepresentsStringType extends \Stringable, \JsonSerializable
 {
 	public function equals( RepresentsStringType $type ): bool;
 

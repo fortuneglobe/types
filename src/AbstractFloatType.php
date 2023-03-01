@@ -75,6 +75,11 @@ abstract class AbstractFloatType implements RepresentsFloatType
 		return new static( $this->value / $this->getValue( $value ) );
 	}
 
+	public function jsonSerialize(): float
+	{
+		return $this->value;
+	}
+
 	protected function validate( float $value ): void
 	{
 		if ( !static::isValid( $value ) )

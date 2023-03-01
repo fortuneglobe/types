@@ -2,7 +2,7 @@
 
 namespace Fortuneglobe\Types\Interfaces;
 
-interface RepresentsFloatType
+interface RepresentsFloatType extends \JsonSerializable
 {
 	public function equals( RepresentsFloatType $type ): bool;
 

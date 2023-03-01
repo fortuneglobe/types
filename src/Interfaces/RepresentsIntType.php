@@ -2,7 +2,7 @@
 
 namespace Fortuneglobe\Types\Interfaces;
 
-interface RepresentsIntType
+interface RepresentsIntType extends \JsonSerializable
 {
 	public function toInt(): int;
 

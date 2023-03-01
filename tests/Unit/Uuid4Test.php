@@ -14,8 +14,8 @@ class Uuid4Test extends TestCase
 {
 	public function testToString(): void
 	{
-		self::assertSame( 'e403623c-934f-4b12-84ee-f358ac3291ba', Uuid4::fromString( 'e403623c-934f-4b12-84ee-f358ac3291ba' )->toString() );
-		self::assertSame( 'e403623c-934f-4b12-84ee-f358ac3291ba', (string)Uuid4::fromString( 'e403623c-934f-4b12-84ee-f358ac3291ba' ) );
+		self::assertSame( 'e403623c-934f-4b12-84ee-f358ac3291ba', (new Uuid4( 'e403623c-934f-4b12-84ee-f358ac3291ba' ))->toString() );
+		self::assertSame( 'e403623c-934f-4b12-84ee-f358ac3291ba', (string)new Uuid4( 'e403623c-934f-4b12-84ee-f358ac3291ba' ) );
 	}
 
 	public function InvalidUuid4Provider(): array
@@ -37,9 +37,9 @@ class Uuid4Test extends TestCase
 	public function testIfInvalidValueThrowsException( string $invalidValue ): void
 	{
 		$this->expectException( ValidationException::class );
-		$this->expectExceptionMessage( 'Invalid uuid: ' . $invalidValue );
+		$this->expectExceptionMessage( 'Invalid Uuid4: ' . $invalidValue );
 
-		Uuid4::fromString( $invalidValue );
+		new Uuid4( $invalidValue );
 	}
 
 	public function ValidUuid4Provider(): array
@@ -47,21 +47,19 @@ class Uuid4Test extends TestCase
 		return [
 			[ 'c2667c9b-01b7-48e0-bb16-1df24837ec3f', ],
 			[ '00000000-0000-0000-0000-000000000000', ],
-			[ new AnyStringType( 'c2667c9b-01b7-48e0-bb16-1df24837ec3f' ), ],
-			[ new AnotherStringType( '00000000-0000-0000-0000-000000000000' ), ],
 		];
 	}
 
 	/**
 	 * @dataProvider ValidUuid4Provider
 	 *
-	 * @param RepresentsStringType|string $validValue
+	 * @param string $validValue
 	 */
-	public function testIfValidValueThrowsException( RepresentsStringType|string $validValue ): void
+	public function testIfValidValueThrowsException( string $validValue ): void
 	{
 		$this->expectNotToPerformAssertions();
 
-		Uuid4::fromString( $validValue );
+		new Uuid4( $validValue );
 	}
 
 	public function testGeneratingUuid4(): void
@@ -76,23 +74,23 @@ class Uuid4Test extends TestCase
 	{
 		return [
 			[
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
 				true,
 			],
 			[
-				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new AnotherUuid4Type( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
 				false,
 			],
 			[
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( 'f1025ba6-bcaf-4257-8e48-58ebc96788b4' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( 'f1025ba6-bcaf-4257-8e48-58ebc96788b4' ),
 				false,
 			],
 			[
-				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '605879b6-14ae-4323-9994-7bcd6a53bb90' ),
+				new AnotherUuid4Type( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '605879b6-14ae-4323-9994-7bcd6a53bb90' ),
 				false,
 			],
 		];
@@ -116,28 +114,28 @@ class Uuid4Test extends TestCase
 	{
 		return [
 			[
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
 				true,
 			],
 			[
-				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new AnotherUuid4Type( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
 				true,
 			],
 			[
 				new AnyStringType( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
 				true,
 			],
 			[
-				Uuid4::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( 'f1025ba6-bcaf-4257-8e48-58ebc96788b4' ),
+				new Uuid4( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( 'f1025ba6-bcaf-4257-8e48-58ebc96788b4' ),
 				false,
 			],
 			[
-				AnotherUuid4Type::fromString( '4dce17db-3031-4de2-b428-962952e2166b' ),
-				Uuid4::fromString( '605879b6-14ae-4323-9994-7bcd6a53bb90' ),
+				new AnotherUuid4Type( '4dce17db-3031-4de2-b428-962952e2166b' ),
+				new Uuid4( '605879b6-14ae-4323-9994-7bcd6a53bb90' ),
 				false,
 			],
 		];

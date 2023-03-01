@@ -50,6 +50,11 @@ abstract class AbstractDateType implements RepresentsDateType
 		return $this->getTimezone()->getName() === $dateType->getTimezone()->getName() && $this->format( 'c' ) === $dateType->format( 'c' );
 	}
 
+	public function jsonSerialize(): string
+	{
+		return $this->dateTime->format( 'Y-m-d H:i:s.u' );
+	}
+
 	protected function validate( string $dateTime, ?\DateTimeZone $timeZone ): void
 	{
 		try

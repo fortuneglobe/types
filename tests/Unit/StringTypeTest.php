@@ -410,4 +410,11 @@ class StringTypeTest extends TestCase
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toUpperCamelCase()->toString() );
 	}
+
+	public function testJsonSerialize(): void
+	{
+		$stringType = new AnyStringType( 'This is json encoded' );
+
+		self::assertSame( '"This is json encoded"', json_encode( $stringType, JSON_THROW_ON_ERROR ) );
+	}
 }
