@@ -6,7 +6,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsStringType;
 
 class Uuid4 extends AbstractStringType
 {
-	public static function generate(): self
+	public static function generate(): static
 	{
 		$data = random_bytes( 16 );
 

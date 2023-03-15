@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [6.0.1] - 2023-15-03
+
+### Fixed
+
+* Change return type of method `generate` of `Uuid4` to static
+
+---
+
+[6.0.1]: https://github.com/fortuneglobe/types/compare/6.0.0...6.0.1
+
 ## [6.0.0] - 2023-24-01
 
 ### Added
