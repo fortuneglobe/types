@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
       context: .docker/php
     container_name: types_repo
+    restart: "no"
     working_dir: /repo
     volumes:
       - ./:/repo
