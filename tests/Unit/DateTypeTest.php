@@ -36,7 +36,7 @@ class DateTypeTest extends TestCase
 
 	public function testFromTimestamp(): void
 	{
-		self::assertEquals( new AnyDateType( '1970-01-01 00:00:00', new \DateTimeZone( '+0200' ) ), AnyDateType::fromTimestamp( 0, new \DateTimeZone( '+0200' ) ) );
+		self::assertEquals( new AnyDateType( '1970-01-01 00:00:00', new \DateTimeZone( '+0000' ) ), AnyDateType::fromTimestamp( 0, new \DateTimeZone( '+0000' ) ) );
 	}
 
 	public function testIfSameClassWithSameValueEquals()
