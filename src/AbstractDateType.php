@@ -20,11 +20,11 @@ abstract class AbstractDateType implements RepresentsDateType
 	abstract public static function isValid( \DateTimeInterface $value ): bool;
 
 	/**
-	 * @param RepresentsDateType $type
+	 * @param RepresentsDateType|\DateTimeInterface $type
 	 *
 	 * @return RepresentsDateType|static
 	 */
-	public static function fromDateType( RepresentsDateType $type ): RepresentsDateType
+	public static function fromDate( RepresentsDateType|\DateTimeInterface $type ): RepresentsDateType
 	{
 		return new static( $type->format( 'c' ), $type->getTimezone() );
 	}
@@ -40,19 +40,23 @@ abstract class AbstractDateType implements RepresentsDateType
 		return new static( (new \DateTimeImmutable( 'now', $timeZone ))->modify( '@' . $unixTimestamp )->format( 'c' ) );
 	}
 
-	public function equals( RepresentsDateType $dateType ): bool
+	public function sub( \DateInterval $dateInterval ): RepresentsDateType
 	{
-		return get_class( $dateType ) === get_class( $this ) && $this->equalsValue( $dateType );
+		$dateTime = $this->dateTime->sub( $dateInterval );
+
+		return new static( $dateTime->format( 'c' ), $dateTime->getTimezone() );
 	}
 
-	public function equalsValue( RepresentsDateType $dateType ): bool
+	public function add( \DateInterval $dateInterval ): RepresentsDateType
 	{
-		return $this->getTimezone()->getName() === $dateType->getTimezone()->getName() && $this->format( 'c' ) === $dateType->format( 'c' );
+		$dateTime = $this->dateTime->add( $dateInterval );
+
+		return new static( $dateTime->format( 'c' ), $dateTime->getTimezone() );
 	}
 
 	public function jsonSerialize(): string
 	{
-		return $this->dateTime->format( 'Y-m-d H:i:s.u' );
+		return $this->dateTime->format( 'Y-m-d H:i:s' );
 	}
 
 	protected function validate( string $dateTime, ?\DateTimeZone $timeZone ): void

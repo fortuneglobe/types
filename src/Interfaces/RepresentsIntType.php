@@ -2,15 +2,13 @@
 
 namespace Fortuneglobe\Types\Interfaces;
 
-interface RepresentsIntType extends \JsonSerializable
+interface RepresentsIntType extends \JsonSerializable, \Stringable
 {
 	public function toInt(): int;
 
 	public function toString(): string;
 
 	public function toFloat(): float;
-
-	public function __toString(): string;
 
 	public function equals( RepresentsIntType $type ): bool;
 
