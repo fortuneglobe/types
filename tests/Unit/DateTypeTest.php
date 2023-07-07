@@ -29,12 +29,14 @@ class DateTypeTest extends TestCase
 
 	public function testFromDateType(): void
 	{
-		self::assertEquals( new AnyDateType( '2021-08-04 21:15:37' ), AnyDateType::fromDateType( new AnotherDateType( '2021-08-04 21:15:37' ) ) );
+		self::assertEquals( new AnyDateType( '2021-08-04 21:15:37' ), AnyDateType::fromDate( new AnotherDateType( '2021-08-04 21:15:37' ) ) );
+		self::assertEquals( new AnyDateType( '2021-08-04 21:15:37' ), AnyDateType::fromDate( new \DateTimeImmutable( '2021-08-04 21:15:37' ) ) );
+		self::assertEquals( new AnyDateType( '2021-08-04 21:15:37' ), AnyDateType::fromDate( new \DateTime( '2021-08-04 21:15:37' ) ) );
 	}
 
 	public function testFromTimestamp(): void
 	{
-		self::assertEquals( new AnyDateType( '1970-01-01 00:00:00', new \DateTimeZone( '+0200' ) ), AnyDateType::fromTimestamp( 0, new \DateTimeZone( '+0200' ) ) );
+		self::assertEquals( new AnyDateType( '1970-01-01 00:00:00', new \DateTimeZone( '+0000' ) ), AnyDateType::fromTimestamp( 0, new \DateTimeZone( '+0000' ) ) );
 	}
 
 	public function testIfSameClassWithSameValueEquals()
@@ -135,8 +137,84 @@ class DateTypeTest extends TestCase
 
 	public function testJsonSerialize(): void
 	{
-		$date = new AnyDateType( '2023-03-01 07:33:35.843380' );
+		$date = new AnyDateType( '2023-03-01 07:33:35' );
 
-		self::assertSame( '"2023-03-01 07:33:35.843380"', json_encode( $date, JSON_THROW_ON_ERROR ) );
+		self::assertSame( '"2023-03-01 07:33:35"', json_encode( $date, JSON_THROW_ON_ERROR ) );
+	}
+
+	public function testAdd(): void
+	{
+		self::assertEquals( new AnyDateType( '2023-03-01 07:30:00' ), (new AnyDateType( '2023-03-01 04:30:00' ))->add( new \DateInterval( 'PT3H' ) ) );
+		self::assertEquals( new AnyDateType( '2023-03-04 07:30:00' ), (new AnyDateType( '2023-03-01 07:30:00' ))->add( new \DateInterval( 'P3D' ) ) );
+	}
+
+	public function testSub(): void
+	{
+		self::assertEquals( new AnyDateType( '2023-03-01 07:30:00' ), (new AnyDateType( '2023-03-01 10:30:00' ))->sub( new \DateInterval( 'PT3H' ) ) );
+		self::assertEquals( new AnyDateType( '2023-03-01 07:30:00' ), (new AnyDateType( '2023-03-04 07:30:00' ))->sub( new \DateInterval( 'P3D' ) ) );
+	}
+
+	public function testIsGreaterThan(): void
+	{
+		$dateTime = new AnyDateType( '2023-03-01 07:30:00' );
+
+		self::assertTrue( $dateTime->isGreaterThan( new AnyDateType( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThan( new AnyDateType( '2023-03-01 07:30:00' ) ) );
+		self::assertFalse( $dateTime->isGreaterThan( new AnyDateType( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isGreaterThan( new \DateTimeImmutable( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThan( new \DateTime( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThan( new AnotherDateType( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThan( '2023-03-01 07:29:59' ) );
+	}
+
+	public function testIsGreaterThanOrEqual(): void
+	{
+		$dateTime = new AnyDateType( '2023-03-01 07:30:00' );
+
+		self::assertTrue( $dateTime->isGreaterThanOrEqual( new AnyDateType( '2023-03-01 07:29:59' ) ) );
+		self::assertTrue( $dateTime->isGreaterThanOrEqual( new AnyDateType( '2023-03-01 07:30:00' ) ) );
+		self::assertFalse( $dateTime->isGreaterThanOrEqual( new AnyDateType( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isGreaterThanOrEqual( new \DateTimeImmutable( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThanOrEqual( new \DateTime( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThanOrEqual( new AnotherDateType( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isGreaterThanOrEqual( '2023-03-01 07:29:59' ) );
+	}
+
+	public function testIsLessThan(): void
+	{
+		$dateTime = new AnyDateType( '2023-03-01 07:30:00' );
+
+		self::assertTrue( $dateTime->isLessThan( new AnyDateType( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThan( new AnyDateType( '2023-03-01 07:30:00' ) ) );
+		self::assertFalse( $dateTime->isLessThan( new AnyDateType( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isLessThan( new \DateTimeImmutable( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThan( new \DateTime( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThan( new AnotherDateType( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThan( '2023-03-01 07:30:01' ) );
+	}
+
+	public function testIsLessThanOrEqual(): void
+	{
+		$dateTime = new AnyDateType( '2023-03-01 07:30:00' );
+
+		self::assertTrue( $dateTime->isLessThanOrEqual( new AnyDateType( '2023-03-01 07:30:01' ) ) );
+		self::assertTrue( $dateTime->isLessThanOrEqual( new AnyDateType( '2023-03-01 07:30:00' ) ) );
+		self::assertFalse( $dateTime->isLessThanOrEqual( new AnyDateType( '2023-03-01 07:29:59' ) ) );
+		self::assertFalse( $dateTime->isLessThanOrEqual( new \DateTimeImmutable( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThanOrEqual( new \DateTime( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThanOrEqual( new AnotherDateType( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->isLessThanOrEqual( '2023-03-01 07:30:01' ) );
+	}
+
+	public function testHasExpired(): void
+	{
+		$dateTime = new AnyDateType( '2023-03-01 07:30:00' );
+
+		self::assertTrue( $dateTime->hasExpired( null, new \DateTimeImmutable( '2023-03-01 07:30:01' ) ) );
+		self::assertFalse( $dateTime->hasExpired( null, new \DateTimeImmutable( '2023-03-01 07:30:00' ) ) );
+		self::assertFalse( $dateTime->hasExpired( null, new \DateTimeImmutable( '2023-03-01 07:29:59' ) ) );
+		self::assertTrue( $dateTime->hasExpired( new \DateInterval( 'PT15M' ), new \DateTimeImmutable( '2023-03-01 07:45:01' ) ) );
+		self::assertFalse( $dateTime->hasExpired( new \DateInterval( 'PT15M' ), new \DateTimeImmutable( '2023-03-01 07:45:00' ) ) );
+		self::assertFalse( $dateTime->hasExpired( new \DateInterval( 'PT15M' ), new \DateTimeImmutable( '2023-03-01 07:44:59' ) ) );
 	}
 }

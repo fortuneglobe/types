@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## [7.0.0] - 2023-07-07
+
+### Added
+
+* New methods to `RepresentsDateType` and it's implementations
+  * `sub`
+  * `add`
+  * `isLessThan`
+  * `isGreaterThan`
+  * `isGreaterThanOrEqual`
+  * `isLessThanOrEqual`
+  * `hasExpired`
+
+### Changed
+
+* json_serialize will now format date time to more common format `Y-m-d H:i:s` (without microseconds) instead of `Y-m-d H:i:s.u` (with microseconds)
+
+---
+
+[7.0.0]: https://github.com/fortuneglobe/types/compare/6.0.1...7.0.0
+
 ## [6.0.1] - 2023-15-03
 
 ### Fixed

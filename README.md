@@ -109,7 +109,7 @@ $uuid4 = (string)Uuid4::generate();
 * `splitRaw`
 * `matchRegularExpression`
 
-### Additional Methods provided by AbstractStringType
+### Additional methods provided by AbstractStringType
 
 * `trim`
 * `replace`
@@ -122,6 +122,45 @@ $uuid4 = (string)Uuid4::generate();
 * `toSnakeCase`
 * `toUpperCamelCase`
 * `toLowerCamelCase`
+
+### DateType
+
+````PHP
+class UpdatedOn extends AbstractDateType
+{
+    public static function isValid( \DateTimeInterface $value ): bool
+    {
+        return true;
+    }
+}
+
+$updatedOn = new UpdatedOn('2023-07-07 08:01:20', new \DateTimeZone( '+0200' ) ))->toString() ); //some UUID4
+$updatedOn->hasExpired(); //Checks if current date time is greater than date time of UpdatedOn. Returns boolean
+$updatedOn->hasExpired( new \DateInterval('PT15M') ); //Checks if current date time is greater than date time of UpdatedOn and added \DateInterval. Returns boolean
+````
+### RepresentsDateType extends following interfaces
+
+* `\Stringable`
+* `\JsonSerializable`
+
+### Methods provided by RepresentsDateType
+
+* `equals`
+* `equalsValue`
+* `toDateTime`
+* `sub`
+* `add`
+* `diff`
+* `isLessThan`
+* `isGreaterThan`
+* `isGreaterThanOrEqual`
+* `isLessThanOrEqual`
+* `hasExpired`
+* `format`
+* `getOffset`
+* `getTimestamp`
+* `getTimezone`
+* `toString`
 
 ## Helpers
 
