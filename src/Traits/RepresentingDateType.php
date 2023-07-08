@@ -25,12 +25,12 @@ trait RepresentingDateType
 
 	public function equalsValue( RepresentsDateType|\DateTimeInterface|string $value ): bool
 	{
-		return $this->format( 'c' ) === (is_string( $value ) ? (new \DateTimeImmutable( $value ))->format( 'c' ) : $value->format( 'c' ));
+		return $this->format( 'c' ) === $this->convertToDateTime( $value )->format( 'c' );
 	}
 
 	public function isGreaterThan( RepresentsDateType|\DateTimeInterface|string $value ): bool
 	{
-		return $this > (is_string( $value ) ? new \DateTimeImmutable( $value ) : $value);
+		return $this->toDateTime() > $this->convertToDateTime( $value );
 	}
 
 	public function isGreaterThanOrEqual( RepresentsDateType|\DateTimeInterface|string $value ): bool
@@ -40,7 +40,7 @@ trait RepresentingDateType
 
 	public function isLessThan( RepresentsDateType|\DateTimeInterface|string $value ): bool
 	{
-		return $this < (is_string( $value ) ? new \DateTimeImmutable( $value ) : $value);
+		return $this->toDateTime() < $this->convertToDateTime( $value );
 	}
 
 	public function isLessThanOrEqual( RepresentsDateType|\DateTimeInterface|string $value ): bool
@@ -98,5 +98,20 @@ trait RepresentingDateType
 	public function __toString(): string
 	{
 		return $this->toString();
+	}
+
+	private function convertToDateTime( RepresentsDateType|\DateTimeInterface|string $value )
+	{
+		if ( is_string( $value ) )
+		{
+			return new \DateTimeImmutable( $value );
+		}
+
+		if ( $value instanceof RepresentsDateType )
+		{
+			return $value->toDateTime();
+		}
+
+		return $value;
 	}
 }

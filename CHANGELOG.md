@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [7.0.1] - 2023-07-08
+
+### Fixed
+
+* Comparison methods of date types
+
+---
+
+[7.0.1]: https://github.com/fortuneglobe/types/compare/7.0.0...7.0.1
+
 ## [7.0.0] - 2023-07-07
 
 ### Added
