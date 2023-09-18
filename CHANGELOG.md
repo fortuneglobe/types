@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [7.0.2] - 2023-09-18
+
+### Fixed
+
+* Add missing type hint for `fromArrayType`
+
+---
+
+[7.0.2]: https://github.com/fortuneglobe/types/compare/7.0.1...7.0.2
+
 ## [7.0.1] - 2023-07-08
 
 ### Fixed
