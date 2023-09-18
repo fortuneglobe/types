@@ -29,6 +29,11 @@ abstract class AbstractArrayType implements RepresentsArrayType
 		return new static( json_decode( $json, true, 512, JSON_THROW_ON_ERROR ) );
 	}
 
+	/**
+	 * @param RepresentsArrayType $type
+	 *
+	 * @return RepresentsArrayType|static
+	 */
 	public static function fromArrayType( RepresentsArrayType $type ): RepresentsArrayType
 	{
 		return new static( $type->toArray() );
