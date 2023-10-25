@@ -10,6 +10,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroFloatType;
+use Fortuneglobe\Types\Tests\Unit\Samples\TransformableFloatType;
 use Fortuneglobe\Types\Traits\RepresentingFloatType;
 use PHPUnit\Framework\TestCase;
 
@@ -430,5 +431,12 @@ class FloatTypeTest extends TestCase
 		$floatType = new AnyFloatType( 1.255 );
 
 		self::assertSame( '1.255', json_encode( $floatType, JSON_THROW_ON_ERROR ) );
+	}
+
+	public function testTransformation(): void
+	{
+		$type = new TransformableFloatType( 1 );
+
+		self::assertEquals( 2.0, $type->toFloat() );
 	}
 }

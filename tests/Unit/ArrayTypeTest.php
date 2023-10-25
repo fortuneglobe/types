@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsArrayType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherArrayType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnArrayType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoNumberAsKeyArrayType;
+use Fortuneglobe\Types\Tests\Unit\Samples\TransformableArrayType;
 use PHPUnit\Framework\TestCase;
 
 class ArrayTypeTest extends TestCase
@@ -68,8 +69,7 @@ class ArrayTypeTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class([ 'a' => 'b' ]) extends AbstractArrayType
-		{
+		new class([ 'a' => 'b' ]) extends AbstractArrayType {
 			public static function isValid( array $genericArray ): bool
 			{
 				return false;
@@ -81,8 +81,7 @@ class ArrayTypeTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class([ 'a' => 'b' ]) extends AbstractArrayType
-		{
+		new class([ 'a' => 'b' ]) extends AbstractArrayType {
 			public static function isValid( array $genericArray ): bool
 			{
 				return true;
@@ -343,5 +342,15 @@ class ArrayTypeTest extends TestCase
 			]
 		);
 		self::assertNull( $arrayType['four'] );
+	}
+
+	public function testTransformation(): void
+	{
+		$testArray = [ 'c', 'b', 'a' ];
+
+		$arrayType = new TransformableArrayType( $testArray );
+
+		self::assertEquals( [ 'a', 'b', 'c' ], $arrayType->toArray() );
+		self::assertNotEquals( $testArray, $arrayType->toArray() );
 	}
 }

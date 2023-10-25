@@ -18,7 +18,7 @@ abstract class AbstractFloatTypeArray implements RepresentsArrayType
 	{
 		$this->validate( $floatTypes );
 
-		$this->floatTypes = $floatTypes;
+		$this->floatTypes = $this->transform( $floatTypes );
 	}
 
 	abstract protected static function isValid( RepresentsFloatType $floatType ): bool;
@@ -55,6 +55,14 @@ abstract class AbstractFloatTypeArray implements RepresentsArrayType
 		sort( $foreignClassAndValues );
 
 		return $currentClassAndValues === $foreignClassAndValues;
+	}
+
+	/**
+	 * @param RepresentsFloatType[] $floatTypes
+	 */
+	protected function transform( array $floatTypes ): array
+	{
+		return $floatTypes;
 	}
 
 	protected function validate( array $floatTypes ): void

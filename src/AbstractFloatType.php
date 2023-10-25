@@ -15,7 +15,7 @@ abstract class AbstractFloatType implements RepresentsFloatType
 	{
 		$this->validate( $value );
 
-		$this->value = $value;
+		$this->value = $this->transform( $value );
 	}
 
 	abstract public static function isValid( float $value ): bool;
@@ -78,6 +78,11 @@ abstract class AbstractFloatType implements RepresentsFloatType
 	public function jsonSerialize(): float
 	{
 		return $this->value;
+	}
+
+	protected function transform( float $value ): float
+	{
+		return $value;
 	}
 
 	protected function validate( float $value ): void

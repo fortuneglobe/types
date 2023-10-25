@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroIntType;
+use Fortuneglobe\Types\Tests\Unit\Samples\TransformableIntType;
 use Fortuneglobe\Types\Traits\RepresentingIntType;
 use PHPUnit\Framework\TestCase;
 
@@ -17,8 +18,7 @@ class IntTypeTest extends TestCase
 	{
 		$this->expectException( ValidationException::class );
 
-		new class(12) extends AbstractIntType
-		{
+		new class(12) extends AbstractIntType {
 			public static function isValid( int $value ): bool
 			{
 				return false;
@@ -30,8 +30,7 @@ class IntTypeTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		new class(12) extends AbstractIntType
-		{
+		new class(12) extends AbstractIntType {
 			public static function isValid( int $value ): bool
 			{
 				return true;
@@ -171,15 +170,13 @@ class IntTypeTest extends TestCase
 	 */
 	public function testComparingIntValues( int $originalIntValue, int $anotherIntValue, bool $isLess, bool $isEqual, bool $isGreater ): void
 	{
-		$originalIntType = new class($originalIntValue) extends AbstractIntType
-		{
+		$originalIntType = new class($originalIntValue) extends AbstractIntType {
 			public static function isValid( int $value ): bool
 			{
 				return true;
 			}
 		};
-		$anotherIntType  = new class($anotherIntValue) extends AbstractIntType
-		{
+		$anotherIntType  = new class($anotherIntValue) extends AbstractIntType {
 			public static function isValid( int $value ): bool
 			{
 				return true;
@@ -356,8 +353,7 @@ class IntTypeTest extends TestCase
 
 	public function testInitializeClassUsingTrait(): void
 	{
-		$intType = new class(2)
-		{
+		$intType = new class(2) {
 			use RepresentingIntType;
 		};
 
@@ -413,6 +409,13 @@ class IntTypeTest extends TestCase
 		$intType = new JustAnIntType( 255 );
 
 		self::assertSame( '255', json_encode( $intType, JSON_THROW_ON_ERROR ) );
+	}
+
+	public function testTransformation(): void
+	{
+		$type = new TransformableIntType( 1 );
+
+		self::assertEquals( 2, $type->toInt() );
 	}
 }
 

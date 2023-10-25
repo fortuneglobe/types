@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [7.1.0] - 2023-10-25
+
+### Changed
+
+* Add overrideable method `transform` to 
+  * `AbstractArrayType`
+  * `AbstractFloatType`
+  * `AbstractFloatTypeArray`
+  * `AbstractIntType`
+  * `AbstractIntTypeArray`
+  * `AbstractStringType`
+  * `AbstractStringTypeArray`
+
+---
+
+[7.1.0]: https://github.com/fortuneglobe/types/compare/7.0.2...7.1.0
+
 ## [7.0.2] - 2023-09-18
 
 ### Fixed

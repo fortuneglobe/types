@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsIntType;
 use Fortuneglobe\Types\IntTypeArray;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
+use Fortuneglobe\Types\Tests\Unit\Samples\TransformableIntTypeArray;
 use Fortuneglobe\Types\Traits\RepresentingIntArrayType;
 use PHPUnit\Framework\TestCase;
 
@@ -279,5 +280,21 @@ class IntTypeArrayTest extends TestCase
 		new class([ new JustAnIntType( 0 ), new JustAnIntType( 1 ) ]) {
 			use RepresentingIntArrayType;
 		};
+	}
+
+	public function testTransformation(): void
+	{
+		$testArray = [
+			new JustAnIntType( -1 ),
+			new JustAnIntType( -2 ),
+			new JustAnIntType( 3 ),
+			new JustAnIntType( 4 ),
+		];
+
+		$arrayType = new TransformableIntTypeArray( $testArray );
+
+		self::assertEquals( [ 3, 4, ], $arrayType->toArray() );
+
+		self::assertNotEquals( $testArray, $arrayType->toArray() );
 	}
 }

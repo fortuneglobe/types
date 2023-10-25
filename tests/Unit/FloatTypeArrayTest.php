@@ -9,6 +9,7 @@ use Fortuneglobe\Types\Interfaces\RepresentsFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatTypeArray;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyFloatType;
+use Fortuneglobe\Types\Tests\Unit\Samples\TransformableFloatTypeArray;
 use Fortuneglobe\Types\Traits\RepresentingFloatArrayType;
 use PHPUnit\Framework\TestCase;
 
@@ -288,5 +289,21 @@ class FloatTypeArrayTest extends TestCase
 		new class([ new AnyFloatType( 0.5 ), new AnyFloatType( 1.5 ) ]) {
 			use RepresentingFloatArrayType;
 		};
+	}
+
+	public function testTransformation(): void
+	{
+		$testArray = [
+			new AnyFloatType( -1 ),
+			new AnyFloatType( -2 ),
+			new AnyFloatType( 3 ),
+			new AnyFloatType( 4 ),
+		];
+
+		$arrayType = new TransformableFloatTypeArray( $testArray );
+
+		self::assertEquals( [ 3.0, 4.0, ], $arrayType->toArray() );
+
+		self::assertNotEquals( $testArray, $arrayType->toArray() );
 	}
 }
