@@ -14,7 +14,7 @@ abstract class AbstractIntType implements RepresentsIntType
 	{
 		$this->validate( $value );
 
-		$this->value = $value;
+		$this->value = $this->transform( $value );
 	}
 
 	abstract public static function isValid( int $value ): bool;
@@ -77,6 +77,11 @@ abstract class AbstractIntType implements RepresentsIntType
 	public function jsonSerialize(): int
 	{
 		return $this->value;
+	}
+
+	protected function transform( int $value ): int
+	{
+		return $value;
 	}
 
 	protected function validate( int $value ): void

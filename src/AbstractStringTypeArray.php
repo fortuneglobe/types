@@ -18,7 +18,7 @@ abstract class AbstractStringTypeArray implements RepresentsArrayType
 	{
 		self::validate( $stringTypes );
 
-		$this->stringTypes = $stringTypes;
+		$this->stringTypes = $this->transform( $stringTypes );
 	}
 
 	abstract protected static function isValid( RepresentsStringType $stringType ): bool;
@@ -50,6 +50,14 @@ abstract class AbstractStringTypeArray implements RepresentsArrayType
 		sort( $foreignClassAndValues );
 
 		return $currentClassAndValues === $foreignClassAndValues;
+	}
+
+	/**
+	 * @param RepresentsStringType[] $stringTypes
+	 */
+	protected function transform( array $stringTypes ): array
+	{
+		return $stringTypes;
 	}
 
 	protected static function validate( array $stringTypes ): void

@@ -14,7 +14,7 @@ abstract class AbstractStringType implements RepresentsStringType
 	{
 		$this->validate( $value );
 
-		$this->value = $value;
+		$this->value = $this->transform( $value );
 	}
 
 	abstract public static function isValid( string $value ): bool;
@@ -97,6 +97,11 @@ abstract class AbstractStringType implements RepresentsStringType
 	public function jsonSerialize(): string
 	{
 		return $this->value;
+	}
+
+	protected function transform( string $value ): string
+	{
+		return $value;
 	}
 
 	protected function validate( string $value ): void

@@ -18,7 +18,7 @@ abstract class AbstractIntTypeArray implements RepresentsArrayType
 	{
 		self::validate( $intTypes );
 
-		$this->intTypes = $intTypes;
+		$this->intTypes = $this->transform( $intTypes );
 	}
 
 	abstract protected static function isValid( RepresentsIntType $intType ): bool;
@@ -67,6 +67,14 @@ abstract class AbstractIntTypeArray implements RepresentsArrayType
 				);
 			}
 		}
+	}
+
+	/**
+	 * @param RepresentsIntType[] $intTypes
+	 */
+	protected function transform( array $intTypes ): array
+	{
+		return $intTypes;
 	}
 
 	private function getClassAndValueStrings( AbstractIntTypeArray $intTypes ): array

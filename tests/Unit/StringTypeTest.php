@@ -9,6 +9,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoQuestionMarkStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\RandomStringableType;
+use Fortuneglobe\Types\Tests\Unit\Samples\TransformableStringType;
 use Fortuneglobe\Types\Traits\RepresentingStringType;
 use PHPUnit\Framework\TestCase;
 
@@ -416,5 +417,12 @@ class StringTypeTest extends TestCase
 		$stringType = new AnyStringType( 'This is json encoded' );
 
 		self::assertSame( '"This is json encoded"', json_encode( $stringType, JSON_THROW_ON_ERROR ) );
+	}
+
+	public function testTransformation(): void
+	{
+		$type = new TransformableStringType( 'AbC' );
+
+		self::assertEquals( 'abc', $type->toString() );
 	}
 }

@@ -14,7 +14,7 @@ abstract class AbstractArrayType implements RepresentsArrayType
 	{
 		self::validate( $genericArray );
 
-		$this->genericArray = $genericArray;
+		$this->genericArray = $this->transform( $genericArray );
 	}
 
 	abstract public static function isValid( array $genericArray ): bool;
@@ -62,6 +62,11 @@ abstract class AbstractArrayType implements RepresentsArrayType
 		ksort( $secondArray );
 
 		return $firstArray === $secondArray;
+	}
+
+	protected function transform( array $genericArray ): array
+	{
+		return $genericArray;
 	}
 
 	protected static function validate( array $genericArray ): void

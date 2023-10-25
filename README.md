@@ -16,6 +16,9 @@ Die Typen können auch von den abstrakten Klassen abgeleitet werden. Diese imple
 
 Die abstrakten Klassen sind immutable.
 
+Bis auf AbstractDateType haben alle abstrakten Typ Klassen eine `transform` Methode, welche im Konstruktor nach der Validierung (durch `isValid`) aufgerufen wird. 
+Diese Methode verändert den Wert standardmäßig nicht. Sie kann vollständig überschrieben werden, falls der Wert verändert werden soll. 
+
 ## Anwendungsbeispiele
 
 ### Strings
