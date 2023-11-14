@@ -425,4 +425,25 @@ class StringTypeTest extends TestCase
 
 		self::assertEquals( 'abc', $type->toString() );
 	}
+
+	public function testContainsOneOf(): void
+	{
+		$type = new AnyStringType( 'OuterAndInnerText' );
+
+		self::assertFalse( $type->containsOneOf(  'abc', 'def', 'ghi') );
+		self::assertFalse( $type->containsOneOf(  'inner', 'def', 'ghi') );
+		self::assertTrue( $type->containsOneOf( 'abc', 'And', 'ghi') );
+		self::assertTrue( $type->containsOneOf(  'Inner', 'def', 'ghi') );
+		self::assertTrue( $type->containsOneOf(  'abc', 'def', 'Text') );
+		self::assertTrue( $type->containsOneOf(  'OuterAndInnerText', 'def', 'ghi') );
+	}
+
+	public function testIsOneOf(): void
+	{
+		$type = new AnyStringType( 'OuterAndInnerText' );
+
+		self::assertFalse( $type->isOneOf( 'abc', 'And', 'ghi') );
+		self::assertFalse( $type->isOneOf(  'outerAndInnerText', 'def', 'ghi') );
+		self::assertTrue( $type->isOneOf( 'abc', 'OuterAndInnerText', 'ghi') );
+	}
 }
