@@ -38,6 +38,32 @@ trait RepresentingStringType
 		return str_contains( $this->toString(), (string)$needle );
 	}
 
+	public function containsOneOf( string|RepresentsStringType|\Stringable...$values ): bool
+	{
+		foreach ( $values as $value )
+		{
+			if ( $this->contains( $value ) )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function isOneOf( string|RepresentsStringType|\Stringable...$values ): bool
+	{
+		foreach ( $values as $value )
+		{
+			if ( $this->value === (string)$value )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * @param string $delimiter
 	 *

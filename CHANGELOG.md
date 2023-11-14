@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [8.0.0] - 2023-11-14
+
+### Changed
+
+* Added existing string methods to interface `RepresentsStringType`:
+  * `trim`
+  * `replace`
+  * `substring`
+  * `toLowerCase`
+  * `toUpperCase`
+  * `capitalizeFirst`
+  * `deCapitalizeFirst`
+  * `toKebabCase`
+  * `toSnakeCase`
+  * `toUpperCamelCase`
+  * `toLowerCamelCase`
+  * `split`
+  * `splitRaw`
+  * `matchRegularExpression`
+  * `getLength`
+  * `isEmpty`
+  * `contains`
+* Added new methods to interface `RepresentsStringType` and trait `RepresentingStringType`
+  * `containsOneOf`
+  * `isOneOf`
+
+---
+
+[8.0.0]: https://github.com/fortuneglobe/types/compare/7.1.0...8.0.0
+
 ## [7.1.0] - 2023-10-25
 
 ### Changed
