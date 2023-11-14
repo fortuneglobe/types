@@ -2,7 +2,7 @@
 
 ## [8.0.0] - 2023-11-14
 
-### Changed
+### Added
 
 * Added existing string methods to interface `RepresentsStringType`:
   * `trim`
