@@ -315,6 +315,7 @@ class StringTypeTest extends TestCase
 			[ 'nice-kebab-Case', 'nice-kebab-Case' ],
 			[ 'nice_kebab_Case', 'nice-kebab-Case' ],
 			[ 'nice_-_-kebab_-_-Case', 'nice-kebab-Case' ],
+			[ 'Nice_but-WeirdKebabCase1-2$%#=?a-?b--c', 'Nice-but-Weird-Kebab-Case1-2-a-b-c' ],
 		];
 	}
 
@@ -342,6 +343,7 @@ class StringTypeTest extends TestCase
 			[ 'nice-snake-Case', 'nice_snake_Case' ],
 			[ 'nice_snake_Case', 'nice_snake_Case' ],
 			[ 'nice_-_-snake_-_-Case', 'nice_snake_Case' ],
+			[ 'Nice_but-WeirdKebabCase1--2$%#=?a_?b__c', 'Nice_but_Weird_Kebab_Case1_2_a_b_c' ],
 		];
 	}
 
@@ -357,6 +359,36 @@ class StringTypeTest extends TestCase
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toSnakeCase()->toString() );
 	}
+
+	public function DotCaseDataProvider(): array
+	{
+		return [
+			[ 'nice.dot.case', 'nice.dot.case' ],
+			[ 'Nice Dot Case', 'Nice.Dot.Case' ],
+			[ 'nice dot Case', 'nice.dot.Case' ],
+			[ 'nice  dot  Case', 'nice.dot.Case' ],
+			[ 'nice  dot  Case', 'nice.dot.Case' ],
+			[ 'nice-dot-Case', 'nice.dot.Case' ],
+			[ 'nice_dot_Case', 'nice.dot.Case' ],
+			[ 'nice_-_-dot-_-Case', 'nice.dot.Case' ],
+			[ 'nice.-.-dot.-.-Case', 'nice.dot.Case' ],
+			[ 'Nice.but-WeirdKebabCase1--2$%#=?a.?b..c', 'Nice.but.Weird.Kebab.Case1.2.a.b.c' ],
+		];
+	}
+
+	/**
+	 * @dataProvider DotCaseDataProvider
+	 *
+	 * @param string $anyString
+	 * @param string $expectedString
+	 *
+	 * @return void
+	 */
+	public function testToDotCase( string $anyString, string $expectedString ): void
+	{
+		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toDotCase()->toString() );
+	}
+
 
 	public function LowerCamelCaseDataProvider(): array
 	{

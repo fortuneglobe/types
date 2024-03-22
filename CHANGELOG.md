@@ -1,8 +1,24 @@
 # CHANGELOG
 
+## [8.1.0] - 2024-03-22
+
+### Added
+
+* Added string method to `AbstractStringType`
+  * `toDotCase`
+
+### Fixed
+
+* Fixed methods `toKebabCase` and `toSnakeCase`
+  * Now converting also special chars to the selected case
+
+---
+
+[8.1.0]: https://github.com/fortuneglobe/types/compare/8.0.0...8.1.0
+
 ## [8.0.0] - 2023-11-14
 
-### Changed
+### Added
 
 * Added existing string methods to interface `RepresentsStringType`:
   * `trim`

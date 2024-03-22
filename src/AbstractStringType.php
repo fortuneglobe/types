@@ -76,12 +76,17 @@ abstract class AbstractStringType implements RepresentsStringType
 
 	public function toKebabCase(): self
 	{
-		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/[-_\s]+/', '/--/', ], [ ' $0', '-', '-', ], $this->toString() ) );
+		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/[^-\da-zA-Z]+/', '/-+/', ], [ ' $0', '-', '-', ], $this->toString() ) );
 	}
 
 	public function toSnakeCase(): self
 	{
-		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/[-_\s]+/', '/__/' ], [ ' $0', '_', '_' ], $this->toString() ) );
+		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/\W+/', '/_+/', ], [ ' $0', '_', '_', ], $this->toString() ) );
+	}
+
+	public function toDotCase(): self
+	{
+		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/[^.\da-zA-Z]+/', '/\.+/', ], [ ' $0', '.', '.', ], $this->toString() ) );
 	}
 
 	public function toUpperCamelCase(): self
