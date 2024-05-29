@@ -91,12 +91,12 @@ abstract class AbstractStringType implements RepresentsStringType
 
 	public function toUpperCamelCase(): self
 	{
-		return $this->toCamelCase( false );
+		return new static( $this->toCamelCase( false ) );
 	}
 
 	public function toLowerCamelCase(): self
 	{
-		return $this->toCamelCase( true );
+		return new static( $this->toCamelCase( true ) );
 	}
 
 	public function jsonSerialize(): string
@@ -123,7 +123,7 @@ abstract class AbstractStringType implements RepresentsStringType
 		}
 	}
 
-	private function toCamelCase( bool $isLowerCamelCase ): self
+	private function toCamelCase( bool $isLowerCamelCase ): string
 	{
 		$result = @preg_match_all( '#[^-_\s]*#', $this->toString(), $matches, PREG_PATTERN_ORDER );
 
@@ -135,17 +135,41 @@ abstract class AbstractStringType implements RepresentsStringType
 		if ( $result > 0 && count( $matches[0] ) > 2 )
 		{
 			$camelCaseString = '';
-			foreach ( $matches[0] as $value )
+			foreach ( $matches[0] as $matchedValue )
 			{
-				if ( '' !== $value )
+				if ( '' !== $matchedValue )
 				{
-					$camelCaseString .= ucfirst( strtolower( $value ) );
+					$camelCaseString .= ucfirst( strtolower( $matchedValue ) );
 				}
 			}
 
-			return new static( $isLowerCamelCase ? lcfirst( $camelCaseString ) : $camelCaseString );
+			return $isLowerCamelCase ? lcfirst( $camelCaseString ) : $camelCaseString;
 		}
 
-		return $this;
+		$camelCaseValue = '';
+		$lastCharUpper  = false;
+		foreach ( str_split( $this->toString() ) as $index => $char )
+		{
+			if ( ctype_upper( $char ) )
+			{
+				if ( $lastCharUpper )
+				{
+					$camelCaseValue .= isset( $this->toString()[ $index + 1 ] ) && ctype_lower( $this->toString()[ $index + 1 ] ) ? $char : strtolower( $char );
+				}
+				else
+				{
+					$camelCaseValue .= $char;
+				}
+
+				$lastCharUpper = true;
+			}
+			else
+			{
+				$camelCaseValue .= $char;
+				$lastCharUpper  = false;
+			}
+		}
+
+		return $isLowerCamelCase ? lcfirst( $camelCaseValue ) : ucfirst( $camelCaseValue );
 	}
 }

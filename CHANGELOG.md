@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [8.1.1] - 2024-05-29
+
+### Fixed
+
+* Fixed camel cases
+
+---
+
+[8.1.1]: https://github.com/fortuneglobe/types/compare/8.1.0...8.1.1
+
 ## [8.1.0] - 2024-03-22
 
 ### Added
