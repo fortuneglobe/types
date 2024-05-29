@@ -393,6 +393,10 @@ class StringTypeTest extends TestCase
 	public function LowerCamelCaseDataProvider(): array
 	{
 		return [
+			[ 'Lower', 'lower' ],
+			[ 'LOWERCamelCase', 'lowerCamelCase' ],
+			[ 'LOWERCamelCASE', 'lowerCamelCase' ],
+			[ 'LowerCAMELCase', 'lowerCamelCase' ],
 			[ 'lowerCamelCase', 'lowerCamelCase' ],
 			[ 'Lower Camel Case', 'lowerCamelCase' ],
 			[ 'lower camel case', 'lowerCamelCase' ],
@@ -420,6 +424,8 @@ class StringTypeTest extends TestCase
 	public function UpperCamelCaseDataProvider(): array
 	{
 		return [
+			[ 'upper', 'Upper' ],
+			[ 'upperCAMELCase', 'UpperCamelCase' ],
 			[ 'UpperCamelCase', 'UpperCamelCase' ],
 			[ 'Upper Camel Case', 'UpperCamelCase' ],
 			[ 'upper camel case', 'UpperCamelCase' ],
