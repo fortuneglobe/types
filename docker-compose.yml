@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   types_repo:
     build:
@@ -10,3 +8,6 @@ services:
     working_dir: /repo
     volumes:
       - ./:/repo
+
+networks:
+  default:
