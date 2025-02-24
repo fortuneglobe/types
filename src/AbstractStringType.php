@@ -76,17 +76,41 @@ abstract class AbstractStringType implements RepresentsStringType
 
 	public function toKebabCase(): self
 	{
-		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/[^-\da-zA-Z]+/', '/-+/', ], [ ' $0', '-', '-', ], $this->toString() ) );
+		$value = $this->toString();
+
+		return new static(
+			preg_replace(
+				[ '/[^-\da-zA-Z]+/', '/-+/', ],
+				[ '-', '-', ],
+				$this->isCamelCase( $value ) ? $this->transformFromCamelCase( $value ) : $value
+			)
+		);
 	}
 
 	public function toSnakeCase(): self
 	{
-		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/\W+/', '/_+/', ], [ ' $0', '_', '_', ], $this->toString() ) );
+		$value = $this->toString();
+
+		return new static(
+			preg_replace(
+				[  '/\W+/', '/_+/', ],
+				[  '_', '_', ],
+				$this->isCamelCase( $value ) ? $this->transformFromCamelCase( $value ) : $value
+			)
+		);
 	}
 
 	public function toDotCase(): self
 	{
-		return new static( preg_replace( [ '/(?<!^)[A-Z]/', '/[^.\da-zA-Z]+/', '/\.+/', ], [ ' $0', '.', '.', ], $this->toString() ) );
+		$value = $this->toString();
+
+		return new static(
+			preg_replace(
+				[ '/[^.\da-zA-Z]+/', '/\.+/', ],
+				[  '.', '.', ],
+				$this->isCamelCase( $value ) ? $this->transformFromCamelCase( $value ) : $value
+			)
+		);
 	}
 
 	public function toUpperCamelCase(): self
@@ -171,5 +195,15 @@ abstract class AbstractStringType implements RepresentsStringType
 		}
 
 		return $isLowerCamelCase ? lcfirst( $camelCaseValue ) : ucfirst( $camelCaseValue );
+	}
+
+	private function isCamelCase( string $value ): bool
+	{
+		return preg_match( '/[a-z]*[A-Z][a-z]+/', $value ) > 0;
+	}
+
+	private function transformFromCamelCase( string $value ): string
+	{
+		return preg_replace( '/(?<!^)([A-Z]+[a-z]*)/', ' $0', $value );
 	}
 }

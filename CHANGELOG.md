@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [8.1.2] - 2025-24-24
+
+### Fixed
+
+* Fixed methods of `AbstractStringType`:
+  * `formatToKebabCase`
+  * `formatToSnakeCase`
+  * `formatToDotCase`
+  * Now the string will not be divided by every upper case letter, but only if there is a camel case in the string, e.g. thisIsCamelCase or ThisIsCamelCase
+
+---
+
 ## [8.1.1] - 2024-05-29
 
 ### Fixed

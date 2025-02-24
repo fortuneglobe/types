@@ -316,6 +316,8 @@ class StringTypeTest extends TestCase
 			[ 'nice_kebab_Case', 'nice-kebab-Case' ],
 			[ 'nice_-_-kebab_-_-Case', 'nice-kebab-Case' ],
 			[ 'Nice_but-WeirdKebabCase1-2$%#=?a-?b--c', 'Nice-but-Weird-Kebab-Case1-2-a-b-c' ],
+			[ 'NICE_KEBAB_CASE', 'NICE-KEBAB-CASE' ],
+			[ 'NICE.KEBAB.CASE', 'NICE-KEBAB-CASE' ],
 		];
 	}
 
@@ -343,7 +345,9 @@ class StringTypeTest extends TestCase
 			[ 'nice-snake-Case', 'nice_snake_Case' ],
 			[ 'nice_snake_Case', 'nice_snake_Case' ],
 			[ 'nice_-_-snake_-_-Case', 'nice_snake_Case' ],
-			[ 'Nice_but-WeirdKebabCase1--2$%#=?a_?b__c', 'Nice_but_Weird_Kebab_Case1_2_a_b_c' ],
+			[ 'Nice_but-WeirdSnakeCase1--2$%#=?a_?b__c', 'Nice_but_Weird_Snake_Case1_2_a_b_c' ],
+			[ 'NICE-SNAKE-CASE', 'NICE_SNAKE_CASE' ],
+			[ 'NICE.SNAKE.CASE', 'NICE_SNAKE_CASE' ],
 		];
 	}
 
@@ -372,7 +376,9 @@ class StringTypeTest extends TestCase
 			[ 'nice_dot_Case', 'nice.dot.Case' ],
 			[ 'nice_-_-dot-_-Case', 'nice.dot.Case' ],
 			[ 'nice.-.-dot.-.-Case', 'nice.dot.Case' ],
-			[ 'Nice.but-WeirdKebabCase1--2$%#=?a.?b..c', 'Nice.but.Weird.Kebab.Case1.2.a.b.c' ],
+			[ 'Nice.but-WeirdDotCase1--2$%#=?a.?b..c', 'Nice.but.Weird.Dot.Case1.2.a.b.c' ],
+			[ 'NICE-DOT-CASE', 'NICE.DOT.CASE' ],
+			[ 'NICE_DOT_CASE', 'NICE.DOT.CASE' ],
 		];
 	}
 
@@ -388,7 +394,6 @@ class StringTypeTest extends TestCase
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toDotCase()->toString() );
 	}
-
 
 	public function LowerCamelCaseDataProvider(): array
 	{
@@ -468,20 +473,20 @@ class StringTypeTest extends TestCase
 	{
 		$type = new AnyStringType( 'OuterAndInnerText' );
 
-		self::assertFalse( $type->containsOneOf(  'abc', 'def', 'ghi') );
-		self::assertFalse( $type->containsOneOf(  'inner', 'def', 'ghi') );
-		self::assertTrue( $type->containsOneOf( 'abc', 'And', 'ghi') );
-		self::assertTrue( $type->containsOneOf(  'Inner', 'def', 'ghi') );
-		self::assertTrue( $type->containsOneOf(  'abc', 'def', 'Text') );
-		self::assertTrue( $type->containsOneOf(  'OuterAndInnerText', 'def', 'ghi') );
+		self::assertFalse( $type->containsOneOf( 'abc', 'def', 'ghi' ) );
+		self::assertFalse( $type->containsOneOf( 'inner', 'def', 'ghi' ) );
+		self::assertTrue( $type->containsOneOf( 'abc', 'And', 'ghi' ) );
+		self::assertTrue( $type->containsOneOf( 'Inner', 'def', 'ghi' ) );
+		self::assertTrue( $type->containsOneOf( 'abc', 'def', 'Text' ) );
+		self::assertTrue( $type->containsOneOf( 'OuterAndInnerText', 'def', 'ghi' ) );
 	}
 
 	public function testIsOneOf(): void
 	{
 		$type = new AnyStringType( 'OuterAndInnerText' );
 
-		self::assertFalse( $type->isOneOf( 'abc', 'And', 'ghi') );
-		self::assertFalse( $type->isOneOf(  'outerAndInnerText', 'def', 'ghi') );
-		self::assertTrue( $type->isOneOf( 'abc', 'OuterAndInnerText', 'ghi') );
+		self::assertFalse( $type->isOneOf( 'abc', 'And', 'ghi' ) );
+		self::assertFalse( $type->isOneOf( 'outerAndInnerText', 'def', 'ghi' ) );
+		self::assertTrue( $type->isOneOf( 'abc', 'OuterAndInnerText', 'ghi' ) );
 	}
 }
