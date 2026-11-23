@@ -8,6 +8,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherUuid4Type;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Uuid4;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class Uuid4Test extends TestCase
@@ -18,7 +19,7 @@ class Uuid4Test extends TestCase
 		self::assertSame( 'e403623c-934f-4b12-84ee-f358ac3291ba', (string)new Uuid4( 'e403623c-934f-4b12-84ee-f358ac3291ba' ) );
 	}
 
-	public function InvalidUuid4Provider(): array
+	public static function InvalidUuid4Provider(): array
 	{
 		return [
 			[ 'c2667c9b-01b7-48e0-bb16-1df24837ec3f2', ],
@@ -30,10 +31,9 @@ class Uuid4Test extends TestCase
 	}
 
 	/**
-	 * @dataProvider InvalidUuid4Provider
-	 *
 	 * @param string $invalidValue
 	 */
+	#[DataProvider( 'InvalidUuid4Provider' )]
 	public function testIfInvalidValueThrowsException( string $invalidValue ): void
 	{
 		$this->expectException( ValidationException::class );
@@ -42,7 +42,7 @@ class Uuid4Test extends TestCase
 		new Uuid4( $invalidValue );
 	}
 
-	public function ValidUuid4Provider(): array
+	public static function ValidUuid4Provider(): array
 	{
 		return [
 			[ 'c2667c9b-01b7-48e0-bb16-1df24837ec3f', ],
@@ -51,10 +51,9 @@ class Uuid4Test extends TestCase
 	}
 
 	/**
-	 * @dataProvider ValidUuid4Provider
-	 *
 	 * @param string $validValue
 	 */
+	#[DataProvider( 'ValidUuid4Provider' )]
 	public function testIfValidValueThrowsException( string $validValue ): void
 	{
 		$this->expectNotToPerformAssertions();
@@ -70,7 +69,7 @@ class Uuid4Test extends TestCase
 		self::assertSame( Uuid4::class, get_class( $uuid4 ) );
 	}
 
-	public function EqualsDataProvider(): array
+	public static function EqualsDataProvider(): array
 	{
 		return [
 			[
@@ -97,20 +96,19 @@ class Uuid4Test extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsDataProvider
-	 *
 	 * @param RepresentsStringType $uuid4
 	 * @param RepresentsStringType $anotherUuid4
 	 * @param bool                 $expectedResult
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'EqualsDataProvider' )]
 	public function testEquals( RepresentsStringType $uuid4, RepresentsStringType $anotherUuid4, bool $expectedResult ): void
 	{
 		self::assertEquals( $expectedResult, $uuid4->equals( $anotherUuid4 ) );
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -142,14 +140,13 @@ class Uuid4Test extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param RepresentsStringType $uuid4
 	 * @param RepresentsStringType $anotherUuid4
 	 * @param bool                 $expectedResult
 	 *
 	 * @return array[]
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testEqualsValue( RepresentsStringType $uuid4, RepresentsStringType $anotherUuid4, bool $expectedResult ): void
 	{
 		self::assertEquals( $expectedResult, $uuid4->equalsValue( $anotherUuid4 ) );

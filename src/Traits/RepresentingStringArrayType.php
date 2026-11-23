@@ -49,7 +49,9 @@ trait RepresentingStringArrayType
 
 	public function valid(): bool
 	{
-		return isset( $this->stringTypes[ $this->key() ] );
+		$key = $this->key();
+
+		return null !== $key && isset( $this->stringTypes[ $key ] );
 	}
 
 	public function rewind(): void

@@ -9,6 +9,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\AnotherArrayType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnArrayType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoNumberAsKeyArrayType;
 use Fortuneglobe\Types\Tests\Unit\Samples\TransformableArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ArrayTypeTest extends TestCase
@@ -89,7 +90,7 @@ class ArrayTypeTest extends TestCase
 		};
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -231,12 +232,11 @@ class ArrayTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param RepresentsArrayType $arrayType
 	 * @param RepresentsArrayType $anotherArrayType
 	 * @param bool                $expectedResult
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testIfEqualsValueComparesOnlyValues( RepresentsArrayType $arrayType, RepresentsArrayType $anotherArrayType, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $arrayType->equalsValue( $anotherArrayType ) );

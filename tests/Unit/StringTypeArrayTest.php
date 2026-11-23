@@ -9,6 +9,7 @@ use Fortuneglobe\Types\StringTypeArray;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyStringType;
 use Fortuneglobe\Types\Traits\RepresentingStringArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class StringTypeArrayTest extends TestCase
@@ -72,7 +73,7 @@ class StringTypeArrayTest extends TestCase
 		new StringTypeArray( [ new AnyStringType( 'a' ), new AnotherStringType( 'b' ) ] );
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -165,12 +166,11 @@ class StringTypeArrayTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param StringTypeArray $stringTypes
 	 * @param StringTypeArray $anotherStringTypes
 	 * @param bool            $expectedResult
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testIfEqualsValueComparesOnlyValues( StringTypeArray $stringTypes, StringTypeArray $anotherStringTypes, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $stringTypes->equalsValues( $anotherStringTypes ) );

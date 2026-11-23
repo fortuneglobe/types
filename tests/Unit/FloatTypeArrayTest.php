@@ -11,6 +11,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\AnotherFloatTypeArray;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\TransformableFloatTypeArray;
 use Fortuneglobe\Types\Traits\RepresentingFloatArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FloatTypeArrayTest extends TestCase
@@ -82,7 +83,7 @@ class FloatTypeArrayTest extends TestCase
 		new FloatTypeArray( [ new AnyFloatType( 0.5 ), new AnotherFloatType( 1.5 ) ] );
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -175,12 +176,11 @@ class FloatTypeArrayTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param FloatTypeArray $floatTypes
 	 * @param FloatTypeArray $otherFloatTypes
 	 * @param bool           $expectedResult
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testIfEqualsValueComparesOnlyValues( FloatTypeArray $floatTypes, FloatTypeArray $otherFloatTypes, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $floatTypes->equalsValues( $otherFloatTypes ) );

@@ -11,12 +11,12 @@
 		}
 	],
 	"require": {
-		"php": ">=8.1",
+		"php": ">=8.5",
 		"ext-json": "*",
 		"ext-ctype": "*"
 	},
 	"require-dev": {
-		"tm/tooly-composer-script": "^1.4.1"
+		"phpunit/phpunit": "^12.5"
 	},
 	"autoload": {
 		"psr-4": {
@@ -29,20 +29,6 @@
 		}
 	},
 	"scripts": {
-		"post-install-cmd": "Tooly\\ScriptHandler::installPharTools",
-		"post-update-cmd": "Tooly\\ScriptHandler::installPharTools"
-	},
-	"extra": {
-		"tools": {
-			"phpunit": {
-				"url": "https://phar.phpunit.de/phpunit-9.phar",
-				"only-dev": true,
-				"force-replace": true
-			},
-			"phpmetrics": {
-				"url": "https://github.com/phpmetrics/PhpMetrics/releases/download/v2.3.2/phpmetrics.phar",
-				"only-dev": true
-			}
-		}
+		"test": "phpunit -c build/phpunit.xml"
 	}
 }

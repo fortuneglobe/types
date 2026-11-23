@@ -49,7 +49,9 @@ trait RepresentingIntArrayType
 
 	public function valid(): bool
 	{
-		return isset( $this->intTypes[ $this->key() ] );
+		$key = $this->key();
+
+		return null !== $key && isset( $this->intTypes[ $key ] );
 	}
 
 	public function rewind(): void

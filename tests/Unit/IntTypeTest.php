@@ -10,6 +10,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\TransformableIntType;
 use Fortuneglobe\Types\Traits\RepresentingIntType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class IntTypeTest extends TestCase
@@ -38,7 +39,7 @@ class IntTypeTest extends TestCase
 		};
 	}
 
-	public function IntTypeProvider(): array
+	public static function IntTypeProvider(): array
 	{
 		return [
 			[
@@ -75,18 +76,17 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider IntTypeProvider
-	 *
 	 * @param AbstractIntType $intType
 	 * @param AbstractIntType $anotherIntType
 	 * @param bool            $equals
 	 */
+	#[DataProvider( 'IntTypeProvider' )]
 	public function testIntTypeEquality( AbstractIntType $intType, AbstractIntType $anotherIntType, bool $equals ): void
 	{
 		self::assertEquals( $equals, $intType->equals( $anotherIntType ) );
 	}
 
-	public function IntEqualityValueDataProvider(): array
+	public static function IntEqualityValueDataProvider(): array
 	{
 		return [
 			[
@@ -123,12 +123,11 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider IntEqualityValueDataProvider
-	 *
 	 * @param AbstractIntType $intType
 	 * @param AbstractIntType $anotherIntType
 	 * @param bool            $equals
 	 */
+	#[DataProvider( 'IntEqualityValueDataProvider' )]
 	public function testIntValueEquality( AbstractIntType $intType, AbstractIntType $anotherIntType, bool $equals ): void
 	{
 		self::assertEquals( $equals, $intType->isEqual( $anotherIntType ) );
@@ -142,7 +141,7 @@ class IntTypeTest extends TestCase
 		self::assertEquals( new JustAnIntType( 12 ), $intType );
 	}
 
-	public function IntComparisonDataProvider(): array
+	public static function IntComparisonDataProvider(): array
 	{
 		return [
 			[ 0, 0, false, true, false ],
@@ -160,14 +159,13 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider IntComparisonDataProvider
-	 *
 	 * @param int  $originalIntValue
 	 * @param int  $anotherIntValue
 	 * @param bool $isLess
 	 * @param bool $isEqual
 	 * @param bool $isGreater
 	 */
+	#[DataProvider( 'IntComparisonDataProvider' )]
 	public function testComparingIntValues( int $originalIntValue, int $anotherIntValue, bool $isLess, bool $isEqual, bool $isGreater ): void
 	{
 		$originalIntType = new class($originalIntValue) extends AbstractIntType {
@@ -196,7 +194,7 @@ class IntTypeTest extends TestCase
 		self::assertEquals( $isGreater || $isEqual, $originalIntType->isGreaterThanOrEqual( $anotherIntType->toInt() ) );
 	}
 
-	public function AdditionDataProvider(): array
+	public static function AdditionDataProvider(): array
 	{
 		return [
 			[ new JustAnIntType( 0 ), new AnotherIntType( 0 ), new JustAnIntType( 0 ) ],
@@ -209,19 +207,18 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider AdditionDataProvider
-	 *
 	 * @param RepresentsIntType $originalIntType
 	 * @param RepresentsIntType $anotherIntType
 	 * @param RepresentsIntType $expectedIntType
 	 */
+	#[DataProvider( 'AdditionDataProvider' )]
 	public function testAddition( RepresentsIntType $originalIntType, RepresentsIntType $anotherIntType, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->add( $anotherIntType ) );
 		self::assertEquals( $expectedIntType, $originalIntType->add( $anotherIntType->toInt() ) );
 	}
 
-	public function SubtractionDataProvider(): array
+	public static function SubtractionDataProvider(): array
 	{
 		return [
 			[ new JustAnIntType( 0 ), new AnotherIntType( 0 ), new JustAnIntType( 0 ) ],
@@ -233,19 +230,18 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider SubtractionDataProvider
-	 *
 	 * @param RepresentsIntType $originalIntType
 	 * @param RepresentsIntType $anotherIntType
 	 * @param RepresentsIntType $expectedIntType
 	 */
+	#[DataProvider( 'SubtractionDataProvider' )]
 	public function testSubtraction( RepresentsIntType $originalIntType, RepresentsIntType $anotherIntType, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->subtract( $anotherIntType ) );
 		self::assertEquals( $expectedIntType, $originalIntType->subtract( $anotherIntType->toInt() ) );
 	}
 
-	public function IncrementDataProvider(): array
+	public static function IncrementDataProvider(): array
 	{
 		return [
 			[ new JustAnIntType( 0 ), 0, new JustAnIntType( 0 ) ],
@@ -259,19 +255,18 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider IncrementDataProvider
-	 *
 	 * @param RepresentsIntType $originalIntType
 	 * @param int               $value
 	 * @param RepresentsIntType $expectedIntType
 	 */
+	#[DataProvider( 'IncrementDataProvider' )]
 	public function testIncrement( RepresentsIntType $originalIntType, int $value, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->increment( $value ) );
 		self::assertEquals( $expectedIntType, $originalIntType->increment( new JustAnIntType( $value ) ) );
 	}
 
-	public function DecrementDataProvider(): array
+	public static function DecrementDataProvider(): array
 	{
 		return [
 			[ new JustAnIntType( 0 ), 0, new JustAnIntType( 0 ) ],
@@ -286,19 +281,18 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider DecrementDataProvider
-	 *
 	 * @param RepresentsIntType $originalIntType
 	 * @param int               $value
 	 * @param RepresentsIntType $expectedIntType
 	 */
+	#[DataProvider( 'DecrementDataProvider' )]
 	public function testDecrement( RepresentsIntType $originalIntType, int $value, RepresentsIntType $expectedIntType ): void
 	{
 		self::assertEquals( $expectedIntType, $originalIntType->decrement( $value ) );
 		self::assertEquals( $expectedIntType, $originalIntType->decrement( new JustAnIntType( $value ) ) );
 	}
 
-	public function ToStringDataProvider(): array
+	public static function ToStringDataProvider(): array
 	{
 		return [
 			[ new JustAnIntType( 1 ), '1' ],
@@ -308,17 +302,16 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider ToStringDataProvider
-	 *
 	 * @param RepresentsIntType $intType
 	 * @param string            $expectedString
 	 */
+	#[DataProvider( 'ToStringDataProvider' )]
 	public function testToString( RepresentsIntType $intType, string $expectedString ): void
 	{
 		self::assertSame( $expectedString, (string)$intType );
 	}
 
-	public function ToIntDataProvider(): array
+	public static function ToIntDataProvider(): array
 	{
 		return [
 			[ new JustAnIntType( 1 ), 1 ],
@@ -328,11 +321,10 @@ class IntTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider ToIntDataProvider
-	 *
 	 * @param RepresentsIntType $intType
 	 * @param int               $expectedInt
 	 */
+	#[DataProvider( 'ToIntDataProvider' )]
 	public function testToInt( RepresentsIntType $intType, int $expectedInt ): void
 	{
 		self::assertSame( $expectedInt, $intType->toInt() );

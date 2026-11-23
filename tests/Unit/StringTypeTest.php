@@ -11,11 +11,12 @@ use Fortuneglobe\Types\Tests\Unit\Samples\NoQuestionMarkStringType;
 use Fortuneglobe\Types\Tests\Unit\Samples\RandomStringableType;
 use Fortuneglobe\Types\Tests\Unit\Samples\TransformableStringType;
 use Fortuneglobe\Types\Traits\RepresentingStringType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class StringTypeTest extends TestCase
 {
-	public function ToStringDataProvider(): array
+	public static function ToStringDataProvider(): array
 	{
 		return [
 			[ new AnyStringType( 'test' ), 'test' ],
@@ -27,11 +28,10 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider ToStringDataProvider
-	 *
 	 * @param RepresentsStringType $stringType
 	 * @param string               $expectedString
 	 */
+	#[DataProvider( 'ToStringDataProvider' )]
 	public function testToString( RepresentsStringType $stringType, string $expectedString ): void
 	{
 		self::assertSame( $expectedString, $stringType->toString() );
@@ -90,7 +90,7 @@ class StringTypeTest extends TestCase
 		};
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -117,12 +117,11 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param RepresentsStringType $stringType
 	 * @param RepresentsStringType $anotherStringType
 	 * @param bool                 $expectedResult
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testIfEqualsValueComparesOnlyValues( RepresentsStringType $stringType, RepresentsStringType $anotherStringType, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $stringType->equalsValue( $anotherStringType ) );
@@ -156,7 +155,7 @@ class StringTypeTest extends TestCase
 		self::assertEquals( 18, (new AnyStringType( 'Count this please!' ))->getLength() );
 	}
 
-	public function TrimDataProvider(): array
+	public static function TrimDataProvider(): array
 	{
 		return [
 			[ ' Trim this! ', 'Trim this!' ],
@@ -166,13 +165,12 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider TrimDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $expectedString
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'TrimDataProvider' )]
 	public function testTrim( string $anyString, string $expectedString ): void
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->trim() );
@@ -202,7 +200,7 @@ class StringTypeTest extends TestCase
 		self::assertNotSame( $anyStringType, $anyStringType->replace( 'yellow', 'red' ) );
 	}
 
-	public function SubstringDataProvider(): array
+	public static function SubstringDataProvider(): array
 	{
 		return [
 			[ 'abcdef', -1, null, 'f' ],
@@ -216,8 +214,6 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider SubstringDataProvider
-	 *
 	 * @param string   $anyString
 	 * @param int      $offset
 	 * @param int|null $length
@@ -225,6 +221,7 @@ class StringTypeTest extends TestCase
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'SubstringDataProvider' )]
 	public function testSubstring( string $anyString, int $offset, ?int $length, string $expectedString ): void
 	{
 		self::assertEquals( new AnyStringType( $expectedString ), (new AnyStringType( $anyString ))->substring( $offset, $length ) );
@@ -270,7 +267,7 @@ class StringTypeTest extends TestCase
 		self::assertEquals( new AnyStringType( 'myId Ok!' ), (new AnyStringType( 'MyId Ok!' ))->deCapitalizeFirst() );
 	}
 
-	public function RegularExpressionDataProvider(): array
+	public static function RegularExpressionDataProvider(): array
 	{
 		return [
 			[ 'This is a small text', '/small/', true ],
@@ -280,14 +277,13 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider RegularExpressionDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $pattern
 	 * @param bool   $expectedResult
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'RegularExpressionDataProvider' )]
 	public function testMatchRegularExpression( string $anyString, string $pattern, bool $expectedResult )
 	{
 		@preg_match( $pattern, $anyString, $expectedMatches );
@@ -304,7 +300,7 @@ class StringTypeTest extends TestCase
 		(new AnyStringType( 'Abc' ))->matchRegularExpression( '}{' );
 	}
 
-	public function KebabCaseDataProvider(): array
+	public static function KebabCaseDataProvider(): array
 	{
 		return [
 			[ 'nice-kebab-case', 'nice-kebab-case' ],
@@ -322,19 +318,18 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider KebabCaseDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $expectedString
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'KebabCaseDataProvider' )]
 	public function testToKebabCase( string $anyString, string $expectedString ): void
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toKebabCase()->toString() );
 	}
 
-	public function SnakeCaseDataProvider(): array
+	public static function SnakeCaseDataProvider(): array
 	{
 		return [
 			[ 'nice_snake_case', 'nice_snake_case' ],
@@ -352,19 +347,18 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider SnakeCaseDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $expectedString
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'SnakeCaseDataProvider' )]
 	public function testToSnakeCase( string $anyString, string $expectedString ): void
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toSnakeCase()->toString() );
 	}
 
-	public function DotCaseDataProvider(): array
+	public static function DotCaseDataProvider(): array
 	{
 		return [
 			[ 'nice.dot.case', 'nice.dot.case' ],
@@ -383,19 +377,18 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider DotCaseDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $expectedString
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'DotCaseDataProvider' )]
 	public function testToDotCase( string $anyString, string $expectedString ): void
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toDotCase()->toString() );
 	}
 
-	public function LowerCamelCaseDataProvider(): array
+	public static function LowerCamelCaseDataProvider(): array
 	{
 		return [
 			[ 'Lower', 'lower' ],
@@ -414,19 +407,18 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider LowerCamelCaseDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $expectedString
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'LowerCamelCaseDataProvider' )]
 	public function testToLowerCamelCase( string $anyString, string $expectedString ): void
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toLowerCamelCase()->toString() );
 	}
 
-	public function UpperCamelCaseDataProvider(): array
+	public static function UpperCamelCaseDataProvider(): array
 	{
 		return [
 			[ 'upper', 'Upper' ],
@@ -443,13 +435,12 @@ class StringTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider UpperCamelCaseDataProvider
-	 *
 	 * @param string $anyString
 	 * @param string $expectedString
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'UpperCamelCaseDataProvider' )]
 	public function testToUpperCamelCase( string $anyString, string $expectedString ): void
 	{
 		self::assertEquals( $expectedString, (new AnyStringType( $anyString ))->toUpperCamelCase()->toString() );

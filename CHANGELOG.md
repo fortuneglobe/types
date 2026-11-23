@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [9.0.0] - 2026-11-23
+
+### Changed
+
+* **[BC break]** Requires PHP >= 8.5
+* Dev tooling: `phpunit/phpunit` ^12.5 as dev dependency (`composer test`) instead of tool phars installed via the abandoned `tm/tooly-composer-script`; tests migrated to PHPUnit 12; removed the outdated CircleCI configuration
+
+### Fixed
+
+* `valid()` of the array/attribute iterators no longer uses `null` as array offset at the end of an iteration (deprecated since PHP 8.5)
+
+### Removed
+
+* **[BC break]** `RepresentingDateType::__wakeup()`, which fails on PHP 8.5 (`DateTimeImmutable::__wakeup()` is deprecated); unserializing works without it
+
+---
+
+[9.0.0]: https://github.com/fortuneglobe/types/compare/8.1.2...9.0.0
+
 ## [8.1.2] - 2025-02-24
 
 ### Fixed

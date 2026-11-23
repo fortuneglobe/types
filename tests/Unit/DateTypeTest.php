@@ -9,6 +9,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\After2000DateType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnotherDateType;
 use Fortuneglobe\Types\Tests\Unit\Samples\AnyDateType;
 use Fortuneglobe\Types\Traits\RepresentingDateType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DateTypeTest extends TestCase
@@ -88,7 +89,7 @@ class DateTypeTest extends TestCase
 		new AnyDateType( $invalidDateTime );
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -115,12 +116,11 @@ class DateTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param RepresentsDateType $dateType
 	 * @param RepresentsDateType $anotherDateType
 	 * @param bool               $expectedResult
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testIfEqualsValueComparesOnlyValues( RepresentsDateType $dateType, RepresentsDateType $anotherDateType, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $dateType->equalsValue( $anotherDateType ) );

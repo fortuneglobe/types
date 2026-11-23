@@ -1,27 +1,23 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="../tests/bootstrap.php"
-         verbose="true"
+         cacheDirectory="logs/.phpunit.cache"
          beStrictAboutOutputDuringTests="true"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-	<coverage processUncoveredFiles="true">
-		<include>
-			<directory suffix=".php">../src</directory>
-		</include>
-		<report>
-			<html outputDirectory="./logs" lowUpperBound="50" highLowerBound="90"/>
-		</report>
-	</coverage>
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnPhpunitDeprecations="true"
+         failOnDeprecation="true"
+         failOnWarning="true"
+         colors="true">
 	<testsuites>
 		<testsuite name="Unit">
 			<directory suffix="Test.php">../tests/Unit</directory>
 		</testsuite>
 	</testsuites>
-	<logging>
-		<testdoxText outputFile="php://stdout"/>
-	</logging>
+	<source>
+		<include>
+			<directory suffix=".php">../src</directory>
+		</include>
+	</source>
 </phpunit>

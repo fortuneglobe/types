@@ -49,7 +49,9 @@ trait RepresentingFloatArrayType
 
 	public function valid(): bool
 	{
-		return isset( $this->floatTypes[ $this->key() ] );
+		$key = $this->key();
+
+		return null !== $key && isset( $this->floatTypes[ $key ] );
 	}
 
 	public function rewind(): void

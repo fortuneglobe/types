@@ -33,7 +33,9 @@ trait RepresentingArrayType
 
 	public function valid(): bool
 	{
-		return isset( $this->genericArray[ $this->key() ] );
+		$key = $this->key();
+
+		return null !== $key && isset( $this->genericArray[ $key ] );
 	}
 
 	public function rewind(): void

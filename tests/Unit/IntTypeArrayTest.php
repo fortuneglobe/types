@@ -10,6 +10,7 @@ use Fortuneglobe\Types\Tests\Unit\Samples\AnotherIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\TransformableIntTypeArray;
 use Fortuneglobe\Types\Traits\RepresentingIntArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class IntTypeArrayTest extends TestCase
@@ -73,7 +74,7 @@ class IntTypeArrayTest extends TestCase
 		new IntTypeArray( [ new JustAnIntType( 0 ), new AnotherIntType( 1 ) ] );
 	}
 
-	public function EqualsValueDataProvider(): array
+	public static function EqualsValueDataProvider(): array
 	{
 		return [
 			[
@@ -166,12 +167,11 @@ class IntTypeArrayTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider EqualsValueDataProvider
-	 *
 	 * @param IntTypeArray $intTypes
 	 * @param IntTypeArray $otherIntTypes
 	 * @param bool         $expectedResult
 	 */
+	#[DataProvider( 'EqualsValueDataProvider' )]
 	public function testIfEqualsValueComparesOnlyValues( IntTypeArray $intTypes, IntTypeArray $otherIntTypes, bool $expectedResult ): void
 	{
 		self::assertSame( $expectedResult, $intTypes->equalsValues( $otherIntTypes ) );

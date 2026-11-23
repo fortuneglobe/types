@@ -12,11 +12,12 @@ use Fortuneglobe\Types\Tests\Unit\Samples\JustAnIntType;
 use Fortuneglobe\Types\Tests\Unit\Samples\NoZeroFloatType;
 use Fortuneglobe\Types\Tests\Unit\Samples\TransformableFloatType;
 use Fortuneglobe\Types\Traits\RepresentingFloatType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FloatTypeTest extends TestCase
 {
-	public function ToStringDataProvider(): array
+	public static function ToStringDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 1 ), '1' ],
@@ -28,17 +29,16 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider ToStringDataProvider
-	 *
 	 * @param RepresentsFloatType $floatType
 	 * @param string              $expectedString
 	 */
+	#[DataProvider( 'ToStringDataProvider' )]
 	public function testToString( RepresentsFloatType $floatType, string $expectedString ): void
 	{
 		self::assertSame( $expectedString, (string)$floatType );
 	}
 
-	public function ToFloatDataProvider(): array
+	public static function ToFloatDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 1 ), 1.0 ],
@@ -50,11 +50,10 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider ToFloatDataProvider
-	 *
 	 * @param RepresentsFloatType $floatType
 	 * @param float               $expectedFloat
 	 */
+	#[DataProvider( 'ToFloatDataProvider' )]
 	public function testToFloat( RepresentsFloatType $floatType, float $expectedFloat ): void
 	{
 		self::assertSame( $expectedFloat, $floatType->toFloat() );
@@ -112,7 +111,7 @@ class FloatTypeTest extends TestCase
 		};
 	}
 
-	public function FloatComparisonDataProvider(): array
+	public static function FloatComparisonDataProvider(): array
 	{
 		return [
 			[ 0, 0, false, true, false ],
@@ -135,14 +134,13 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider FloatComparisonDataProvider
-	 *
 	 * @param float $originalFloatValue
 	 * @param float $anotherFloatValue
 	 * @param bool  $isLess
 	 * @param bool  $isEqual
 	 * @param bool  $isGreater
 	 */
+	#[DataProvider( 'FloatComparisonDataProvider' )]
 	public function testComparingFloatValues( float $originalFloatValue, float $anotherFloatValue, bool $isLess, bool $isEqual, bool $isGreater ): void
 	{
 		$originalFloatType = new class($originalFloatValue) extends AbstractFloatType {
@@ -215,7 +213,7 @@ class FloatTypeTest extends TestCase
 		self::assertFalse( (new AnyFloatType( 0.1 ))->isNegativeOrZero() );
 	}
 
-	public function FloatValueEqualityDataProvider(): array
+	public static function FloatValueEqualityDataProvider(): array
 	{
 		return [
 			[
@@ -272,21 +270,20 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider FloatValueEqualityDataProvider
-	 *
 	 * @param RepresentsFloatType $floatType
 	 * @param RepresentsFloatType $anotherFloatType
 	 * @param bool                $expectedEquals
 	 *
 	 * @return void
 	 */
+	#[DataProvider( 'FloatValueEqualityDataProvider' )]
 	public function testValueEquality( RepresentsFloatType $floatType, RepresentsFloatType $anotherFloatType, bool $expectedEquals ): void
 	{
 		self::assertEquals( $expectedEquals, $floatType->isEqual( $anotherFloatType ) );
 		self::assertEquals( $expectedEquals, $floatType->isEqual( $anotherFloatType->toFloat() ) );
 	}
 
-	public function AdditionDataProvider(): array
+	public static function AdditionDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
@@ -298,12 +295,11 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider AdditionDataProvider
-	 *
 	 * @param RepresentsFloatType                   $originalFloatType
 	 * @param RepresentsFloatType|RepresentsIntType $anotherType
 	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
+	#[DataProvider( 'AdditionDataProvider' )]
 	public function testAddition( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
 		self::assertEquals( $expectedFloatType, $originalFloatType->add( $anotherType ) );
@@ -315,7 +311,7 @@ class FloatTypeTest extends TestCase
 		}
 	}
 
-	public function SubtractionDataProvider(): array
+	public static function SubtractionDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
@@ -332,12 +328,11 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider SubtractionDataProvider
-	 *
 	 * @param RepresentsFloatType                   $originalFloatType
 	 * @param RepresentsFloatType|RepresentsIntType $anotherType
 	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
+	#[DataProvider( 'SubtractionDataProvider' )]
 	public function testSubtraction( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
 		self::assertEquals( $expectedFloatType, $originalFloatType->subtract( $anotherType ) );
@@ -349,7 +344,7 @@ class FloatTypeTest extends TestCase
 		}
 	}
 
-	public function MultiplicationDataProvider(): array
+	public static function MultiplicationDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnotherFloatType( 0 ), new AnyFloatType( 0 ) ],
@@ -366,12 +361,11 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider MultiplicationDataProvider
-	 *
 	 * @param RepresentsFloatType                   $originalFloatType
 	 * @param RepresentsFloatType|RepresentsIntType $anotherType
 	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
+	#[DataProvider( 'MultiplicationDataProvider' )]
 	public function testMultiplication( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
 		self::assertEquals( $expectedFloatType, $originalFloatType->multiply( $anotherType ) );
@@ -383,7 +377,7 @@ class FloatTypeTest extends TestCase
 		}
 	}
 
-	public function DivisionDataProvider(): array
+	public static function DivisionDataProvider(): array
 	{
 		return [
 			[ new AnyFloatType( 0 ), new AnyFloatType( 5 ), new AnyFloatType( 0 ) ],
@@ -398,12 +392,11 @@ class FloatTypeTest extends TestCase
 	}
 
 	/**
-	 * @dataProvider DivisionDataProvider
-	 *
 	 * @param RepresentsFloatType                   $originalFloatType
 	 * @param RepresentsFloatType|RepresentsIntType $anotherType
 	 * @param RepresentsFloatType                   $expectedFloatType
 	 */
+	#[DataProvider( 'DivisionDataProvider' )]
 	public function testDivision( RepresentsFloatType $originalFloatType, RepresentsFloatType|RepresentsIntType $anotherType, RepresentsFloatType $expectedFloatType ): void
 	{
 		self::assertEquals( $expectedFloatType, $originalFloatType->divide( $anotherType ) );

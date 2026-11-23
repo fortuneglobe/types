@@ -80,11 +80,6 @@ trait RepresentingDateType
 		return $this->dateTime->getTimezone();
 	}
 
-	public function __wakeup(): void
-	{
-		$this->dateTime->__wakeup();
-	}
-
 	public function toDateTime(): \DateTimeInterface
 	{
 		return $this->dateTime;
